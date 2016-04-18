@@ -10,6 +10,14 @@ var schema = new mongoose.Schema({
     password: {
         type: String
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order'
+    }],
     salt: {
         type: String
     },
