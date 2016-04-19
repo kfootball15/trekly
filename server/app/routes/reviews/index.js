@@ -44,7 +44,7 @@ router.get('/user/:userId', function(req, res, next){
 });
 
 router.post('/', function(req, res, next){
-
+// Reviews can only be left by authenticated users (todo)
     Reviews.create(req.body)
     .then(function(review){
         res.status(201).send(review);
