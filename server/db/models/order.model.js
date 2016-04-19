@@ -11,18 +11,14 @@ var schema = new mongoose.Schema({
     sessionId: {
         type: String
     },
-    products: [{ //****CHECK IF DEFAULT IS NOTHING OR AN EMPTY ARRAY***************************
+    products: [{ //****CHECK IF DEFAULT IS NOTHING OR AN EMPTY ARRAY*************************** IT IS AN EMPTY ARRAY
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     }],
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
     status: {
         type: String,
-        enum:   ['cart', 
-                'confirmed', 
+        enum:   ['cart',
+                'confirmed',
                 'processing',
                 'cancelled',
                 'complete'],
@@ -31,7 +27,10 @@ var schema = new mongoose.Schema({
 });
 
 // virtual to get total price
-schema.virtuals('totalPrice').get = function() {
+schema.virtual('totalPrice').get = function() {
+    // ***** NOTE: ADDED IF TO ESCAPE IF NO LONGER CART STATUS, IE CHECKED OUT
+    if (this.status !== 'cart') return this.finalPrice;
+
     return this.populate('products').exec()
     .then(function(orderPopulatedWithArrayOfProducts) {
         var total = 0;
