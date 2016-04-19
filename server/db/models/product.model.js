@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 
-var schema = new mongoose.Schema({
+var Schema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -13,9 +13,9 @@ var schema = new mongoose.Schema({
     location: {
         type: String
     },
-    tags: {
-        type: [String], 
-        index: true 
+    categories: {
+        type: [String],
+        index: true
     },
     price: {
         type: Number,
@@ -28,10 +28,14 @@ var schema = new mongoose.Schema({
     inventory: {
         type: Number,
         min: 0
-    }, 
+    },
     coordinates: {
         type: [Number]
     }
 });
 
-mongoose.model('Product', schema);
+// Schema.statics.addToCategories = function(category, cb){
+//     this.categories.push(category)
+// }
+
+mongoose.model('Product', Schema);
