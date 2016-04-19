@@ -3,24 +3,36 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    name: {
-        type: String
+
+    title: {
+        type: String,
+        required: true
     },
     description: {
         type: String
     },
+    location: {
+        type: String
+    },
+    tags: {
+        type: [String],
+        index: true
+    },
     price: {
-        type: Number
+        type: Number,
+        required: true
     },
-    quantity: {
-        type: Number
-    },    
-    country: {
-        type: String
+    images: {
+        type: [String],
+        default: '/assets/images/placeholder.jpg'
     },
-    activities: [{
-        type: String
-    }],
+    inventory: {
+        type: Number,
+        min: 0
+    },
+    coordinates: {
+        type: [Number]
+    }
 });
 
 mongoose.model('Product', schema);

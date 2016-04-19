@@ -11,7 +11,7 @@ var schema = new mongoose.Schema({
     sessionId: {
         type: String
     },
-    products: [{ //****CHECK IF DEFAULT IS NOTHING OR AN EMPTY ARRAY*************************** IT IS AN EMPTY ARRAY
+    products: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     }],
