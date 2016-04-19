@@ -15,29 +15,35 @@ router.get('/', function(req, res, next){
 });
 
 router.get('/:productId', function(req, res, next){
+
     Product.findById(req.params.productId)
     .then(function(product){
         if (!product) res.sendStatus(404);
         else res.json(product);
     })
     .then(null, next);
+
 });
 
 router.post('/', function(req, res, next){
+
     Product.create(req.body)
     .then(function(product){
         res.status(201).send(product);
     })
     .then(null, next);
+
 });
 
 router.put('/:productId', function(req, res, next){
+
     Product.findByIdAndUpdate(req.params.productId, req.body, {new: true})
     .then(function(response){
         if (!response) res.sendStatus(404)
         else res.send(response)
     })
     .then(null, next)
+
 });
 
 router.put('/', function(req, res, next){

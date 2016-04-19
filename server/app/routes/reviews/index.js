@@ -4,8 +4,23 @@ var mongoose = require('mongoose');
 var Reviews = mongoose.model('Reviews');
 module.exports = router;
 
+//DEVELOPER ROUTES
+router.get('/:reviewId', function(req, res, next){
 
+    Reviews.findById(req.params.reviewId)
+    .populate('product')
+    .populate('user')
+    .then(function(review){
+        res.json(review)
+    })
+    .then(null, next)
+
+})
+
+
+//USER ROUTES
 router.get('/product/:productId', function(req, res, next){
+
     Reviews.find({product: req.params.productId})
     .populate('user')
     .then(function(reviews){
@@ -13,9 +28,11 @@ router.get('/product/:productId', function(req, res, next){
         res.json(reviews);
     })
     .then(null, next)
+
 });
 
 router.get('/user/:userId', function(req, res, next){
+
     Reviews.find({user: req.params.userId})
     .populate('product')
     .then(function(reviews){
@@ -23,16 +40,18 @@ router.get('/user/:userId', function(req, res, next){
         else res.json(reviews);
     })
     .then(null, next);
+
 });
 
 router.post('/', function(req, res, next){
+
     Reviews.create(req.body)
     .then(function(review){
         res.status(201).send(review);
     })
     .then(null, next);
-});
 
+});
 
 
 router.delete('/:reviewId', function(req, res, next) {
@@ -45,9 +64,3 @@ router.delete('/:reviewId', function(req, res, next) {
     .then(null, next);
 
 });
-
-
-//Get Reviews by Product ID
-//Get Reviews by User ID
-//POST Reviews
-//
