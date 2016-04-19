@@ -15,10 +15,10 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    orders: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Order'
-    }],
+    // orders: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Order'
+    // }],
     salt: {
         type: String
     },

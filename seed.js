@@ -24,15 +24,9 @@ var connectToDb = require('./server/db');
 var User = mongoose.model('User');
 var Order = mongoose.model('Order');
 var Product = mongoose.model('Product');
-var Review = mongoose.model('Review');
+var Review = mongoose.model('Reviews');
 
-var wipeCollections = function () {
-    var models = [User, Order, Product, Review];
 
-    return Promise.map(models, function(model) {
-        return model.remove({}).exec();
-    });
-};
 
 var userSeed = [
     {
@@ -82,52 +76,52 @@ var orderSeed = [
 
 var productSeed = [
     {
-        name: 'Package 1',
+        title: 'Package 1',
         description: 'The number one holiday',
+        location: 'United Kingdom',
+        tags: ['Big Ben', 'London Eye', 'Meet the Queen'],
         price: 5000,
-        quantity: 5,
-        country: 'United Kingdom',
-        activities: ['Big Ben', 'London Eye', 'Meet the Queen']
+        inventory: 5,
     },
     {
-        name: 'Package 2',
+        title: 'Package 2',
         description: 'The number two holiday',
+        location: 'France',
+        tags: ['Eiffel Tower', 'Arc de Triomphe', 'Champs Elysee', 'Louvre'],
         price: 3000,
-        quantity: 5,
-        country: 'France',
-        activities: ['Eiffel Tower', 'Arc de Triomphe', 'Champs Elysee', 'Louvre']
+        inventory: 5,
     },
     {
-        name: 'Package 3',
+        title: 'Package 3',
         description: 'The number three holiday',
+        location: 'China',
+        tags: ['Pandas', 'Ice City', 'Shaolin Temple'],
         price: 4000,
-        quantity: 5,
-        country: 'China',
-        activities: ['Pandas', 'Ice City', 'Shaolin Temple']
+        inventory: 5,
     },
     {
-        name: 'Package 4',
+        title: 'Package 4',
         description: 'The number four holiday',
+        location: 'South Africa',
+        tags: ['Safari'],
         price: 2000,
-        quantity: 5,
-        country: 'South Africa',
-        activities: ['Safari']
+        inventory: 5,
     },
     {
-        name: 'Package 5',
+        title: 'Package 5',
         description: 'The number five holiday',
+        location: 'Bahamas',
+        tags: ['Beach', 'Scuba diving', 'Jet ski'],
         price: 10000,
-        quantity: 5,
-        country: 'Bahamas',
-        activities: ['Beach', 'Scuba diving', 'Jet ski']
+        inventory: 5,
     },
     {
-        name: 'Package 6',
+        title: 'Package 6',
         description: 'The number six holiday',
+        location: 'Egypt',
+        tags: ['Pyramids', 'The Nile', 'Sphinx'],
         price: 15000,
-        quantity: 5,
-        country: 'Egypt',
-        activities: ['Pyramids', 'The Nile', 'Sphinx']
+        inventory: 5,
     }
 ];
 
@@ -145,6 +139,14 @@ var reviewSeed = [
         comment: 'Totally amazing'
     }
 ];
+
+var wipeCollections = function () {
+    var models = [User, Order, Product, Review];
+
+    return Promise.map(models, function(model) {
+        return model.remove({}).exec();
+    });
+};
 
 var seedDB = function() {
     var randomizeSelector = function(array) {
@@ -165,6 +167,7 @@ var seedDB = function() {
         usersList = users;
         return Promise.map(orderSeed, function(order) {
             order.user = randomizeSelector(users);
+            order.products.push(randomizeSelector(productsList));
             order.products.push(randomizeSelector(productsList));
             return Order.create(order);
         });
