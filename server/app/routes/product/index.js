@@ -55,9 +55,7 @@ router.put('/categories/:productId', function(req, res, next){
     // We need to send on Req.body {addedCategories:...}
     Product.findById(req.params.productId)
     .then(function(product){
-        for (var i = 0; i < req.body.addedCategories.length; i++) {
-            product.categories.push(req.body.addedCategories[i])
-        }
+        product.categories = product.categories.concat(req.body.addedCategories)
         return product.save()
     })
     .then(function(product){
