@@ -12,26 +12,57 @@ router.get('/', function(req, res, next) {
     .catch(next);
 });
 
-router.get('/:sessionId/session', function(req, res, next) {
-    Order.findOne({sessionId: req.params.sessionId}).exec()
+router.put('/addToCart', function(req,res,next){
+    Order.findOrCreate(req.session.id)
+    .then(function(order){
+        return order.addProduct(req.body.productId, req.body.quantity)
+    })
+    .then(function(updatedCart){
+        res.send(updatedCart);
+    })
+})
+
+router.put('/removeFromCart', function(req,res,next){
+    Order.findOne({sessionId: req.session.id})
+    .then(function(order){
+        return order.deleteProduct(req.body.productId)
+    })
+    .then(function(updatedCart){
+        res.send(updatedCart);
+    })
+})
+
+router.get('/findOneOrder', function(req, res, next) {
+    Order.findOne({sessionId: req.session.id}).exec()
     .then(function(order) {
         res.status(200).send(order);
     })
     .catch(next);
 });
 
-router.get('/:userId/user', function(req, res, next) {
-    Order.findOne({userId: req.params.userId}).exec()
-    .then(function(order) {
-        res.status(200).send(order);
+router.put('/:newStatus', function(req, res, next){
+    var newStatus = req.params.newStatus;
+    var change = false;
+    return Order.findOne({sessionId: req.session.id}).exec()
+    .then(function(order){
+        var currentStatus = order.status;
+        if (currentStatus === 'cart' && newStatus === 'processing') return order.cartToProcessing();
+        else if (currentStatus === 'processing' && newStatus === 'cancelled') {
+            return order.cancel();
+        }
+        else if (currentStatus === 'processing' && newStatus === 'complete') {
+            return order.processingToComplete();
+        }
+        if (currentStatus === 'complete' && newStatus === 'cancelled') {
+            return order.cancel();
+        }
+        else return order
     })
-    .catch(next);
-});
+    .then(function(updatedOrder){
+        res.send(updatedOrder);
+    })
+})
 
-router.post('/', function(req, res, next) {
-    Order.create(req.body)
-    .then(function(order) {
-        res.status(200).send(order);
-    })
-    .catch(next);
-});
+// router.get('/checkout')
+// //get checkout info
+

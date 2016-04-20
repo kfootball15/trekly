@@ -35,4 +35,24 @@ var schema = new mongoose.Schema({
     }
 });
 
+schema.statics.decreaseInventory = function(productIdArray){
+    return this.find({'_id': {$in: productIdArray}})
+    .then(function(productArray){
+        return Promise.all(productArray.map(function(product){
+            product.inventory--;
+            return product.save();
+        }))
+    })
+}
+
+schema.statics.increaseInventory = function(productIdArray){
+    return this.find({'_id': {$in: productIdArray}})
+    .then(function(productArray){
+        return Promise.all(productArray.map(function(product){
+            product.inventory++;
+            return product.save();
+        }))
+    })
+}
+
 mongoose.model('Product', schema);

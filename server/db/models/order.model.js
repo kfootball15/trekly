@@ -13,8 +13,11 @@ var schema = new mongoose.Schema({
     },
     products: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
+        ref: 'Product',
     }],
+    finalPrice: [{
+        type: Number,
+    }], //array of product prices 
     status: {
         type: String,
         enum:   ['cart',
@@ -26,20 +29,101 @@ var schema = new mongoose.Schema({
     }
 });
 
-// virtual to get total price
-schema.virtual('totalPrice').get = function() {
-    // ***** NOTE: ADDED IF TO ESCAPE IF NO LONGER CART STATUS, IE CHECKED OUT
-    if (this.status !== 'cart') return this.finalPrice;
+//virtual to get total price ARRAY of all products AT CURRENT PRICE IN DATABASE
+// schema.virtual('totalPriceArray').get = function(){
+//     console.log('got into total price array virtual')
+//     // if (this.status !== 'cart') return this.finalPrice;
+//     return this.populate('products')
+//     .then(function(orderPopulatedWithArrayOfProducts) {
+//         console.log('order populated with array of products', orderPopulatedWithArrayOfProducts)
+//         // return orderPopulatedWithArrayOfProducts.products.map(function(product) {
+//         //     return product.price;
+//         // });
+//     });
+// }
 
-    return this.populate('products').exec()
-    .then(function(orderPopulatedWithArrayOfProducts) {
-        var total = 0;
-        orderPopulatedWithArrayOfProducts.products.forEach(function(product) {
-            total += product.price;
+// // virtual to get total price of all products
+// schema.virtual('totalPrice').get = function() {
+//     // ***** NOTE: ADDED IF TO ESCAPE IF NO LONGER CART STATUS, IE CHECKED OUT
+//     return this.totalPriceArray.reduce(function(prev, curr){return prev+curr});
+// };
+
+schema.methods.getPriceArray = function(){
+    console.log('in get price array function');
+    return mongoose.model('Order').findById(this._id).populate('products')
+    .then(function(populatedOrder) {
+        return populatedOrder.products.map(function(product) {
+            return product.price;
         });
-        return total;
     });
-};
+}
+
+schema.methods.getTotalPrice = function(){
+    return this.getPriceArray()
+    .then(function(priceArray){
+        return priceArray.reduce(function(prev, curr){return prev+curr});
+    })
+}
+
+
+schema.methods.cartToProcessing = function(){
+    var self = this;
+    return this.getPriceArray()
+    .then(function(priceArray){
+        self.finalPrice = priceArray;
+        self.status = 'processing';
+        return self.save()
+    })
+    .then(function(updatedOrder){
+        return mongoose.model('Product').decreaseInventory(updatedOrder.products);
+    })
+    .then(function(updatedProducts){
+        return self;
+    })
+}
+
+schema.methods.cancel = function(){
+    var self = this;
+    self.status = 'cancelled';
+    return self.save()
+    .then(function(updatedOrder){
+        return mongoose.model('Product').increaseInventory(updatedOrder.products);
+    })
+    .then(function(updatedProducts){
+        return self;
+    })
+}
+
+schema.methods.processingToComplete = function(){
+    this.status = 'complete';
+    return this.save()
+    .then(function(updatedOrder){
+        return updatedOrder;
+    })
+}
+
+
+//find cart by sessionID or create a new card, specifying product ID, session ID, and user ID if exists
+schema.statics.findOrCreate = function(sessionId, userId){
+    var self = this;
+    return this.findOne({sessionId: sessionId, status: 'cart'})
+    .exec()
+    .then(function(order){
+        if (!order){
+            var newOrder = new self();
+            newOrder.sessionId = sessionId;
+            if (userId) newOrder.userId = userId;
+            return newOrder.save()
+            .then(function(newOrder){
+                return newOrder;
+            })
+        }
+        else return order;
+    })
+    .catch(function(err){
+        console.error(err);
+    })
+}
 
 // method to add to order
 schema.methods.addProduct = function (productId, quantity) {
@@ -53,10 +137,18 @@ schema.methods.addProduct = function (productId, quantity) {
     return this.save();
 };
 
+
 // method to remove product from order
+schema.methods.deleteProduct = function (productId) {
+    if (this.status !== 'cart') return;
+
+    var firstIndex = this.products.indexOf(productId);
+    this.products.splice(firstIndex, 1);
+    
+    return this.save();
+};
 
 
-// method to initialize cart
 
 
 

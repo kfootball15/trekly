@@ -48,27 +48,27 @@ var userSeed = [
 
 var orderSeed = [
     {
-        sessionId: '1234567',
+        sessionId: '111',
         status: 'cart',
         products: []
     },
     {
-        sessionId: '1234567',
-        status: 'confirmed',
+        sessionId: '222',
+        status: 'cart',
         products: []
     },
     {
-        sessionId: '1234567',
+        sessionId: '333',
         status: 'processing',
         products: []
     },
     {
-        sessionId: '1234567',
-        status: 'cancelled',
+        sessionId: '444',
+        status: 'cart',
         products: []
     },
     {
-        sessionId: '1234567',
+        sessionId: '555',
         status: 'complete',
         products: []
     }
