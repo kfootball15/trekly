@@ -43,6 +43,9 @@ schema.statics.decreaseInventory = function(productIdArray){
             return product.save();
         }))
     })
+    .catch(function(err){
+        console.error(err);
+    })
 }
 
 schema.statics.increaseInventory = function(productIdArray){
@@ -52,6 +55,9 @@ schema.statics.increaseInventory = function(productIdArray){
             product.inventory++;
             return product.save();
         }))
+    })
+    .catch(function(err){
+        console.error(err);
     })
 }
 

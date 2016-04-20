@@ -29,25 +29,7 @@ var schema = new mongoose.Schema({
     }
 });
 
-//virtual to get total price ARRAY of all products AT CURRENT PRICE IN DATABASE
-// schema.virtual('totalPriceArray').get = function(){
-//     console.log('got into total price array virtual')
-//     // if (this.status !== 'cart') return this.finalPrice;
-//     return this.populate('products')
-//     .then(function(orderPopulatedWithArrayOfProducts) {
-//         console.log('order populated with array of products', orderPopulatedWithArrayOfProducts)
-//         // return orderPopulatedWithArrayOfProducts.products.map(function(product) {
-//         //     return product.price;
-//         // });
-//     });
-// }
-
-// // virtual to get total price of all products
-// schema.virtual('totalPrice').get = function() {
-//     // ***** NOTE: ADDED IF TO ESCAPE IF NO LONGER CART STATUS, IE CHECKED OUT
-//     return this.totalPriceArray.reduce(function(prev, curr){return prev+curr});
-// };
-
+//get total price ARRAY of all products AT CURRENT PRICE IN DATABASE
 schema.methods.getPriceArray = function(){
     console.log('in get price array function');
     return mongoose.model('Order').findById(this._id).populate('products')
@@ -55,17 +37,24 @@ schema.methods.getPriceArray = function(){
         return populatedOrder.products.map(function(product) {
             return product.price;
         });
-    });
+    })
+    .catch(function(err){
+        console.error(err);
+    })
 }
 
+//get total price of all products
 schema.methods.getTotalPrice = function(){
     return this.getPriceArray()
     .then(function(priceArray){
         return priceArray.reduce(function(prev, curr){return prev+curr});
     })
+    .catch(function(err){
+        console.error(err);
+    })
 }
 
-
+//route to change status to 'processing' calls this method
 schema.methods.cartToProcessing = function(){
     var self = this;
     return this.getPriceArray()
@@ -80,8 +69,12 @@ schema.methods.cartToProcessing = function(){
     .then(function(updatedProducts){
         return self;
     })
+    .catch(function(err){
+        console.error(err);
+    })
 }
 
+//route to change status to 'cancelled' calls this method
 schema.methods.cancel = function(){
     var self = this;
     self.status = 'cancelled';
@@ -92,13 +85,20 @@ schema.methods.cancel = function(){
     .then(function(updatedProducts){
         return self;
     })
+    .catch(function(err){
+        console.error(err);
+    })
 }
 
+//route to change status to 'complete' calls this method
 schema.methods.processingToComplete = function(){
     this.status = 'complete';
     return this.save()
     .then(function(updatedOrder){
         return updatedOrder;
+    })
+    .catch(function(err){
+        console.error(err);
     })
 }
 
@@ -128,12 +128,10 @@ schema.statics.findOrCreate = function(sessionId, userId){
 // method to add to order
 schema.methods.addProduct = function (productId, quantity) {
     if (this.status !== 'cart') return;
-
     var number = quantity || 1;
     for (var i = 0; i < number; i++) {
         this.products.push(productId);
     }
-
     return this.save();
 };
 
@@ -141,47 +139,10 @@ schema.methods.addProduct = function (productId, quantity) {
 // method to remove product from order
 schema.methods.deleteProduct = function (productId) {
     if (this.status !== 'cart') return;
-
     var firstIndex = this.products.indexOf(productId);
     this.products.splice(firstIndex, 1);
-    
     return this.save();
 };
 
-
-
-
-
-
-// // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
-// // are all used for local authentication security.
-// var generateSalt = function () {
-//     return crypto.randomBytes(16).toString('base64');
-// };
-
-// var encryptPassword = function (plainText, salt) {
-//     var hash = crypto.createHash('sha1');
-//     hash.update(plainText);
-//     hash.update(salt);
-//     return hash.digest('hex');
-// };
-
-// schema.pre('save', function (next) {
-
-//     if (this.isModified('password')) {
-//         this.salt = this.constructor.generateSalt();
-//         this.password = this.constructor.encryptPassword(this.password, this.salt);
-//     }
-
-//     next();
-
-// });
-
-// schema.statics.generateSalt = generateSalt;
-// schema.statics.encryptPassword = encryptPassword;
-
-// schema.method('correctPassword', function (candidatePassword) {
-//     return encryptPassword(candidatePassword, this.salt) === this.password;
-// });
 
 mongoose.model('Order', schema);

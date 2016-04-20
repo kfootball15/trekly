@@ -42,11 +42,12 @@ router.get('/findOneOrder', function(req, res, next) {
 
 router.put('/:newStatus', function(req, res, next){
     var newStatus = req.params.newStatus;
-    var change = false;
     return Order.findOne({sessionId: req.session.id}).exec()
     .then(function(order){
         var currentStatus = order.status;
-        if (currentStatus === 'cart' && newStatus === 'processing') return order.cartToProcessing();
+        if (currentStatus === 'cart' && newStatus === 'processing') {
+            return order.cartToProcessing();
+        }
         else if (currentStatus === 'processing' && newStatus === 'cancelled') {
             return order.cancel();
         }
