@@ -1,0 +1,39 @@
+<md-list>
+    <md-list-item class="md-2-line">
+    <md-checkbox ng-model="item.done"></md-checkbox>
+    <div class="md-list-item-text">
+         <h2>Images</h3>
+    </div>
+     <div class="md-list-item-text">
+        <h2>Title</h3>
+    </div>
+     <div class="md-list-item-text">
+         <h2>Description</h3>
+    </div>
+    <md-button class="btn1" ng-click="acceptOffer();"> Edit </md-button>
+  </md-list-item>
+  <md-list-item class="md-2-line" ng-repeat="product in products">
+    <md-checkbox ng-model="item.done"></md-checkbox>
+    <div class="md-list-item-text">
+        <img ng-src="{{product.images[0]}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+    </div>
+     <div class="md-list-item-text">
+        <h3>{{product.title}}</h3>
+    </div>
+     <div class="md-list-item-text">
+        <p>{{product.description}}</p>
+    </div>
+    <md-button class="btn1" ng-click="editForm(product);"> Edit </md-button>
+  </md-list-item>
+</md-list>
+
+<!-- <md-list>
+  <md-list-item>
+    <img class="md-avatar" ng-src="{{product.images[0]}}">
+    <span>product in products</span>
+  </md-list-item>
+  <md-list-item>
+    <md-icon class="md-avatar-icon" md-svg-icon="communication:phone"></md-icon>
+    <span>product in products</span>
+  </md-list-item>
+</md-list> -->
