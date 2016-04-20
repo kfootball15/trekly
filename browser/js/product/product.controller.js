@@ -6,8 +6,4 @@ app.controller('ProductCtrl', function($scope, ProductFactory, $timeout, $q, $lo
   .then(function(products){
       $scope.products = products;
   })
-
-  // $scope.searchText='';
-
-
 });

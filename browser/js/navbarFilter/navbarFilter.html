@@ -15,16 +15,25 @@
         </div>
     </div>
 </nav> -->
+<style>
+md-autocomplete input:not(.md-input) {
+    color: #000;
+}
+</style>
 
  <md-toolbar class="md-hue-2">
   <div class="md-toolbar-tools">
 <!--     <md-button class="md-icon-button" aria-label="Settings">
       <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
     </md-button> -->
-    <md-autocomplete name="locationFilter" md-selected-item="selectedItem" md-search-text="searchText" md-items="product in products | filter: {location: searchText}" md-item-text="product.location">
+<!--     <md-autocomplete name="locationFilter" md-selected-item="selectedItem" md-search-text="searchText" md-items="product in products | filter: {location: searchText}" md-item-text="product.location">
+        <span md-highlight-text="searchText" placeholder="location">{{product.location}}</span>
+    </md-autocomplete> -->
+    <md-autocomplete name="locationFilter" md-selected-item="selectedItem" md-search-text="searchText" md-items="product in products" md-item-text="product.location"placeholder="Location">
         <span md-highlight-text="searchText" placeholder="location">{{product.location}}</span>
     </md-autocomplete>
-<!--     <span flex></span> -->
+
+<!--     <span flex></span>
 <!--     <md-button class="md-icon-button" aria-label="Favorite">
       <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
     </md-button>
