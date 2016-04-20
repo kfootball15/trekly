@@ -19,12 +19,14 @@ module.exports = function (app) {
         UserModel.findOne({ 'facebook.id': profile.id }).exec()
             .then(function (user) {
 
+                        console.log(profile)
                 if (user) {
                     return user;
                 } else {
                     return UserModel.create({
                         facebook: {
-                            id: profile.id
+                            id: profile.id,
+                            username: profile.displayName
                         }
                     });
                 }

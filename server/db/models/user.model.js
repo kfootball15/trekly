@@ -15,10 +15,6 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    // orders: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Order'
-    // }],
     salt: {
         type: String
     },
@@ -29,10 +25,14 @@ var schema = new mongoose.Schema({
         tokenSecret: String
     },
     facebook: {
-        id: String
+        id: String,
+        username: String
     },
     google: {
-        id: String
+        id: String,
+        username: String,
+        email: String,
+        token: String
     }
 });
 
