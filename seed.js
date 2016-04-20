@@ -22,29 +22,163 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = mongoose.model('User');
+var Order = mongoose.model('Order');
+var Product = mongoose.model('Product');
+var Review = mongoose.model('Reviews');
+
+
+
+var userSeed = [
+    {
+        email: 'admin@me.com',
+        password: '123',
+        isAdmin: true
+    },
+    {
+        email: 'me@me.com',
+        password: '123',
+        isAdmin: false
+    },
+    {
+        email: 'me1@me.com',
+        password: '123',
+        isAdmin: false
+    }
+];
+
+var orderSeed = [
+    {
+        sessionId: '111',
+        status: 'cart',
+        products: []
+    },
+    {
+        sessionId: '222',
+        status: 'cart',
+        products: []
+    },
+    {
+        sessionId: '333',
+        status: 'processing',
+        products: []
+    },
+    {
+        sessionId: '444',
+        status: 'cart',
+        products: []
+    },
+    {
+        sessionId: '555',
+        status: 'complete',
+        products: []
+    }
+];
+
+var productSeed = [
+    {
+        title: 'Package 1',
+        description: 'The number one holiday',
+        location: 'United Kingdom',
+        tags: ['Big Ben', 'London Eye', 'Meet the Queen'],
+        price: 5000,
+        inventory: 5,
+    },
+    {
+        title: 'Package 2',
+        description: 'The number two holiday',
+        location: 'France',
+        tags: ['Eiffel Tower', 'Arc de Triomphe', 'Champs Elysee', 'Louvre'],
+        price: 3000,
+        inventory: 5,
+    },
+    {
+        title: 'Package 3',
+        description: 'The number three holiday',
+        location: 'China',
+        tags: ['Pandas', 'Ice City', 'Shaolin Temple'],
+        price: 4000,
+        inventory: 5,
+    },
+    {
+        title: 'Package 4',
+        description: 'The number four holiday',
+        location: 'South Africa',
+        tags: ['Safari'],
+        price: 2000,
+        inventory: 5,
+    },
+    {
+        title: 'Package 5',
+        description: 'The number five holiday',
+        location: 'Bahamas',
+        tags: ['Beach', 'Scuba diving', 'Jet ski'],
+        price: 10000,
+        inventory: 5,
+    },
+    {
+        title: 'Package 6',
+        description: 'The number six holiday',
+        location: 'Egypt',
+        tags: ['Pyramids', 'The Nile', 'Sphinx'],
+        price: 15000,
+        inventory: 5,
+    }
+];
+
+var reviewSeed = [
+    {
+        rating: 5,
+        comment: 'This is a great package'
+    },
+    {
+        rating: 4,
+        comment: 'I really enjoyed this package'
+    },
+    {
+        rating: 3,
+        comment: 'Totally amazing'
+    }
+];
 
 var wipeCollections = function () {
-    var removeUsers = User.remove({});
-    return Promise.all([
-        removeUsers
-    ]);
+    var models = [User, Order, Product, Review];
+
+    return Promise.map(models, function(model) {
+        return model.remove({}).exec();
+    });
 };
 
-var seedUsers = function () {
+var seedDB = function() {
+    var randomizeSelector = function(array) {
+      var random = Math.floor(Math.random() * array.length);
+      var randomSelection = array[random];
+      return randomSelection;
+    };
 
-    var users = [
-        {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
-        }
-    ];
+    var productsList;
+    var usersList;
 
-    return User.create(users);
-
+    return Product.create(productSeed)
+    .then(function(products) {
+        productsList = products;
+        return User.create(userSeed);
+    })
+    .then(function(users){
+        usersList = users;
+        return Promise.map(orderSeed, function(order) {
+            order.user = randomizeSelector(users);
+            order.products.push(randomizeSelector(productsList));
+            order.products.push(randomizeSelector(productsList));
+            return Order.create(order);
+        });
+    })
+    .then(function(orders) {
+        return Promise.map(reviewSeed, function(review) {
+            review.user = randomizeSelector(usersList);
+            review.product = randomizeSelector(productsList);
+            return Review.create(review);
+        });
+    });
 };
 
 connectToDb
@@ -52,7 +186,7 @@ connectToDb
         return wipeCollections();
     })
     .then(function () {
-        return seedUsers();
+        return seedDB();
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));

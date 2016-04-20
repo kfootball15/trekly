@@ -5,11 +5,20 @@ var _ = require('lodash');
 
 var schema = new mongoose.Schema({
     email: {
-        type: String
+        type: String,
+        unique: true
     },
     password: {
         type: String
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    // orders: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Order'
+    // }],
     salt: {
         type: String
     },
