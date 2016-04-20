@@ -1,0 +1,35 @@
+<!-- <nav class="navbar navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <fullstack-logo></fullstack-logo>
+        </div>
+        <ul class="nav navbar-nav">
+            <li ng-repeat="product in products" ng-show="!item.auth || isLoggedIn()">
+                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ product.location }}</a>
+            </li>
+        </ul>
+        <button ng-show="!user" ui-sref="login" class="btn login-button">Products!</button>
+        <div ng-show="user" class="welcome">
+            <span>Welcome, {{ user.email }}!</span>
+            <a ng-click="logout()">Logout</a>
+        </div>
+    </div>
+</nav> -->
+
+ <md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+<!--     <md-button class="md-icon-button" aria-label="Settings">
+      <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+    </md-button> -->
+    <md-autocomplete name="locationFilter" md-selected-item="selectedItem" md-search-text="searchText" md-items="product in products | filter: {location: searchText}" md-item-text="product.location">
+        <span md-highlight-text="searchText" placeholder="location">{{product.location}}</span>
+    </md-autocomplete>
+<!--     <span flex></span> -->
+<!--     <md-button class="md-icon-button" aria-label="Favorite">
+      <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="More">
+      <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+    </md-button> -->
+  </div>
+</md-toolbar>
