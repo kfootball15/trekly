@@ -14,7 +14,7 @@ var schema = new mongoose.Schema({
     location: {
         type: String
     },
-    tags: {
+    categories: {
         type: [String],
         index: true
     },
