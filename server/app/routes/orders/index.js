@@ -12,6 +12,15 @@ router.get('/', function(req, res, next) {
     .catch(next);
 });
 
+router.get('/getComplete/:userId', function(req, res, next) {
+    Order.find({user: req.params.userId, status: 'complete'}).populate('products user')
+    .then(function(orders) {
+        res.status(200).send(orders);
+    })
+    .catch(next);
+});
+
+
 router.put('/addToCart', function(req,res,next){
     Order.findOrCreate(req.session.id)
     .then(function(order){

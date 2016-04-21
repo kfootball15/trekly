@@ -29,6 +29,8 @@ router.get('/', function(req, res, next) {
     .catch(next);
 });
 
+
+
 router.get('/secret-stash', ensureAuthenticated, function (req, res) {
 
     var theStash = [

@@ -13,5 +13,13 @@ app.factory('UserFactory', function($http) {
         });
     };
 
+    UserFactory.getUser = function(userId) {
+        return $http.get('api/members/' + userId)
+        .then(getData)
+        .then(function(user) {
+            return user;
+        });
+    };
+
     return UserFactory;
 });
