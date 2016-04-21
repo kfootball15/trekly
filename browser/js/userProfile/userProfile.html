@@ -1,0 +1,67 @@
+<div ng-show="user !== null">
+    <h1>{{user.username}}'s Profile Page</h1>
+    <h4 ng-if="user.email">Email: {{user.email}}</h4>
+
+    <div ng-cloak>
+      <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+
+          <md-tab label="Orders">
+            <md-content class="md-padding">
+              <h1 class="md-display-2">Order History</h1>
+              <md-content>
+                  <md-list flex>
+                    <md-divider ></md-divider>
+                    <div ng-repeat="order in orders" layout="row">
+                        <div flex="30">
+                            <h4>ORDER DATE PLACEHOLDER</h4>
+                            <h4>Status: {{order.status}}</h4>
+                            <i class="material-icons md-48 green">check_circle</i>
+                        </div>
+                        <div flex="70">
+                            <md-list-item class="md-3-line" ng-repeat="product in order.products" ng-click="productDetail({productId: review.product._id})">
+                              <div flex="20">
+                                <img class="listImg md-avatar" ng-src="{{product.images[0]}}"/>
+                              </div>
+                              <div class="md-list-item-text" layout="column" flex="60">
+                                <h4>{{ product.title }}</h4>
+                              </div>
+                              <div class="md-list-item-text" layout="column" flex="60">
+                                <h4>{{ product.finalPrice | currency}}</h4>
+                              </div>
+
+                            </md-list-item>
+                        </div>
+                        <md-divider ></md-divider>
+                    </div>
+                  </md-list>
+                </md-content>
+            </md-content>
+          </md-tab>
+
+          <md-tab label="Reviews">
+            <md-content class="md-padding">
+              <h1 class="md-display-2">Past Reviews</h1>
+                <md-content>
+                  <md-list flex>
+                    <md-divider ></md-divider>
+                    <md-list-item class="md-3-line" ng-repeat="review in reviews" ng-click="productDetail({productId: review.product._id})">
+                      <div flex="30">
+                        <img class="listImg" ng-src="{{review.product.images[0]}}"/>
+                      </div>
+                      <div class="md-list-item-text" layout="column" flex="70">
+                        <h4>{{ review.product.title }}</h4>
+                        <review review="review"></review>
+                      </div>
+                      <md-divider ></md-divider>
+                    </md-list-item>
+                  </md-list>
+                </md-content>
+            </md-content>
+          </md-tab>
+
+        </md-tabs>
+      </md-content>
+    </div>
+</div>
+

@@ -37,6 +37,30 @@ router.get('/user/:userId', function(req, res, next){
     .populate('product')
     .then(function(reviews){
         if (!reviews) res.sendStatus(404);
+        res.json(reviews);
+    })
+    .then(null, next);
+
+});
+
+router.get('/', function(req, res, next){
+
+    Reviews.find(req.body)
+    .populate('product user')
+    .then(function(reviews){
+        if (!reviews) res.sendStatus(404);
+        res.json(reviews);
+    })
+    .then(null, next);
+
+});
+
+router.get('/user/:userId', function(req, res, next){
+
+    Reviews.find({user: req.params.userId})
+    .populate('product')
+    .then(function(reviews){
+        if (!reviews) res.sendStatus(404);
         else res.json(reviews);
     })
     .then(null, next);

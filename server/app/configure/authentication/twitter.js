@@ -4,9 +4,11 @@ var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var updateCartWhenLoggingIn = require('./updateCartWhenLoggingIn.js');
 
 module.exports = function (app) {
 
+    var thisUser;
     var twitterConfig = app.getValue('env').TWITTER;
 
     var twitterCredentials = {
@@ -17,6 +19,7 @@ module.exports = function (app) {
 
     var createNewUser = function (token, tokenSecret, profile) {
         return UserModel.create({
+            username: profile.displayName,
             twitter: {
                 id: profile.id,
                 username: profile.username,
@@ -47,6 +50,7 @@ module.exports = function (app) {
                 }
             })
             .then(function (user) {
+                thisUser = user;
                 done(null, user);
             })
             .catch(function (err) {
@@ -63,7 +67,10 @@ module.exports = function (app) {
     app.get('/auth/twitter/callback',
         passport.authenticate('twitter', {failureRedirect: '/login'}),
         function (req, res) {
-            res.redirect('/');
+            updateCartWhenLoggingIn(thisUser, req.session)
+            .then(function() {
+                res.redirect('/');
+            });
         });
 
 };
