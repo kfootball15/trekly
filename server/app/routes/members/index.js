@@ -13,7 +13,7 @@ var ensureAuthenticated = function (req, res, next) {
     }
 };
 
-router.post('/addNewUser', function(req, res, next) {
+router.post('/', function(req, res, next) {
     User.create(req.body)
     .then(function(newUser) {
         res.send(newUser);

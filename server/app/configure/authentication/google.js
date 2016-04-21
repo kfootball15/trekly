@@ -4,9 +4,11 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var updateCartWhenLoggingIn = require('./updateCartWhenLoggingIn.js');
 
 module.exports = function (app) {
 
+    var thisUser;
     var googleConfig = app.getValue('env').GOOGLE;
 
     var googleCredentials = {
@@ -24,6 +26,7 @@ module.exports = function (app) {
                     return user;
                 } else {
                     return UserModel.create({
+                        username: profile.displayName,
                         email: profile.emails[0].value,
                         google: {
                             id: profile.id,
@@ -33,9 +36,9 @@ module.exports = function (app) {
                         }
                     });
                 }
-
             })
             .then(function (userToLogin) {
+                thisUser = userToLogin;
                 done(null, userToLogin);
             })
             .catch(function (err) {
@@ -57,7 +60,10 @@ module.exports = function (app) {
     app.get('/auth/google/callback',
         passport.authenticate('google', { failureRedirect: '/login' }),
         function (req, res) {
-            res.redirect('/');
+            updateCartWhenLoggingIn(thisUser, req.session)
+            .then(function() {
+                res.redirect('/');
+            });
         });
 
 };

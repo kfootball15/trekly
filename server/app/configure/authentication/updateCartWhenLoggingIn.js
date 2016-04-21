@@ -5,6 +5,7 @@
 // 2. If there is a userCart but not sessionCart, update the sessionId on the userCart
 // 3. If there is a userCart and a sessionCart, merge carts and use the sessionCart's sessionId
 
+var mongoose = require('mongoose');
 var Order = mongoose.model('Order');
 
 module.exports = function (user, session) {
@@ -29,8 +30,9 @@ module.exports = function (user, session) {
         if (userCart !== null && sessionCart !== null) {
             userCart.sessionId = session.id;
             // Need to copy products from sessionCart to the userCart;
-
-
+            sessionCart.products.forEach(function(product) {
+                userCart.products.push(product);
+            });
             return userCart.save();
         }
         return;

@@ -6,7 +6,7 @@ app.factory('UserFactory', function($http) {
     }
 
     UserFactory.signup = function(newUser) {
-        return $http.post('api/members/addNewUser', newUser)
+        return $http.post('api/members/', newUser)
         .then(getData)
         .then(function(createdUser) {
             return createdUser;
