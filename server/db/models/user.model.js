@@ -4,6 +4,10 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 
 var schema = new mongoose.Schema({
+    username: {
+        type: String,
+        unique: true
+    },
     email: {
         type: String,
         unique: true
@@ -15,10 +19,6 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    // orders: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Order'
-    // }],
     salt: {
         type: String
     },
@@ -29,13 +29,14 @@ var schema = new mongoose.Schema({
         tokenSecret: String
     },
     facebook: {
-        id: String
+        id: String,
+        username: String
     },
     google: {
-        id: String
-    },
-    name: {
-        type: String
+        id: String,
+        username: String,
+        email: String,
+        token: String
     }
 });
 

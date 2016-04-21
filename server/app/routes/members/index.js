@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 module.exports = router;
 var _ = require('lodash');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 var ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -23,12 +25,19 @@ router.get('/:userId', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     User.create(req.body)
-    .then(function(user) {
-        res.send(user);
+    .then(function(newUser) {
+        res.send(newUser);
     })
-    .then(null, next);
+    .catch(next);
 });
 
+router.get('/', function(req, res, next) {
+    User.find()
+    .then(function(users){
+        res.send(users);
+    })
+    .catch(next);
+});
 
 router.get('/secret-stash', ensureAuthenticated, function (req, res) {
 

@@ -23,6 +23,14 @@ app.factory('OrderFactory', function($http){
     //     })
     // }
 
+    OrderFactory.getCompleteOrdersByUser = function(userId){
+        return $http.get('/api/orders/getComplete/' + userId)
+        .then(function(completeOrders){
+            return completeOrders.data;
+        });
+    };
+
+
     OrderFactory.getRecentComplete = function(orderId){
         return $http.get('/api/orders/getRecentComplete/' + orderId)
         .then(function(recentComplete){
@@ -80,6 +88,7 @@ app.factory('OrderFactory', function($http){
         })
     }
 
+
     //WORK IN PROGRESS / CURRENTLY DEBUGGING
     OrderFactory.changeStatus = function(newStatus){
         console.log('in factory change status with new status: ', newStatus);
@@ -88,6 +97,9 @@ app.factory('OrderFactory', function($http){
             console.log('in factory after $http.put');
             console.log('order updated in factory', updatedOrder.data)
             return updatedOrder.data;
+        })
+        .catch(function(err){
+            console.log('Error: ', err);
         })
     }
 
