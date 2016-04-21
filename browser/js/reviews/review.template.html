@@ -1,0 +1,17 @@
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <span class="pull-right">{{ review.date | date }}</span>
+        <span class="glyphicon" ng-class="{'glyphicon-star': review.rating >= 1, 'glyphicon-star-empty': review.rating < 1}"></span>
+        <span class="glyphicon" ng-class="{'glyphicon-star': review.rating >= 2, 'glyphicon-star-empty': review.rating < 2}"></span>
+        <span class="glyphicon" ng-class="{'glyphicon-star': review.rating >= 3, 'glyphicon-star-empty': review.rating < 3}"></span>
+        <span class="glyphicon" ng-class="{'glyphicon-star': review.rating >= 4, 'glyphicon-star-empty': review.rating < 4}"></span>
+        <span class="glyphicon" ng-class="{'glyphicon-star': review.rating >= 5, 'glyphicon-star-empty': review.rating < 5}"></span>
+        <p>{{ review.rating }} stars</p>
+        <br>
+        <p>{{ review.user.name }}</p>
+        <p>{{ review.comment }}</p>
+    </div>
+</div>
+
+<!-- make actual rating (under pic) correct -->

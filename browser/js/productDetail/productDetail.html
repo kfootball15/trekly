@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="thumbnail">
+            <div class="col-md-12">
+            <div class="col-md-9">
+                <img class="img-responsive" ng-src="{{bigImgSrc}}">
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <img class="img-thumbnail" width="200" height="250" ng-src="{{product.images[0]}}" ng-show="product.images[0]" ng-click="setBigImg(product.images[0])">
+                    <img class="img-thumbnail" width="200" height="250" ng-src="{{product.images[1]}}" ng-show="product.images[1]" ng-click="setBigImg(product.images[1])">
+                    <img class="img-thumbnail" width="200" height="250" ng-src="{{product.images[2]}}" ng-show="product.images[2]" ng-click="setBigImg(product.images[2])">
+                    <img class="img-thumbnail" width="200" height="250" ng-src="{{product.images[3]}}" ng-show="product.images[3]" ng-click="setBigImg(product.images[3])">
+                </ul>
+            </div>
+            </div>
+              <div class="caption-full">
+                    <h4 class="pull-right">{{ product.price | myCurrency }}</h4>
+                        <button type="button" class="btn btn-default btn-sm pull-right" ng-click="addToCart(product)">
+                          <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
+                        </button>
+                    <h1>{{ product.title }}</h1>
+                    <h4>Experience...</h4>
+                    <h5>{{product.categories.join(', ')}}</h5>
+                    <!-- <p>{{ product.description | cut:true:100:'...'}}</p> -->
+                </div>
+                <div class="ratings">
+                    <p class="pull-right">{{ reviews.length }} {{ numReviews }}</p>
+                    <p>
+                        <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 1, 'glyphicon-star-empty': totalReviewRating < 1}"></span>
+                        <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 2, 'glyphicon-star-empty': totalReviewRating < 2}"></span>
+                        <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 3, 'glyphicon-star-empty': totalReviewRating < 3}"></span>
+                        <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 4, 'glyphicon-star-empty': totalReviewRating < 4}"></span>
+                        <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 5, 'glyphicon-star-empty': totalReviewRating < 5}"></span>
+                        <br>
+                        {{ totalReviewRating }} stars
+                    </p>
+                </div>
+
+                <!-- TABS (DESCRIPTION/ REVIEW/ ETC) -->
+                        <div ng-cloak>
+                          <md-content>
+                            <md-tabs md-dynamic-height md-border-bottom>
+                              <md-tab label="one">
+                                <md-content class="md-padding">
+                                  <h1 class="DESCRIPTION">Description</h1>
+                                  <p>{{ product.description }}</p>
+                                </md-content>
+                              </md-tab>
+                              <md-tab label="REVIEWS">
+                                <md-content class="md-padding">
+                                  <h1 class="md-display-2">Reviews</h1>
+                                  <review ng-repeat="review in reviews"></review>
+                                </md-content>
+                              </md-tab>
+                              <md-tab label="three">
+                                <md-content class="md-padding">
+                                  <h1 class="md-display-2">Tab Three</h1>
+                                  <p>CONTENT</p>
+                                </md-content>
+                              </md-tab>
+                            </md-tabs>
+                          </md-content>
+                        </div>
+
+            </div>
+        </div>
+
+<!--         <div class="col-md-3">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Category 1</a>
+                <a href="#" class="list-group-item">Category 2</a>
+                <a href="#" class="list-group-item">Category 3</a>
+            </div>
+        </div> -->
+
+    </div>
+</div>

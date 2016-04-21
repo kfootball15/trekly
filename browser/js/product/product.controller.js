@@ -1,9 +1,3 @@
-app.controller('ProductCtrl', function($scope, ProductFactory, $timeout, $q, $log) {
+// app.controller('ProductCtrl', function($scope) {
 
-  $scope.imagePath = 'assets/images/placeholder.jpg';
-
-  ProductFactory.getAllProducts()
-  .then(function(products){
-      $scope.products = products;
-  })
-});
+// });

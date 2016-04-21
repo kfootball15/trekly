@@ -1,5 +1,7 @@
 'use strict';
 var router = require('express').Router();
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 module.exports = router;
 var _ = require('lodash');
 
@@ -10,6 +12,23 @@ var ensureAuthenticated = function (req, res, next) {
         res.status(401).end();
     }
 };
+
+router.get('/:userId', function(req, res, next) {
+    User.findOne({_id: userId})
+    .then(function(user) {
+        res.send(user.data);
+    })
+    .then(null, next);
+});
+
+router.post('/', function(req, res, next) {
+    User.create(req.body)
+    .then(function(user) {
+        res.send(user);
+    })
+    .then(null, next);
+});
+
 
 router.get('/secret-stash', ensureAuthenticated, function (req, res) {
 
