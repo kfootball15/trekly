@@ -15,12 +15,21 @@ app.factory('OrderFactory', function($http){
         })
     }
 
+    //NOT BEING USED!
+    // OrderFactory.getProcessing = function(){
+    //     return $http.get('/api/orders/getProcessing')
+    //     .then(function(processing){
+    //         return processing.data;
+    //     })
+    // }
+
     OrderFactory.getCompleteOrdersByUser = function(userId){
         return $http.get('/api/orders/getComplete/' + userId)
         .then(function(completeOrders){
             return completeOrders.data;
         });
     };
+
 
     OrderFactory.getRecentComplete = function(orderId){
         return $http.get('/api/orders/getRecentComplete/' + orderId)
@@ -79,6 +88,8 @@ app.factory('OrderFactory', function($http){
         })
     }
 
+
+    //WORK IN PROGRESS / CURRENTLY DEBUGGING
     OrderFactory.changeStatus = function(newStatus){
         console.log('in factory change status with new status: ', newStatus);
         return $http.put('/api/orders/' + newStatus)
