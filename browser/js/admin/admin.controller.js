@@ -1,20 +1,16 @@
-app.controller('AdminCtrl', function($scope, $state, ProductFactory) {
+app.controller('AdminCtrl', function($scope, $state, $mdSidenav, $mdMedia, ProductFactory, getAllProducts) {
 
   $scope.imagePath = 'assets/images/placeholder.jpg';
 
-  ProductFactory.getAllProducts()
-  .then(function(products){
-      $scope.products = products;
-  })
-
-  ProductFactory.getOneProduct()
-  .then(function(product){
-    return product;
-  })
+  $scope.products = getAllProducts
 
   $scope.editForm = function(product){
     console.log(product)
     $state.go('adminEdit', {id: product._id})
   }
+
+  $scope.openLeftMenu = function() {
+    $mdSidenav('left').toggle();
+  };
 
 });
