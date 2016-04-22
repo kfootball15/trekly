@@ -21,10 +21,11 @@ var schema = new mongoose.Schema({
     status: {
         type: String,
         enum:   ['cart',
-                'confirmed',
-                'processing',
+                // 'confirmed',
+                // 'processing',
                 'cancelled',
-                'complete'],
+                'complete'
+                ],
         default: 'cart'
     }
 });
@@ -54,13 +55,14 @@ schema.methods.getTotalPrice = function(){
     })
 }
 
-//route to change status to 'processing' calls this method
-schema.methods.cartToProcessing = function(){
+//route to change status to 'complete' calls this method
+schema.methods.cartToComplete = function(){
+    console.log('in cart to complete method')
     var self = this;
     return this.getPriceArray()
     .then(function(priceArray){
         self.finalPrice = priceArray;
-        self.status = 'processing';
+        self.status = 'complete';
         return self.save()
     })
     .then(function(updatedOrder){
@@ -73,6 +75,7 @@ schema.methods.cartToProcessing = function(){
         console.error(err);
     })
 }
+
 
 //route to change status to 'cancelled' calls this method
 schema.methods.cancel = function(){
@@ -90,17 +93,7 @@ schema.methods.cancel = function(){
     })
 }
 
-//route to change status to 'complete' calls this method
-schema.methods.processingToComplete = function(){
-    this.status = 'complete';
-    return this.save()
-    .then(function(updatedOrder){
-        return updatedOrder;
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+
 
 
 //find cart by sessionID or create a new card, specifying product ID, session ID, and user ID if exists
@@ -137,10 +130,21 @@ schema.methods.addProduct = function (productId, quantity) {
 
 
 // method to remove product from order
-schema.methods.deleteProduct = function (productId) {
+schema.methods.deleteOneProduct = function (productId) {
     if (this.status !== 'cart') return;
     var firstIndex = this.products.indexOf(productId);
     this.products.splice(firstIndex, 1);
+    return this.save();
+};
+
+
+schema.methods.deleteProduct = function (productId) {
+    if (this.status !== 'cart') return;
+    while (this.products.indexOf(productId) > -1){
+        var firstIndex = this.products.indexOf(productId);
+        if (this.products.length > 1) this.products.splice(firstIndex, 1);
+        else this.products = [];
+    }
     return this.save();
 };
 

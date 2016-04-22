@@ -48,27 +48,27 @@ var userSeed = [
 
 var orderSeed = [
     {
-        sessionId: '111',
+        sessionId: 'wSKeHI5b4qOMG3mAQW1k7b0mbuYZ0PiC',
         status: 'cart',
         products: []
     },
     {
-        sessionId: '222',
+        sessionId: 'k-x3LrGfHHgwvzJspxyPigq-wONk7x3I',
         status: 'cart',
         products: []
     },
     {
-        sessionId: '333',
-        status: 'processing',
+        sessionId: 'k-x3LrGfHHgwvzJspxyPigq-wONk7x3I',
+        status: 'complete',
         products: []
     },
     {
         sessionId: '444',
-        status: 'cart',
+        status: 'complete',
         products: []
     },
     {
-        sessionId: '555',
+        sessionId: 'wSKeHI5b4qOMG3mAQW1k7b0mbuYZ0PiC',
         status: 'complete',
         products: []
     }
