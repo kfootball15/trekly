@@ -30,16 +30,19 @@ var Review = mongoose.model('Reviews');
 
 var userSeed = [
     {
+        username: 'Admin',
         email: 'admin@me.com',
         password: '123',
         isAdmin: true
     },
     {
+        username: 'Me',
         email: 'me@me.com',
         password: '123',
         isAdmin: false
     },
     {
+        username: 'Me1',
         email: 'me1@me.com',
         password: '123',
         isAdmin: false

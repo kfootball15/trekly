@@ -3,7 +3,7 @@ app.factory('ProductFactory', function($http){
         getAllProducts: function(){
             return $http.get('/api/product')
             .then(function(products){
-                return products.data
+                return products.data;
             })
         },
         getOneProduct: function(productId){
@@ -29,6 +29,14 @@ app.factory('ProductFactory', function($http){
             }).then(function(response){
                 return response.data;
             })
+        },
+        // redunndant paths
+        getById: function(id) {
+        	return $http.get('api/product/' + id)
+        	.then(function(product) {
+        		return product.data;
+        	});
+
         }
     }
 })

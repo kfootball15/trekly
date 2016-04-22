@@ -1,35 +1,20 @@
-<!-- <nav class="navbar navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
-        </div>
-        <ul class="nav navbar-nav">
-            <li ng-repeat="product in products" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ product.location }}</a>
-            </li>
-        </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Products!</button>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
-        </div>
-    </div>
-</nav> -->
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" id="filterBar">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
- <md-toolbar class="md-hue-2">
-  <div class="md-toolbar-tools">
-<!--     <md-button class="md-icon-button" aria-label="Settings">
-      <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-    </md-button> -->
-    <md-autocomplete name="locationFilter" md-selected-item="selectedItem" md-search-text="searchText" md-items="product in products | filter: {location: searchText}" md-item-text="product.location">
-        <span md-highlight-text="searchText" placeholder="location">{{product.location}}</span>
-    </md-autocomplete>
-<!--     <span flex></span> -->
-<!--     <md-button class="md-icon-button" aria-label="Favorite">
-      <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" aria-label="More">
-      <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
-    </md-button> -->
-  </div>
-</md-toolbar>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Filter by location" ng-model="searchText">
+        </div>
+      </form>
+
+      <form class="navbar-form navbar-left">
+        <select class="form-control" ng-options="category for category in categories" ng-model="selectedCat"></select>
+        <button ng-click="searchByCat()" class="btn btn-default">Search</button>
+      </form>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- bootstrap affix pluggin not working -->

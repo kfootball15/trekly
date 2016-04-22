@@ -32,7 +32,7 @@ var schema = new mongoose.Schema({
     },
     coordinates: {
         type: [Number]
-    }
+    },
 });
 
 schema.statics.decreaseInventory = function(productIdArray){

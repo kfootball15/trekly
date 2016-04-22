@@ -12,10 +12,7 @@ router.get('/', function(req, res, next) {
     .catch(next);
 });
 
-//Update a Single Order
 router.put('/:id', function(req, res, next){
-    console.log(req.params.id)
-    console.log(req.body)
     Order.findByIdAndUpdate(req.params.id, req.body, {new: true})
     .then(function(order){
         if (!order) res.sendStatus(404)
@@ -23,6 +20,14 @@ router.put('/:id', function(req, res, next){
     })
     .then(null, next)
 })
+
+router.get('/getComplete/:userId', function(req, res, next) {
+    Order.find({user: req.params.userId, status: 'complete'}).populate('products user')
+    .then(function(orders) {
+        res.status(200).send(orders);
+    })
+    .catch(next);
+});
 
 router.put('/addToCart', function(req,res,next){
     Order.findOrCreate(req.session.id)
