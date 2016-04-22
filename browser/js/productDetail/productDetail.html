@@ -17,10 +17,12 @@
             </div>
             </div>
               <div class="caption-full">
-                    <h4 class="pull-right">{{ product.price | myCurrency }}</h4>
-                        <button type="button" class="btn btn-default btn-sm pull-right" ng-click="addToCart(product)">
+                <div layout="column" class="pull-right">
+                    <h4>{{ product.price | myCurrency }}</h4>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="addToCart(product)">
                           <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
                         </button>
+                </div>
                     <h1>{{ product.title }}</h1>
                     <h4>Experience...</h4>
                     <h5>{{product.categories.join(', ')}}</h5>
@@ -39,26 +41,26 @@
                     </p>
                 </div>
 
-                <!-- TABS (DESCRIPTION/ REVIEW/ ETC) -->
+                <!-- TABS (DESCRIPTION/ REVIEW/ MAP) -->
                         <div ng-cloak>
                           <md-content>
                             <md-tabs md-dynamic-height md-border-bottom>
-                              <md-tab label="one">
+                              <md-tab label="DESCRIPTION">
                                 <md-content class="md-padding">
-                                  <h1 class="DESCRIPTION">Description</h1>
+                                  <h1 class="md-display-2">Description</h1>
                                   <p>{{ product.description }}</p>
                                 </md-content>
                               </md-tab>
                               <md-tab label="REVIEWS">
                                 <md-content class="md-padding">
                                   <h1 class="md-display-2">Reviews</h1>
-                                  <review ng-repeat="review in reviews"></review>
+                                    <review review="review" ng-repeat="review in reviews"></review>
                                 </md-content>
                               </md-tab>
-                              <md-tab label="three">
+                              <md-tab label="MAP">
                                 <md-content class="md-padding">
-                                  <h1 class="md-display-2">Tab Three</h1>
-                                  <p>CONTENT</p>
+                                  <h1 class="md-display-2">Map</h1>
+                                  <p>- - map here - - </p>
                                 </md-content>
                               </md-tab>
                             </md-tabs>
