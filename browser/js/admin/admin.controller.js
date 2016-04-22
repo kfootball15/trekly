@@ -4,12 +4,22 @@ app.controller('AdminCtrl', function($scope, $state, $mdSidenav, $mdMedia, Produ
 
   $scope.products = getAllProducts
 
+  $scope.createProduct = function(){
+    $state.go('adminCreateProduct')
+  }
+
   $scope.editForm = function(product){
     $state.go('adminEdit', {id: product._id})
   }
 
-  $scope.openLeftMenu = function() {
-    $mdSidenav('left').toggle();
-  };
+  // $scope.openLeftMenu = function() {
+  //   $mdSidenav('left').toggle();
+  // };
+  // $scope.isOpen = true;
+  // $scope.toolbar = {
+  //       isOpen: true,
+  //       count: 5,
+  //       selectedDirection: 'left'
+  // };
 
 });
