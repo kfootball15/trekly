@@ -1,9 +1,17 @@
 app.factory('UserFactory', function($http) {
+
     var UserFactory = {};
 
     function getData(res) {
         return res.data;
     }
+
+    UserFactory.getAllUsers = function(){
+        return $http.get('/api/members/')
+        .then(function(users){
+            return users.data;
+        })
+    };
 
     UserFactory.signup = function(newUser) {
         return $http.post('api/members/', newUser)
@@ -23,3 +31,4 @@ app.factory('UserFactory', function($http) {
 
     return UserFactory;
 });
+
