@@ -66,4 +66,26 @@ describe('Members Route', function () {
 
 	});
 
+    describe('Getting all users route', function () {
+
+        var clientA = supertest.agent(app);
+
+        it('should get with 200 response and with an array as the body', function (done) {
+            clientA.get('/api/members/').expect(200).end(function (err, response) {
+                if (err) return done(err);
+                expect(response.body).to.be.an('array');
+                done();
+            });
+        });
+
+        it('should get with 200 response and with an array as the body', function (done) {
+            clientA.post('/api/members/').expect(201).end(function (err, response) {
+                if (err) return done(err);
+                expect(response.body).to.be.an('object');
+                done();
+            });
+        });
+
+    });
+
 });
