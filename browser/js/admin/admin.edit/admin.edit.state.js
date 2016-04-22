@@ -5,7 +5,7 @@ app.config(function ($stateProvider) {
         templateUrl: '/js/admin/admin.edit/admin.edit.template.html',
         resolve: {
             productToEdit: function($stateParams, ProductFactory){
-                console.log("ID:", $stateParams.id)
+                // console.log("ID:", $stateParams.id)
                 return ProductFactory.getOneProduct($stateParams.id)
             }
         }

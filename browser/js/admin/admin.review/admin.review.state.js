@@ -1,13 +1,18 @@
-app.config(function ($stateProvider) {
-    $stateProvider.state('adminReview', {
-        url: '/admin/review',
-        controller: 'AdminCtrl',
-        templateUrl: '/js/admin/admin.review/admin.review.template.html',
-        // resolve: {
-        //     productToEdit: function($stateParams, ProductFactory){
-        //         console.log("ID:", $stateParams.id)
-        //         return ProductFactory.getOneProduct($stateParams.id)
-        //     }
-        // }
-    });
-});
+// app.config(function ($stateProvider) {
+//     $stateProvider.state('adminReview', {
+//         url: '/admin/review',
+//         controller: 'AdminReviewCtrl',
+//         templateUrl: '/js/admin/admin.review/admin.review.template.html',
+//         resolve: {
+//             allOrders: function(){
+//                 return $http.get('/api/orders')
+//                 .then(function(order){
+//                     return order.data;
+//                 })
+//                 .catch(function(err){
+//                     console.error(err);
+//                 });
+//             }
+//         }
+//     });
+// });

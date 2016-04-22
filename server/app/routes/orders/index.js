@@ -5,12 +5,24 @@ var Order = mongoose.model('Order');
 module.exports = router;
 
 router.get('/', function(req, res, next) {
-    Order.find({}).exec()
+    Order.find({}).populate('products').exec()
     .then(function(orders) {
         res.status(200).send(orders);
     })
     .catch(next);
 });
+
+//Update a Single Order
+router.put('/:id', function(req, res, next){
+    console.log(req.params.id)
+    console.log(req.body)
+    Order.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    .then(function(order){
+        if (!order) res.sendStatus(404)
+        else res.send(order)
+    })
+    .then(null, next)
+})
 
 router.put('/addToCart', function(req,res,next){
     Order.findOrCreate(req.session.id)
@@ -34,6 +46,15 @@ router.put('/removeFromCart', function(req,res,next){
 
 router.get('/findOneOrder', function(req, res, next) {
     Order.findOne({sessionId: req.session.id}).exec()
+    .then(function(order) {
+        res.status(200).send(order);
+    })
+    .catch(next);
+});
+
+router.get('/findOneOrderById/:orderId', function(req, res, next) {
+    console.log("BACK-END:", req.params.orderId)
+    Order.findOne({_id: req.params.orderId}).populate('products').exec()
     .then(function(order) {
         res.status(200).send(order);
     })
