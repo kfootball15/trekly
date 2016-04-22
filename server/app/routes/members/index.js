@@ -15,18 +15,11 @@ var ensureAuthenticated = function (req, res, next) {
     }
 };
 
-router.get('/:userId', function(req, res, next) {
-    User.findOne({_id: userId})
-    .then(function(user) {
-        res.send(user.data);
-    })
-    .then(null, next);
-});
 
 router.post('/', function(req, res, next) {
     User.create(req.body)
     .then(function(newUser) {
-        res.send(newUser);
+        res.status(201).send(newUser);
     })
     .catch(next);
 });
@@ -57,4 +50,12 @@ router.get('/secret-stash', ensureAuthenticated, function (req, res) {
 
     res.send(_.shuffle(theStash));
 
+});
+
+router.get('/:userId', function(req, res, next) {
+    User.findOne({_id: userId})
+    .then(function(user) {
+        res.send(user.data);
+    })
+    .then(null, next);
 });
