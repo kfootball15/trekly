@@ -20,6 +20,15 @@ app.factory('ProductFactory', function($http){
             }).then(function(response){
                 return response.data;
             })
+        },
+        createProduct: function(create){
+            return $http({
+                method: 'POST',
+                url: '/api/product',
+                data: create
+            }).then(function(response){
+                return response.data;
+            })
         }
     }
 })
