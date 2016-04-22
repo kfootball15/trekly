@@ -106,6 +106,7 @@ app.factory('OrderFactory', function($http){
         })
         .catch(function(err){
             console.log('Error: ', err);
+        })
     }
 
 
@@ -203,6 +204,7 @@ app.factory('OrderFactory', function($http){
         return consolidatedArray;
     }
 
+    //NEED TO DEBUG THIS
     OrderFactory.changeStatus = function(newStatus){
     	console.log('in factory change status with new status: ', newStatus);
     	return $http.put('/api/orders/' + newStatus)

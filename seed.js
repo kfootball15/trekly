@@ -51,7 +51,7 @@ var userSeed = [
 
 var orderSeed = [
     {
-        sessionId: 'wSKeHI5b4qOMG3mAQW1k7b0mbuYZ0PiC',
+        sessionId: 'hwEPs-WyHDKCF0Bh8KzHjocGQ1lvY0r6',
         status: 'cart',
         products: []
     },
@@ -61,12 +61,12 @@ var orderSeed = [
         products: []
     },
     {
-        sessionId: 'k-x3LrGfHHgwvzJspxyPigq-wONk7x3I',
+        sessionId: 'hwEPs-WyHDKCF0Bh8KzHjocGQ1lvY0r6',
         status: 'complete',
         products: []
     },
     {
-        sessionId: '444',
+        sessionId: 'k-x3LrGfHHgwvzJspxyPigq-wONk7x3I',
         status: 'complete',
         products: []
     },

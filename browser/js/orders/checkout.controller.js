@@ -18,9 +18,9 @@ app.controller('CheckoutCtrl', function($scope, $state, OrderFactory, $timeout, 
   $scope.confirm = function(){
     var cart = $scope.cart;
   	console.log('in controller checkout')
-    OrderFactory.changeStatus('complete')
+    return OrderFactory.changeStatus('complete')
     .then(function(order){
-      console.log('updatedorder', order._id);
+      //NEED TO DEBUG THIS
         $state.go('complete', {id: order._id});
     })    
   }
