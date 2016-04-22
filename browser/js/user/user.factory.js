@@ -25,6 +25,7 @@ app.factory('UserFactory', function($http) {
         return $http.get('api/members/' + userId)
         .then(getData)
         .then(function(user) {
+            console.log("USER", user)
             return user;
         });
     };

@@ -7,22 +7,22 @@
 <div layout="column" ng-cloak class="md-inline-form">
   <md-content layout-gt-sm="row" layout-padding>
     <div >
-    <h2>{{productToEdit.title}}</h2>
+    <h2>{{user.title}}</h2>
       <md-input-container>
         <label>Title</label>
-        <input ng-init="update.title = productToEdit.title" ng-model="update.title" placeholder="{{productToEdit.title}}">
+        <input ng-init="update.title = userToEdit.title" ng-model="update.title" placeholder="{{userToEdit.title}}">
       </md-input-container>
        <md-input-container>
         <label>Location</label>
-        <input ng-init="update.location = productToEdit.location" ng-model="update.location" placeholder="{{productToEdit.location}}">
+        <input ng-init="update.location = userToEdit.location" ng-model="update.location" placeholder="{{userToEdit.location}}">
       </md-input-container>
       <md-input-container>
         <label>Price</label>
-        <input ng-init="update.price = productToEdit.price" ng-model="update.price" type="number" placeholder="{{productToEdit.price}}">
+        <input ng-init="update.price = userToEdit.price" ng-model="update.price" type="number" placeholder="{{userToEdit.price}}">
       </md-input-container>
       <md-input-container>
         <label>Inventory</label>
-        <input ng-init="update.inventory = productToEdit.inventory" ng-model="update.inventory" type="number" placeholder="{{productToEdit.inventory}}">
+        <input ng-init="update.inventory = userToEdit.inventory" ng-model="update.inventory" type="number" placeholder="{{userToEdit.inventory}}">
       </md-input-container>
       <div layout-gt-xs="row">
         <md-datepicker ng-model="update.date" md-placeholder="date">
