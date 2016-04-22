@@ -7,8 +7,24 @@ module.exports = router;
 
 
 router.get('/', function(req, res, next) {
-    Order.find({})
-    .populate('products')
+    Order.find({}).populate('products').exec()
+    .then(function(orders) {
+        res.status(200).send(orders);
+    })
+    .catch(next);
+});
+
+router.put('/:id', function(req, res, next){
+    Order.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    .then(function(order){
+        if (!order) res.sendStatus(404)
+        else res.send(order)
+    })
+    .then(null, next)
+})
+
+router.get('/getComplete/:userId', function(req, res, next) {
+    Order.find({user: req.params.userId, status: 'complete'}).populate('products user')
     .then(function(orders) {
         res.status(200).send(orders);
     })
@@ -98,6 +114,15 @@ router.put('/removeFromCart/:productId', function(req,res,next){
     })
     .catch(next);
 })
+
+router.get('/findOneOrderById/:orderId', function(req, res, next) {
+    console.log("BACK-END:", req.params.orderId)
+    Order.findOne({_id: req.params.orderId}).populate('products').exec()
+    .then(function(order) {
+        res.status(200).send(order);
+    })
+    .catch(next);
+});
 
 router.put('/:newStatus', function(req, res, next){
     console.log('in route new status')

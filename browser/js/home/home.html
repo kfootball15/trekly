@@ -1,3 +1,4 @@
 <section id="home">
-<product-card></product-card>
+	<navbar-filter></navbar-filter>
+	<product-card ng-repeat="product in products | filter: {location: searchText}"></product-card>
 </section>

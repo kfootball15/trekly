@@ -19,6 +19,10 @@ var schema = new mongoose.Schema({
     product: {
       type: Schema.Types.ObjectId, 
       ref: 'Product'
+    },
+    date: {
+      type: Date,
+      default: Date.now
     }
 });
 

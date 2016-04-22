@@ -8,7 +8,7 @@ module.exports = router;
 router.get('/:reviewId', function(req, res, next){
 
     Reviews.findById(req.params.reviewId)
-    .populate('product')
+    .populate('product') 
     .populate('user')
     .then(function(review){
         res.json(review)
@@ -28,6 +28,30 @@ router.get('/product/:productId', function(req, res, next){
         res.json(reviews);
     })
     .then(null, next)
+
+});
+
+router.get('/user/:userId', function(req, res, next){
+
+    Reviews.find({user: req.params.userId})
+    .populate('product')
+    .then(function(reviews){
+        if (!reviews) res.sendStatus(404);
+        res.json(reviews);
+    })
+    .then(null, next);
+
+});
+
+router.get('/', function(req, res, next){
+
+    Reviews.find(req.body)
+    .populate('product user')
+    .then(function(reviews){
+        if (!reviews) res.sendStatus(404);
+        res.json(reviews);
+    })
+    .then(null, next);
 
 });
 

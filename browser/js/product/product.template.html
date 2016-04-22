@@ -1,16 +1,17 @@
-<div class='md-padding' layout="row" layout-wrap>
-  <md-card style="width: 300px;" ng-repeat="product in products | filter: {location: searchText}">
+<div class='md-padding'>
+  <md-card style="width: 300px;">
     <img ng-src="{{imagePath}}" class="md-card-image" alt="user avatar">
     <md-card-content>
       <h2>{{product.title}}</h2>
-      <h4> {{product.location}} </h4>
-      <p>{{product.description}}</p>
-      <p>{{product.price | currency}}</p>
+      <h4>{{product.location}}</h4>
+      <p>{{product.description | cut:true:150:'...'}}</p>
+      <p>{{product.price | myCurrency}}</p>
+      <p><strong>Experience...</strong></p>
       <p>{{product.categories.join(', ')}}</p>
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
-      <md-button>Save</md-button>
-      <md-button>Learn More</md-button>
+      <md-button ui-sref="productDetail({productId: product._id})">Details</md-button>
+      <md-button ng-click="addToCart(product)">Add to Cart</md-button>
     </div>
   </md-card>
 </div>

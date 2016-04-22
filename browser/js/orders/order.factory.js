@@ -8,13 +8,6 @@ app.factory('OrderFactory', function($http){
     //     })
     // }
 
-    // OrderFactory.getCart = function(){
-    //     return $http.get('/api/orders/getCart')
-    //     .then(function(cart){
-    //         return cart.data;
-    //     })
-    // }
-
     var cachedCart = {};
 
     // var getTotalPrice = function(cachedCart){
@@ -113,8 +106,17 @@ app.factory('OrderFactory', function($http){
         })
         .catch(function(err){
             console.log('Error: ', err);
-        })
     }
+
+
+
+    OrderFactory.getCompleteOrdersByUser = function(userId){
+        return $http.get('/api/orders/getComplete/' + userId)
+        .then(function(completeOrders){
+            return completeOrders.data;
+        });
+    };
+
 
      OrderFactory.getAllComplete = function(){
     	return $http.get('/api/orders/getAllComplete/')
