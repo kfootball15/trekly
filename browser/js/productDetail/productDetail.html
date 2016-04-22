@@ -57,9 +57,14 @@
                                     <review review="review" ng-repeat="review in reviews"></review>
                                 </md-content>
                               </md-tab>
-                              <md-tab label="MAP">
+                              <md-tab label="MAP" ng-click="runMap()">
                                 <md-content class="md-padding">
                                   <h1 class="md-display-2">Map</h1>
+
+                                    <div class="map-container">
+                                      <div id="map-canvas" style="height:500px;"></div>
+                                    </div>
+
                                   <p>- - map here - - </p>
                                 </md-content>
                               </md-tab>
