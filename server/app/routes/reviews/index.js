@@ -8,7 +8,7 @@ module.exports = router;
 router.get('/:reviewId', function(req, res, next){
 
     Reviews.findById(req.params.reviewId)
-    .populate('product') 
+    .populate('product')
     .populate('user')
     .then(function(review){
         res.json(review)

@@ -1,19 +1,29 @@
-app.controller('AdminOrderCtrl', function($scope, $state, allOrders) {
+app.controller('AdminOrderCtrl', function($scope, $state, AdminOrderFactory, allOrders) {
 
-  $scope.allOrders = allOrders;
+  //For Filtering
+  $scope.statuses = ['all', 'cart', 'confirmed', 'processing', 'cancelled', 'complete']
 
-  $scope.statuses = ['cart', 'confirmed', 'processing', 'cancelled', 'complete']
+  //Update Object to send to Put Requests
+  $scope.update = {};
+  $scope.update.status = 'all';
+  $scope.update.allOrders = allOrders;
 
-  $scope.update = {}
-  $scope.update.status = 'cart';
 
-  $scope.consoleLog = function(){
-    console.log($scope.update)
-  }
+  $scope.deleteOrder = function(orderId){
+    AdminOrderFactory.deleteOneOrder(orderId)
+    .then(function(order){
+      //CHECK FOR STATUS LIKE LAURA DID
+      for (var i = 0; i < $scope.update.allOrders.length; i++) {
+        if ($scope.update.allOrders[i]._id === order._id) $scope.update.allOrders.splice(i, 1);
+      }
+    })
+    .then(null, function(err){
+      console.error(err);
+    });
+  };
 
   $scope.editOrderForm = function(order){
-    console.log("controller:", order._id)
-    $state.go('adminEditOrder', {orderId: order._id})
+    $state.go('adminEditOrder', {orderId: order._id});
   };
 
 });

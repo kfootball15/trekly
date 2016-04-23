@@ -1,0 +1,26 @@
+<md-list>
+  <md-list-item class="md-2-line">
+    <div style="width: 20px"></div>
+    <div class="md-list-item-text" style="width:200px">
+         <h2>User</h2>
+    </div>
+     <div class="md-list-item-text" style="width:200px">
+         <h2>Products</h2>
+    </div>
+    <div class="md-list-item-text" ng-show="order.findalPrice.length" style="width:200px">
+         <h2 style="text-align: center">Final Price</h2>
+    </div>
+    <div class="md-list-item-text" style="width:100px">
+      <div layout="row">
+        <md-input-container>
+          <md-select ng-model="update.status">
+            <md-option value="{{status}}" ng-repeat="status in statuses">
+              {{status}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+    </div>
+    <md-button class="btn1" ng-click="consoleLog();" style="text-align: center"> Edit </md-button>
+  </md-list-item>
+</md-list>
