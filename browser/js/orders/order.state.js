@@ -3,7 +3,7 @@ app.config(function ($stateProvider) {
         url: '/cart',
         templateUrl: 'js/orders/cart.template.html',
         resolve: {
-        	cart: function(OrderFactory){
+        	backEndCart: function(OrderFactory){
         		return OrderFactory.getCart();
         	}
         },

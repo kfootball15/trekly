@@ -23,47 +23,41 @@ app.factory('OrderFactory', function($http){
     }
 
 
-    var consolidateCart = function(products){
-        if (!products) return;
-        var newObj = {};
-        for (var i = 0; i<products.length; i++){
-            newObj[products[i].title] = newObj[products[i].title] || {};
-            newObj[products[i].title].product = products[i];
-            newObj[products[i].title].quantity = ++newObj[products[i].title].quantity || 1;
-            newObj[products[i].title].finalPrice = newObj[products[i].title].finalPrice + products[i].price || products[i].price;
-            // newObj[products[i].title].finalPrice = newObj[products[i].title].finalPrice + finalPrice[i] || finalPrice[i];
-        }
-        var array = [];
-        for (var key in newObj){
-            var finalObj = {};
-            finalObj['title'] = key;
-            finalObj['quantity'] = newObj[key].quantity;
-            finalObj['finalPrice'] = newObj[key].finalPrice;
-            finalObj['products'] = newObj[key].product;
-            finalObj['id'] = newObj[key].product._id;
-            array.push(finalObj);
-        }
-        console.log('consolidated array', array);
-        return array;
-    }
+    // var consolidateCart = function(products){
+    //     if (!products) return;
+    //     var newObj = {};
+    //     for (var i = 0; i<products.length; i++){
+    //         newObj[products[i].title] = newObj[products[i].title] || {};
+    //         newObj[products[i].title].product = products[i];
+    //         newObj[products[i].title].quantity = ++newObj[products[i].title].quantity || 1;
+    //         newObj[products[i].title].finalPrice = newObj[products[i].title].finalPrice + products[i].price || products[i].price;
+    //         // newObj[products[i].title].finalPrice = newObj[products[i].title].finalPrice + finalPrice[i] || finalPrice[i];
+    //     }
+    //     var array = [];
+    //     for (var key in newObj){
+    //         var finalObj = {};
+    //         finalObj['title'] = key;
+    //         finalObj['quantity'] = newObj[key].quantity;
+    //         finalObj['finalPrice'] = newObj[key].finalPrice;
+    //         finalObj['products'] = newObj[key].product;
+    //         finalObj['id'] = newObj[key].product._id;
+    //         array.push(finalObj);
+    //     }
+    //     console.log('consolidated array', array);
+    //     return array;
+    // }
 
     OrderFactory.getCart = function(){
         return $http.get('/api/orders/getCart')
         .then(function(cart){
-            return cart.data;
-        })
-        .then(function(cart){
             if (!cart) throw new Error();
-            var products = cart.products;
-            cart.consolidateCart = consolidateCart(products);
-            console.log('cart with consolidateCart', consolidateCart);
-            angular.copy(cart, cachedCart);
+            // var products = cart.products;
+            // cart.consolidateCart = consolidateCart(products);
+            // console.log('cart with consolidateCart', consolidateCart);
+            angular.copy(cart.data, cachedCart);
             return cachedCart;
-        })
-        .catch(function(err){
-            console.log("Error:", err);
-        })
-    }
+        });
+    };
 
 
     var consolidateOrder = function(products, finalPrice){
@@ -87,7 +81,7 @@ app.factory('OrderFactory', function($http){
         }
         console.log('consolidated array', array);
         return array;
-    } 
+    }
 
     //TEST THIS!!!!
     OrderFactory.getRecentComplete = function(orderId){
@@ -141,48 +135,59 @@ app.factory('OrderFactory', function($http){
         })
     }
 
-    //WILL ADD TO CART OR CREATE CART IF DOESN'T ALREADY EXIST
-    OrderFactory.addToCart = function(productId){
-    	console.log('hit order factory add to cart. productId: ', productId)
-    	return $http.put('/api/orders/addToCart/' + productId)
-    	.then(function(cart){
-            cachedCart.consolidateCart = addToCache(cachedCart.consolidateCart, productId);
-    		console.log('result cachedCart', cachedCart)
-    		return cachedCart;
-    	})
+    function updateCache(productId, number){
+        var arr = cachedCart.products.map(productChild => productChild.product._id);
+        var index = arr.indexOf(productId);
+        cachedCart.products[index].quantity+=number;
+        cachedCart.products[index].totalPrice = cachedCart.products[index].quantity * cachedCart.products[index].product.price;
     }
 
-    function addToCache(consolidatedArray, productId){
-        console.log('consolidatedArray', consolidatedArray);
-        var index;
-        for (var i=0; i< consolidatedArray.length; i++){
-            if (consolidatedArray[i].id === productId) index = i;
-        }
-        consolidatedArray[index].quantity++;
-        consolidatedArray[index].finalPrice += consolidatedArray[index].products.price;
-        return consolidatedArray;
-    }
+    //WILL ADD TO CART OR CREATE CART IF DOESN'T ALREADY EXIST
+    OrderFactory.addToCart = function(productId){
+    	return $http.put('/api/orders/addToCart/' + productId)
+    	.then(function(cart){
+            updateCache(productId, 1);
+    		return cachedCart;
+    	});
+    };
+
 
     OrderFactory.removeOneFromCart = function(productId){
     	console.log('in remove one from cart factory')
     	return $http.put('/api/orders/removeOneFromCart/' + productId)
     	.then(function(cart){
-            cachedCart.consolidateCart = removeOneFromCache(cachedCart.consolidateCart, productId);
+            console.log('cart', cart)
+            updateCache(productId, -1);
+            // cachedCart.consolidateCart = removeOneFromCache(cachedCart.consolidateCart, productId);
     		console.log('cart after subtract in order factory', cachedCart)
+            // console.log('cache', cachedCart)
     		return cachedCart;
     	})
     }
 
-    function removeOneFromCache(consolidatedArray, productId){
-        var index;
-        for (var i=0; i< consolidatedArray.length; i++){
-            if (consolidatedArray[i].id === productId) index = i;
-        }
-        consolidatedArray[index].quantity--;
-        consolidatedArray[index].finalPrice = consolidatedArray[index].finalPrice - consolidatedArray[index].products.price;
-        console.log('in remove cache function')
-        return consolidatedArray;
-    }
+
+    // function addToCache(consolidatedArray, productId){
+    //     console.log('consolidatedArray', consolidatedArray);
+    //     var index;
+    //     for (var i=0; i< consolidatedArray.length; i++){
+    //         if (consolidatedArray[i].id === productId) index = i;
+    //     }
+    //     consolidatedArray[index].quantity++;
+    //     consolidatedArray[index].finalPrice += consolidatedArray[index].products.price;
+    //     return consolidatedArray;
+    // }
+
+
+    // function removeOneFromCache(consolidatedArray, productId){
+    //     var index;
+    //     for (var i=0; i< consolidatedArray.length; i++){
+    //         if (consolidatedArray[i].id === productId) index = i;
+    //     }
+    //     consolidatedArray[index].quantity--;
+    //     consolidatedArray[index].finalPrice = consolidatedArray[index].finalPrice - consolidatedArray[index].products.price;
+    //     console.log('in remove cache function')
+    //     return consolidatedArray;
+    // }
 
     OrderFactory.removeFromCart = function(productId){
     	console.log('in remove all product from cart factory')

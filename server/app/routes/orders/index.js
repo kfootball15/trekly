@@ -17,14 +17,15 @@ router.get('/', function(req, res, next) {
 router.put('/:id', function(req, res, next){
     Order.findByIdAndUpdate(req.params.id, req.body, {new: true})
     .then(function(order){
-        if (!order) res.sendStatus(404)
-        else res.send(order)
+        if (!order) res.sendStatus(404);
+        else res.send(order);
     })
     .then(null, next)
-})
+    .catch(next);
+});
 
 router.get('/getComplete/:userId', function(req, res, next) {
-    Order.find({user: req.params.userId, status: 'complete'}).populate('products user')
+    Order.find({user: req.params.userId, status: 'complete'}).populate('products.product user')
     .then(function(orders) {
         res.status(200).send(orders);
     })
@@ -43,7 +44,7 @@ router.get('/getComplete/:userId', function(req, res, next) {
 
 router.get('/getCart', function(req, res, next) {
     Order.findOne({sessionId: req.session.id, status: 'cart'})
-    .populate('products')
+    .populate('products.product')
     .then(function(order) {
         res.status(200).send(order);
     })
@@ -82,41 +83,39 @@ router.put('/addToCart/:productId', function(req,res,next){
     console.log('in add to cart route, request params, productId: ', req.params.productId)
     Order.findOrCreate(req.session.id)
     .then(function(order){
-        return order.addProduct(req.params.productId, req.body.quantity)
+        return order.addProduct(req.params.productId, req.body.quantity);
     })
     .then(function(updatedCart){
         res.send(updatedCart);
     })
     .catch(next);
-})
+});
 
 router.put('/removeOneFromCart/:productId', function(req,res,next){
     Order.findOne({sessionId: req.session.id})
     .then(function(order){
-        return order.deleteOneProduct(req.params.productId)
+        return order.deleteOneProduct(req.params.productId);
     })
     .then(function(updatedCart){
-        console.log('subtracted one from cart in route', updatedCart)
         res.send(updatedCart);
     })
     .catch(next);
-})
+});
 
 router.put('/removeFromCart/:productId', function(req,res,next){
-    console.log('in route to remove product from cart')
+    console.log('in route to remove product from cart');
     Order.findOne({sessionId: req.session.id})
     .then(function(order){
-        return order.deleteProduct(req.params.productId)
+        return order.deleteProduct(req.params.productId);
     })
     .then(function(updatedCart){
-        console.log('removed product from cart in route', updatedCart)
+        console.log('removed product from cart in route', updatedCart);
         res.send(updatedCart);
     })
     .catch(next);
-})
+});
 
 router.get('/findOneOrderById/:orderId', function(req, res, next) {
-    console.log("BACK-END:", req.params.orderId)
     Order.findOne({_id: req.params.orderId}).populate('products').exec()
     .then(function(order) {
         res.status(200).send(order);
@@ -124,7 +123,7 @@ router.get('/findOneOrderById/:orderId', function(req, res, next) {
     .catch(next);
 });
 
-router.put('/:newStatus', function(req, res, next){
+router.put('/changeStatus/:newStatus', function(req, res, next){
     console.log('in route new status')
     var newStatus = req.params.newStatus;
     return Order.findOne({sessionId: req.session.id}).exec()
