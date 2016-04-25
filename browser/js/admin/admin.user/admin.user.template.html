@@ -1,4 +1,4 @@
-<admin-toolbar></admin-toolbar>
+
   <div layout="row">
     <admin-nav></admin-nav>
     <md-list>
@@ -9,17 +9,19 @@
         </div>
         <div class="md-list-item-text">
             <h3>{{user.email}}</h3>
-            <p>{{user.location}}</p>
+            <p>{{user.role}}</p>
         </div>
         <div class="md-list-item-text">
             <p></p>
         </div>
          <div class="md-list-item-text">
-            <p>{{user.description}}</p>
+            <p></p>
         </div>
         <div class="md-list-item-text">
             <p></p>
         </div>
+        <md-button class="btn1" ng-click="passwordReset(user);"> Reset PW </md-button>
+        <md-button class="btn1" ng-click="deleteUser(user);"> Delete </md-button>
         <md-button class="btn1" ng-click="editUser(user);"> Edit </md-button>
         <md-divider ng-if="!$last"></md-divider>
       </md-list-item>

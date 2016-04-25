@@ -18,8 +18,7 @@ router.get('/:productId', function(req, res, next){
 
     Product.findById(req.params.productId)
     .then(function(product){
-        if (!product) res.sendStatus(404);
-        else res.json(product);
+        res.json(product);
     })
     .then(null, next);
 
@@ -39,8 +38,7 @@ router.put('/:productId', function(req, res, next){
 
     Product.findByIdAndUpdate(req.params.productId, req.body, {new: true})
     .then(function(response){
-        if (!response) res.sendStatus(404)
-        else res.send(response)
+        res.send(response)
     })
     .then(null, next)
 
@@ -74,9 +72,8 @@ router.put('/categories/:productId', function(req, res, next){
 router.delete('/:productId', function(req, res, next) {
 
     Product.remove({_id: req.params.productId})
-    .then(function(response) {
-        if (response.result.n === 0) res.sendStatus(404);
-        else res.sendStatus(204);
+    .then(function() {
+        res.sendStatus(204);
     })
     .then(null, next);
 

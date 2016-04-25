@@ -1,48 +1,27 @@
-<admin-toolbar></admin-toolbar>
+
 
 <div layout="row">
 <admin-nav></admin-nav>
 
-
 <div layout="column" ng-cloak class="md-inline-form">
-  <md-content layout-gt-sm="row" layout-padding>
-    <div >
-    <h2>{{user.title}}</h2>
-      <md-input-container>
-        <label>Title</label>
-        <input ng-init="update.title = userToEdit.title" ng-model="update.title" placeholder="{{userToEdit.title}}">
-      </md-input-container>
-       <md-input-container>
-        <label>Location</label>
-        <input ng-init="update.location = userToEdit.location" ng-model="update.location" placeholder="{{userToEdit.location}}">
-      </md-input-container>
-      <md-input-container>
-        <label>Price</label>
-        <input ng-init="update.price = userToEdit.price" ng-model="update.price" type="number" placeholder="{{userToEdit.price}}">
-      </md-input-container>
-      <md-input-container>
-        <label>Inventory</label>
-        <input ng-init="update.inventory = userToEdit.inventory" ng-model="update.inventory" type="number" placeholder="{{userToEdit.inventory}}">
-      </md-input-container>
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="update.date" md-placeholder="date">
-        </md-datepicker>
-      </div>
-    </div>
-  </md-content>
   <md-content layout-padding>
     <div>
         <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Activities</label>
-            <md-chips ng-init="update.categories = productToEdit.categories" ng-model="update.categories" readonly="false" md-enable-chip-edit="true" secondary-placeholder="+Tag"></md-chips>
-          <br/>
-        </div>
         <md-input-container class="md-block">
-          <label>Description</label>
-          <textarea ng-init="update.description = productToEdit.description" ng-model="update.description" md-maxlength="150" rows="5" md-select-on-focus placeholder="{{productToEdit.description}}"></textarea>
+          <label>User Email</label>
+          <input ng-model="userToEdit.email" ng-init="update.email = userToEdit.email">
         </md-input-container>
-      <md-button class="md-accent md-raised md-hue-3 md-button md-ink-ripple" ng-click="updateProduct(productToEdit._id, update)">Submit</md-button>
+        </div>
+
+        <md-input-container class="md-block">
+            <label>Edit User Role</label>
+            <md-select ng-init="update.role = userToEdit.role" ng-model="update.role">
+              <md-option ng-repeat="role in roles" value="{{role}}">
+                {{role}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+      <md-button class="md-accent md-raised md-hue-3 md-button md-ink-ripple" ng-click="updateUser(userToEdit._id, update)">Submit</md-button>
     </div>
   </md-content>
 </div>

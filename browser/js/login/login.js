@@ -20,6 +20,7 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
         AuthService.login(loginInfo)
         .then(function (user) {
             if(user.isAdmin) $state.go('admin')
+            else if (user.passwordReset) $state.go('passwordReset', {id: user._id})
             else $state.go('home');
         })
         .catch(function () {

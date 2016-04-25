@@ -19,6 +19,26 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    role: {
+        type: String,
+        enum: ['Admin', 'Customer', 'Seller']
+    },
+    passwordReset: {
+        type: Boolean,
+        default: false
+    },
+    firstName: {
+        type: String
+    },
+    lastName: {
+        type: String
+    },
+    bio: {
+        type: String
+    },
+    avatar: {
+        type: String
+    },
     salt: {
         type: String
     },
@@ -58,6 +78,7 @@ var encryptPassword = function (plainText, salt) {
     return hash.digest('hex');
 };
 
+
 schema.pre('save', function (next) {
 
     if (this.isModified('password')) {
@@ -75,5 +96,6 @@ schema.statics.encryptPassword = encryptPassword;
 schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
+
 
 mongoose.model('User', schema);

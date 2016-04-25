@@ -2,13 +2,15 @@ app.controller('AdminEditUserCtrl', function($scope, $state, UserFactory, userTo
 
   $scope.userToEdit = userToEdit;
 
-  // $scope.update = {};
+  $scope.update = {};
 
-  // $scope.updateUser = function(userId, update){
-  //   UserFactory.updateProduct(userId, update)
-  //   .then(function(){
-  //     $state.go('home')
-  //   })
-  // }
+  $scope.roles = ['Admin', 'Seller', 'Customer']
+
+  $scope.updateUser = function(userId, update){
+    UserFactory.updateUser(userId, update)
+    .then(function(){
+      $state.go('adminUser')
+    })
+  }
 
 });

@@ -25,10 +25,29 @@ app.factory('UserFactory', function($http) {
         return $http.get('api/members/' + userId)
         .then(getData)
         .then(function(user) {
-            console.log("USER", user)
             return user;
         });
     };
+
+    UserFactory.deleteUser = function(userId) {
+        return $http.delete('api/members/' + userId)
+        .then(getData)
+        .then(function(user) {
+            return user;
+        });
+    };
+
+    UserFactory.updateUser = function(userId, update){
+        return $http({
+            method: 'PUT',
+            url: '/api/members/' + userId,
+            data: update
+        }).then(function(response){
+            return response;
+        })
+    };
+
+
 
     return UserFactory;
 });
