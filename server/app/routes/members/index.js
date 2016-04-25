@@ -19,7 +19,7 @@ var ensureAuthenticated = function (req, res, next) {
 router.post('/', function(req, res, next) {
     User.create(req.body)
     .then(function(newUser) {
-        res.send(newUser);
+        res.status(201).send(newUser);
     })
     .catch(next);
 });
@@ -53,6 +53,7 @@ router.get('/secret-stash', ensureAuthenticated, function (req, res) {
 });
 
 router.get('/:userId', function(req, res, next) {
+
     User.findOne({_id: req.params.userId})
     .then(function(user) {
         res.send(user);
@@ -89,3 +90,4 @@ router.put('/:userId', function(req, res, next){
         .then(null, next)
     }
 });
+

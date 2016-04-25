@@ -19,6 +19,24 @@ body {
   margin: 0 auto;
 }
 
+#slider-range {
+  width: 50%;
+  float: right;
+}
+
+md-slider {
+  width: 10%;
+  float:right;
+}
+
+.sliderTitle {
+  float:right;
+  color:white;
+}
+
+
+
+
 
 @import 'directives/main';
 @import 'home/main';

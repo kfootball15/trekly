@@ -38,3 +38,6 @@ app.filter('myCurrency', ['$filter', function ($filter) {
     return '$' + input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 }]);
+
+
+

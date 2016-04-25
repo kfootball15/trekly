@@ -7,6 +7,7 @@ module.exports = router;
 
 // this router also allows us to find by query
 router.get('/', function(req, res, next){
+    console.log('session ID', req.session.id);
     Product.find(req.query)
     .then(function(products){
         res.json(products);

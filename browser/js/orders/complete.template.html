@@ -1,0 +1,39 @@
+<!-- complete.template.html -->
+
+CONFIRMATION PAGE
+
+
+<div class='md-padding' layout="row" layout-wrap>
+	<br>
+	<table>
+		<thead>
+		<tr>
+				<th>Package</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Status</th>
+		</tr>
+		</thead>
+		<tr ng-repeat="product in cart.products">
+			<!-- <td>
+				<img ng-src="{{imagePath}}" style="width: 10%">
+			</td> -->
+			<td>{{product.product.title}}</td>
+			<td>{{product.quantity}}</td>
+			<td>{{product.finalPrice | currency}}</td>
+			<td>Confirmed</td>
+
+		</tr>
+		<tr>
+				<th></th>
+				<th>Total</th>
+				<th>{{totalPrice}}</th>
+		</tr>
+
+	</table>
+	<button ng-click="goToAccount()">Go to Account
+	</button>
+	<button ng-click="continueShopping()">Continue Shopping
+	</button>
+
+</div>

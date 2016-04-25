@@ -1,4 +1,10 @@
 <section id="home">
-	<product-card ng-repeat="product in products | filter: {location: searchText}"></product-card>
+
+	<navbar-filter></navbar-filter>
+
+	<div class='md-padding' layout="row" layout-wrap>
+		<product-card ng-repeat="product in products | filter: {location: locationFilter, categories: categoryFilter} | filter: lessThan | filter: greaterThan"></product-card>
+	</div>
+
 </section>
 

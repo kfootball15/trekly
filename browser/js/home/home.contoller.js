@@ -3,6 +3,18 @@ app.controller('HomeCtrl', function($scope, ProductFactory, allProducts, $state)
 
   $scope.products = allProducts;
 
+  $scope.maxPrice = 10000;
+  $scope.lessThan = function (product) {
+  	return product.price <= $scope.maxPrice;
+  };
+
+  $scope.minPrice = 1;
+  $scope.greaterThan = function (product) {
+  	return product.price >= $scope.minPrice;
+  };
+
+
+  
   // PUTS ALL CATEGORIES FROM ALL PRODUCTS INTO CATS ARRAY
   var cats = [];
   (function getCategories() {
@@ -22,10 +34,6 @@ app.controller('HomeCtrl', function($scope, ProductFactory, allProducts, $state)
   		}
   	});
   })();
-console.log('home')
 
-  $scope.searchByCat = function() {
-    //do something with selected category
-  };
 
 });

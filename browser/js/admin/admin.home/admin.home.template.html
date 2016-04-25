@@ -15,7 +15,7 @@
             <h4>{{product.price | currency}}</h4>
         </div>
          <div class="md-list-item-text">
-            <p>{{product.description}}</p>
+            <p>{{product.description | cut:true:50:'...'}}</p>
         </div>
         <div class="md-list-item-text">
             <p>{{product.categories.join(", ")}}</p>

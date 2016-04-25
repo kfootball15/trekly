@@ -10,7 +10,7 @@ app.factory('UserFactory', function($http) {
         return $http.get('/api/members/')
         .then(function(users){
             return users.data;
-        })
+        });
     };
 
     UserFactory.signup = function(newUser) {
