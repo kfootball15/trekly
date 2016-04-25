@@ -13,6 +13,9 @@ app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, R
 		(function numReviews() {
 			if (reviews.length === 1) $scope.numReviews = 'review'
 			else $scope.numReviews = 'reviews';
+
+			if (reviews.length === 0) $scope.reviewsPresent = false
+			else $scope.reviewsPresent = true;
 		})();
 	}); 
 
@@ -23,12 +26,11 @@ app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, R
 
 
 	$scope.addToCart = function(product) {
-		alert('clicked');
-		// I DO NOT HAVE THE ROUTE FOR THIS IN THE BACKEND, ON DIFF BRANCH
-		OrderFactory.addToCart(product._id)
-		.then(function(cart) {
-			console.log('cart from Ctrl:', cart);
-		});
+		alert('MAKE THIS FUNCTIONAL !');
+		// OrderFactory.addToCart(product._id)
+		// .then(function(cart) {
+		// 	console.log('cart from Ctrl:', cart);
+		// });
 	};
 
 
@@ -36,11 +38,11 @@ app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, R
 	    // initialize new google maps LatLng object
 
 	    // USE PRODUCT.COORDINATES IN THE FOLLOWING LINE FOR LAT/LONG
-	    var myLatlng = new google.maps.LatLng(40.705189,-74.009209);
+	    var myLatlng = new google.maps.LatLng(singleProduct.coordinates[0],singleProduct.coordinates[1]);
 	    // set the map options hash
 	    var mapOptions = {
 	        center: myLatlng,
-	        zoom: 16,
+	        zoom: 5,
 	        mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
 	    // get the maps div's HTML obj

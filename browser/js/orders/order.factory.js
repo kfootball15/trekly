@@ -53,7 +53,7 @@ app.factory('OrderFactory', function($http){
             return cart.data;
         })
         .then(function(cart){
-            if (!cart) throw new Error();
+            if (!cart) throw new Error('No cart present');
             var products = cart.products;
             cart.consolidateCart = consolidateCart(products);
             console.log('cart with consolidateCart', consolidateCart);

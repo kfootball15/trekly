@@ -1,10 +1,10 @@
-<div class='md-padding'>
+<!-- <div class='md-padding'> -->
   <md-card style="width: 300px;">
-    <img ng-src="{{imagePath}}" class="md-card-image" alt="user avatar">
+    <img ng-src="{{product.images[0]}}" class="md-card-image" alt="user avatar">
     <md-card-content>
       <h2>{{product.title}}</h2>
       <h4>{{product.location}}</h4>
-      <p>{{product.description | cut:true:150:'...'}}</p>
+      <p>{{product.description | cut:true:100:'...'}}</p>
       <p>{{product.price | myCurrency}}</p>
       <p><strong>Experience...</strong></p>
       <p>{{product.categories.join(', ')}}</p>
@@ -14,4 +14,4 @@
       <md-button ng-click="addToCart(product)">Add to Cart</md-button>
     </div>
   </md-card>
-</div>
+<!-- </div> -->
