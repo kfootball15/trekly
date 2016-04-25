@@ -7,7 +7,7 @@ module.exports = router;
 
 
 router.get('/', function(req, res, next) {
-    Order.find({}).populate('products').exec()
+    Order.find({}).populate('products user').exec()
     .then(function(orders) {
         res.status(200).send(orders);
     })
@@ -93,6 +93,15 @@ router.put('/removeOneFromCart/:productId', function(req,res,next){
     .catch(next);
 });
 
+
+router.get('/findOneOrder', function(req, res, next) {
+    Order.findOne({sessionId: req.session.id}).popular('user').exec()
+    .then(function(order) {
+        res.status(200).send(order);
+    })
+    .catch(next);
+});
+
 router.put('/removeFromCart/:productId', function(req,res,next){
     Order.findOne({sessionId: req.session.id})
     .then(function(order){
@@ -132,3 +141,18 @@ router.put('/changeStatus/:newStatus', function(req, res, next){
     })
     .catch(next);
 })
+
+router.delete('/:orderId', function(req, res, next) {
+
+    if(!req.user.isAdmin) return res.sendStatus(401);
+    Order.findByIdAndRemove({_id: req.params.orderId})
+    .then(function(order){
+        res.send(order);
+    })
+    .catch(next)
+});
+
+// router.get('/checkout')
+// //get checkout info
+
+

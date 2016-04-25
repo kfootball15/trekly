@@ -7,7 +7,7 @@ app.controller('AdminEditCtrl', function($scope, $state, ProductFactory, product
   $scope.updateProduct = function(productId, update){
     ProductFactory.updateProduct(productId, update)
     .then(function(){
-      $state.go('home')
+      $state.go('productDetail', {"productId": productId})
     })
   }
 

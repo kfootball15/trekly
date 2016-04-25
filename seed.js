@@ -33,19 +33,61 @@ var userSeed = [
         username: 'Admin',
         email: 'admin@me.com',
         password: '123',
-        isAdmin: true
+        isAdmin: true,
+        role: 'Admin',
+        firstName: 'Jennifer',
+        lastName: 'Rittwiger',
+        avatar: '/assets/images/user1.jpg'
     },
     {
-        username: 'Me',
+        username: 'Cassandra',
         email: 'me@me.com',
         password: '123',
-        isAdmin: false
+        isAdmin: false,
+        role: 'Seller',
+        firstName: 'Cassandra',
+        lastName: 'Redding',
+        avatar: '/assets/images/user2.jpg'
     },
     {
-        username: 'Me1',
+        username: 'Alyx',
         email: 'me1@me.com',
         password: '123',
-        isAdmin: false
+        isAdmin: false,
+        role: 'Customer',
+        firstName: 'Alyx',
+        lastName: 'Bookman',
+        avatar: '/assets/images/user3.jpg'
+    },
+    {
+        username: 'Erik',
+        email: 'me2@me.com',
+        password: '123',
+        isAdmin: false,
+        role: 'Customer',
+        firstName: 'Erik',
+        lastName: 'Huntington',
+        avatar: '/assets/images/user4.jpg'
+    },
+    {
+        username: 'Jon',
+        email: 'me3@me.com',
+        password: '123',
+        isAdmin: false,
+        role: 'Seller',
+        firstName: 'Jon',
+        lastName: 'Russel',
+        avatar: '/assets/images/user5.jpg'
+    },
+    {
+        username: 'Ryan',
+        email: 'me4@me.com',
+        password: '123',
+        isAdmin: false,
+        role: 'Customer',
+        firstName: 'Ryan',
+        lastName: 'Callahan',
+        avatar: '/assets/images/user6.jpg'
     }
 ];
 

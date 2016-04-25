@@ -4,6 +4,15 @@ app.controller('AdminCtrl', function($scope, $state, $mdSidenav, $mdMedia, Produ
 
   $scope.products = getAllProducts
 
+  $scope.deleteProduct = function(product, index){
+    return ProductFactory.deleteProduct(product._id)
+    .then(function(response){
+      if (response.status === 204){
+        return $scope.products.splice(index, 1)
+      }
+    })
+  }
+
   $scope.createProduct = function(){
     $state.go('adminCreateProduct')
   }

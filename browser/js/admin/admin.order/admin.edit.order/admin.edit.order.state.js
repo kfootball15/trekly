@@ -7,6 +7,12 @@ app.config(function ($stateProvider) {
             orderToEdit: function($stateParams, AdminOrderFactory){
                 console.log($stateParams.orderId)
                 return AdminOrderFactory.getOneOrder($stateParams.orderId)
+            },
+            isAdminUser: function(AuthService, $state){
+                AuthService.getLoggedInUser()
+                .then(function(user){
+                    if(!user.isAdmin) $state.go('home');
+                });
             }
         }
     });

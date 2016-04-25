@@ -30,6 +30,14 @@ app.factory('ProductFactory', function($http){
                 return response.data;
             })
         },
+        deleteProduct: function(productId){
+            return $http({
+                method: 'DELETE',
+                url: '/api/product/'+ productId
+            }).then(function(response){
+                return response;
+            })
+        },
         // redunndant paths
         getById: function(id) {
         	return $http.get('api/product/' + id)

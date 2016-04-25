@@ -14,7 +14,7 @@ $scope.checkCartEmpty = function(){
   }
 
   $scope.add = function(productId){
-    OrderFactory.addToCart(productId)
+    OrderFactory.addToCart(productId, 1)
     .then(function(updatedCart){
     })
   }

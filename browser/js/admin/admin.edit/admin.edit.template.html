@@ -1,4 +1,3 @@
-<admin-toolbar></admin-toolbar>
 
 <div layout="row">
 <admin-nav></admin-nav>
@@ -10,19 +9,19 @@
     <h2>{{productToEdit.title}}</h2>
       <md-input-container>
         <label>Title</label>
-        <input ng-model="update.title" placeholder="{{productToEdit.title}}">
+        <input ng-init="update.title = productToEdit.title" ng-model="update.title" placeholder="{{productToEdit.title}}">
       </md-input-container>
        <md-input-container>
         <label>Location</label>
-        <input ng-model="update.location" placeholder="{{productToEdit.location}}">
+        <input ng-init="update.location = productToEdit.location" ng-model="update.location" placeholder="{{productToEdit.location}}">
       </md-input-container>
       <md-input-container>
         <label>Price</label>
-        <input ng-model="update.price" type="number" placeholder="{{productToEdit.price}}">
+        <input ng-init="update.price = productToEdit.price" ng-model="update.price" type="number" placeholder="{{productToEdit.price}}">
       </md-input-container>
       <md-input-container>
         <label>Inventory</label>
-        <input ng-model="update.inventory" type="number" placeholder="{{productToEdit.inventory}}">
+        <input ng-init="update.inventory = productToEdit.inventory" ng-model="update.inventory" type="number" placeholder="{{productToEdit.inventory}}">
       </md-input-container>
       <div layout-gt-xs="row">
         <md-datepicker ng-model="update.date" md-placeholder="date">
@@ -40,7 +39,7 @@
         </div>
         <md-input-container class="md-block">
           <label>Description</label>
-          <textarea ng-model="update.description" md-maxlength="150" rows="5" md-select-on-focus placeholder="{{productToEdit.description}}"></textarea>
+          <textarea ng-init="update.description = productToEdit.description" ng-model="update.description" md-maxlength="150" rows="5" md-select-on-focus placeholder="{{productToEdit.description}}"></textarea>
         </md-input-container>
       <md-button class="md-accent md-raised md-hue-3 md-button md-ink-ripple" ng-click="updateProduct(productToEdit._id, update)">Submit</md-button>
     </div>

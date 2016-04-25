@@ -53,9 +53,41 @@ router.get('/secret-stash', ensureAuthenticated, function (req, res) {
 });
 
 router.get('/:userId', function(req, res, next) {
-    User.findOne({_id: userId})
+
+    User.findOne({_id: req.params.userId})
     .then(function(user) {
-        res.send(user.data);
+        res.send(user);
     })
     .then(null, next);
 });
+
+router.delete('/:userId', function(req, res, next) {
+    User.findOneAndRemove({_id: req.params.userId})
+    .then(function(response) {
+        res.send(response);
+    })
+    .then(null, next);
+});
+
+router.put('/:userId', function(req, res, next){
+    if (req.body.password){
+        User.findById(req.params.userId)
+        .then(function(user){
+            user.password = req.body.password;
+            user.passwordReset = false;
+           return user.save()
+        })
+        .then(function(response){
+            res.send(response)
+        })
+        .then(null, next)
+    }
+    else {
+        User.findByIdAndUpdate(req.params.userId, req.body, {new: true})
+        .then(function(response){
+            res.send(response)
+        })
+        .then(null, next)
+    }
+});
+

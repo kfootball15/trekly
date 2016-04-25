@@ -1,17 +1,76 @@
-<nav class="navbar navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
-        </div>
-        <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-            </li>
-        </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
-        </div>
-    </div>
-</nav>
+<head>
+<style>
+.site-content-toolbar {
+  background-color: #ffffff !important;
+}
+ md-toolbar md-list {
+  padding: 0 ;
+  max-height: 60px;
+  margin-top: -5px;
+}
+
+</style>
+</head>
+
+<md-toolbar md-whiteframe="1" class="site-content-toolbar">
+      <div class="md-toolbar-tools">
+      <fullstack-logo></fullstack-logo>
+      <md-content>
+        <md-list>
+          <md-list-item>
+            <h1 class="md-title" ui-sref="home">Trekly</h1>
+          </md-list-item>
+        </md-list>
+      </md-content>
+        <span flex></span>
+
+        <md-menu md-position-mode="target-right target"  layout-align="center end">
+          <md-button aria-label="Open menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+            <md-icon md-menu-origin md-svg-icon="assets/icons/apps.svg"></md-icon>
+            <md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
+            Menu
+          </md-tooltip>
+          </md-button>
+          <md-menu-content width="3" >
+            <md-menu-item ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+              <md-button>
+                  <div layout="row" flex>
+                    <p ui-sref="{{ item.state }}" flex>{{item.label}}</p>
+                    <md-icon md-menu-align-target md-svg-icon="assets/icons/apps.svg" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>
+            <md-menu-item ng-repeat="item in adminItems" ng-if="user.isAdmin" ng-show="!item.auth || isLoggedIn()" ng-if="user.isAdmin">
+              <md-button>
+                  <div layout="row" flex>
+                    <p ui-sref="{{ item.state }}" flex>{{item.label}}</p>
+                    <md-icon md-menu-align-target md-svg-icon="assets/icons/apps.svg" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
+
+        <md-button ng-show="!user" ui-sref="login" class="md-accent md-raised md-hue-3 md-button md-ink-ripple">Login</md-button>
+          <div ng-show="user">
+          <md-content>
+            <md-list>
+              <md-list-item>
+              <img ng-src="{{user.avatar}}" alt="{{user.firstName}}" class="md-avatar" style="border: 3px solid teal">
+              <a ng-click="logout()">Logout</a>
+              </md-list-item>
+            </md-list>
+            </md-content>
+          </div>
+
+
+
+
+        <md-button class="md-icon-button" aria-label="More">
+          <md-icon md-svg-icon="assets/icons/shopping_cart_dark.svg"></md-icon>
+        </md-button>
+      </div>
+</md-toolbar>
+
+
