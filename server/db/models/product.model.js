@@ -35,30 +35,42 @@ var schema = new mongoose.Schema({
     },
 });
 
-schema.statics.decreaseInventory = function(productIdArray){
-    return this.find({'_id': {$in: productIdArray}})
-    .then(function(productArray){
-        return Promise.all(productArray.map(function(product){
-            product.inventory--;
+schema.statics.changeInventory = function(productIdArray, quantityChangeArray){
+    var self = this;
+    var promises = productIdArray.map(function(productId, index) {
+        return self.findById(productId)
+        .then(function(product) {
+            product.inventory += quantityChangeArray[index];
             return product.save();
-        }))
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+        });
+    });
+    return Promise.all(promises);
+};
 
-schema.statics.increaseInventory = function(productIdArray){
-    return this.find({'_id': {$in: productIdArray}})
-    .then(function(productArray){
-        return Promise.all(productArray.map(function(product){
-            product.inventory++;
-            return product.save();
-        }))
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+// schema.statics.decreaseInventory = function(productIdArray){
+//     return this.find({'_id': {$in: productIdArray}})
+//     .then(function(productArray){
+//         return Promise.all(productArray.map(function(product){
+//             product.inventory--;
+//             return product.save();
+//         }))
+//     })
+//     .catch(function(err){
+//         console.error(err);
+//     })
+// }
+
+// schema.statics.increaseInventory = function(productIdArray){
+//     return this.find({'_id': {$in: productIdArray}})
+//     .then(function(productArray){
+//         return Promise.all(productArray.map(function(product){
+//             product.inventory++;
+//             return product.save();
+//         }))
+//     })
+//     .catch(function(err){
+//         console.error(err);
+//     })
+// }
 
 mongoose.model('Product', schema);

@@ -3,9 +3,9 @@ app.config(function ($stateProvider) {
         url: '/cart',
         templateUrl: 'js/orders/cart.template.html',
         resolve: {
-        	cart: function(OrderFactory){
-        		return OrderFactory.getCart();
-        	}
+            backEndCart: function(OrderFactory){
+                return OrderFactory.getCart();
+            }
         },
         controller: 'CartCtrl'
     });
@@ -30,9 +30,7 @@ app.config(function ($stateProvider) {
         url: '/complete/:id',
         templateUrl: 'js/orders/complete.template.html',
         resolve: {
-            recentComplete: function(OrderFactory, $stateParams, $state){
-                console.log('stateparams orderID', $stateParams);
-                // console.log($state.params)
+            recentOrder: function(OrderFactory, $stateParams, $state){
                 return OrderFactory.getRecentComplete($stateParams.id);
             }
         },
@@ -40,21 +38,18 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.config(function ($stateProvider) {
-    $stateProvider.state('userAccount', {
-        url: '/userAccount',
-        templateUrl: 'js/orders/userAccount.template.html',
-        resolve: {
-            // completeOrders: function(OrderFactory){
-            //     return OrderFactory.getAllComplete();
-            // },
-            pastOrders: function(OrderFactory){
-                return OrderFactory.getPastOrders();
-            },
-            loggedInUser: function(AuthService){
-                return AuthService.getLoggedInUser();
-            }
-        },
-        controller: 'UserAccountCtrl'
-    });
-});
+// app.config(function ($stateProvider) {
+//     $stateProvider.state('userAccount', {
+//         url: '/userAccount',
+//         templateUrl: 'js/orders/userAccount.template.html',
+//         resolve: {
+//             pastOrders: function(OrderFactory){
+//                 return OrderFactory.getPastOrders();
+//             },
+//             loggedInUser: function(AuthService){
+//                 return AuthService.getLoggedInUser();
+//             }
+//         },
+//         controller: 'UserAccountCtrl'
+//     });
+// });

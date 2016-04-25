@@ -4,9 +4,4 @@ app.controller('CompleteCtrl', function(recentComplete, $state, $scope, OrderFac
 
 	$scope.complete = recentComplete;
 
-	$scope.consolidateOrder = recentComplete.consolidateOrder;
-	// $scope.totalOrder = recentComplete.totalPrice;
-
-	//WORK ON TOTAL PRICE
-
 });

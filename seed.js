@@ -51,27 +51,27 @@ var userSeed = [
 
 var orderSeed = [
     {
-        sessionId: 'hwEPs-WyHDKCF0Bh8KzHjocGQ1lvY0r6',
+        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
         status: 'cart',
         products: []
     },
     {
-        sessionId: 'k-x3LrGfHHgwvzJspxyPigq-wONk7x3I',
+        sessionId: 'DBHDEZMz3d3eXQA7q9G1g9Nln9KoeSXN',
         status: 'cart',
         products: []
     },
     {
-        sessionId: 'hwEPs-WyHDKCF0Bh8KzHjocGQ1lvY0r6',
+        sessionId: 'DBHDEZMz3d3eXQA7q9G1g9Nln9KoeSXN',
         status: 'complete',
         products: []
     },
     {
-        sessionId: 'k-x3LrGfHHgwvzJspxyPigq-wONk7x3I',
+        sessionId: 'wSKeHI5b4qOMG3mAQW1k7b0mbuYZ0PiC-',
         status: 'complete',
         products: []
     },
     {
-        sessionId: 'wSKeHI5b4qOMG3mAQW1k7b0mbuYZ0PiC',
+        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
         status: 'complete',
         products: []
     }
@@ -264,13 +264,19 @@ var seedDB = function() {
     .then(function(users){
         usersList = users;
         return Promise.map(orderSeed, function(order) {
+            var productToAddToOrder = randomizeSelector(productsList);
+            var price;
+            if(order.status !== 'cart') {
+                price = productToAddToOrder.price;
+                order.date = Date();
+            }
+            order.products.push({product: productToAddToOrder, quantity: 1, finalPrice: price});
             order.user = randomizeSelector(users);
-            order.products.push(randomizeSelector(productsList));
-            order.products.push(randomizeSelector(productsList));
+
             return Order.create(order);
         });
     })
-    .then(function(orders) {
+    .then(function() {
         return Promise.map(reviewSeed, function(review) {
             review.user = randomizeSelector(usersList);
             review.product = randomizeSelector(productsList);
