@@ -1,7 +1,5 @@
-// complete.controller.js
+app.controller('CompleteCtrl', function(recentOrder, $state, $scope, OrderFactory, $timeout, $q, $log, loggedInUser) {
 
-app.controller('CompleteCtrl', function(recentComplete, $state, $scope, OrderFactory, $timeout, $q, $log) {
-
-	$scope.complete = recentComplete;
-
+	$scope.complete = recentOrder;
+	$scope.loggedInUser = loggedInUser || null;
 });

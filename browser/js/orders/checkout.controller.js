@@ -6,7 +6,6 @@ app.controller('CheckoutCtrl', function($scope, $state, OrderFactory, $timeout, 
   // $scope.consolidateCart = $scope.cart.consolidateCart;
   // $scope.totalPrice = $scope.cart.totalPrice;
 
-
   $scope.editOrder = function(){
     $state.go('cart');
   }
@@ -17,8 +16,11 @@ app.controller('CheckoutCtrl', function($scope, $state, OrderFactory, $timeout, 
   // $scope.message; 
   $scope.confirm = function(){
     var cart = $scope.cart;
-    return OrderFactory.changeStatus('complete')
+    console.log('order before change status', $scope.cart._id)
+    var orderId = $scope.cart._id;
+    return OrderFactory.changeStatus('complete', orderId)
     .then(function(order){
+        console.log('order with changed status: ', order._id)
         $state.go('complete', {id: order._id});
     })    
   }

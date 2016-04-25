@@ -1,58 +1,47 @@
 SHOPPING CART
-<form action="" method="POST">
-    <h1>fhdja</h1>
-      <script
-        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="pk_test_baVyKj915LMNByhXkC1fJBqS"
-        data-amount="999"
-        data-name="Stripe.com"
-        data-description="Widget"
-        data-locale="auto">
-      </script>
-</form>
 
 <div ng-show='checkCartEmpty()'>
-    Cart is empty.
-    <button>Time to Shop!</button>
+	Cart is empty.
+	<a ui-sref="home">Time to Shop!</a>
 </div>
 
 <div class='md-padding' layout="row" ng-show="!checkCartEmpty()">
-    <br>
-    <table>
-        <thead>
-        <tr>
-            <th>Package</th>
-            <th>Location</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tr ng-repeat="item in cart.products">
-            <td>{{item.product.title}}</td>
-            <td>{{item.product.location}}</td>
-            <td>{{item.productTotal | currency}}</td>
-            <td>{{item.quantity}}</td>
-            <td>
-                <md-button class="md-fab" aria-label="Eat cake" ng-click="add(item.product._id)"><md-icon>+</md-icon>
-                </md-button>
-            </td>
-            <td>
-                <md-button class="md-fab" aria-label="Eat cake" ng-click="subtract(item.product._id)">
-                <md-icon>-</md-icon>
-                </md-button>
-            </td>
-            <td>
-                <md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.id)"><md-icon>X</md-icon>
-                </md-button>
-            </td>
-        </tr>
-        <tr>
-            <th></th>
-            <th>Total</th>
-            <th>{{cart.cartTotal | currency}}</th>
-        </tr>
-    </table>
-    <button ng-click="checkout()">Proceed to check-Out
-    </button>
+	<br>
+	<table>
+		<thead>
+		<tr>
+			<th>Package</th>
+			<th>Location</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tr ng-repeat="item in cart.products">
+			<td>{{item.product.title}}</td>
+			<td>{{item.product.location}}</td>
+			<td>{{item.productTotal | currency}}</td>
+			<td>{{item.quantity}}</td>
+			<td>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="add(item.product._id)"><md-icon>+</md-icon>
+				</md-button>
+			</td>
+			<td>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="subtract(item.product._id)">
+				<md-icon>-</md-icon>
+				</md-button>
+			</td>
+			<td>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.product._id)"><md-icon>X</md-icon>
+				</md-button>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<th>Total</th>
+			<th>{{cart.cartTotal | currency}}</th>
+		</tr>
+	</table>
+	<button ng-click="checkout()">Proceed to check-Out
+	</button>
 </div>

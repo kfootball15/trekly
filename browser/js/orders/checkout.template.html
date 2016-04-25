@@ -11,7 +11,7 @@ CHECKOUT PAGE
 			<th>Quantity</th>
 		</tr>
 		</thead>
-		<tr ng-repeat="item in cart.products">		
+		<tr ng-repeat="item in cart.products">
 			<td>{{item.product.title}}</td>
 			<td>{{item.product.location}}</td>
 			<td>{{item.productTotal | currency}}</td>
@@ -25,4 +25,15 @@ CHECKOUT PAGE
 	</table>
 	<button ng-click="editOrder()">EditOrder</button>
 	<button ng-click="confirm()">Confirm Order</button>
+    <form action="" method="POST">
+        <h1>Stripe Checkout</h1>
+          <script>
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_baVyKj915LMNByhXkC1fJBqS"
+            data-amount="999"
+            data-name="Stripe.com"
+            data-description="Widget"
+            data-locale="auto">
+          </script>
+    </form>
 </div>

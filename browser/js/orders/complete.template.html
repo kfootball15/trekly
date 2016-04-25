@@ -2,7 +2,6 @@
 
 CONFIRMATION PAGE
 
-
 <div class='md-padding' layout="row" layout-wrap>
 	<br>
 	<table>
@@ -14,26 +13,26 @@ CONFIRMATION PAGE
 				<th>Status</th>
 		</tr>
 		</thead>
-		<tr ng-repeat="product in cart.products">
+		<tr ng-repeat="product in complete.products">
 			<!-- <td>
 				<img ng-src="{{imagePath}}" style="width: 10%">
 			</td> -->
 			<td>{{product.product.title}}</td>
 			<td>{{product.quantity}}</td>
-			<td>{{product.finalPrice | currency}}</td>
+			<td>{{product.productTotal | currency}}</td>
 			<td>Confirmed</td>
 
 		</tr>
 		<tr>
 				<th></th>
 				<th>Total</th>
-				<th>{{totalPrice}}</th>
+				<th>{{complete.orderTotal | currency}}</th>
 		</tr>
 
 	</table>
-	<button ng-click="goToAccount()">Go to Account
+	<button ui-sref="userProfile" ng-if="loggedInUser">Go to Account
 	</button>
-	<button ng-click="continueShopping()">Continue Shopping
+	<button ui-sref="home">Continue Shopping
 	</button>
 
 </div>

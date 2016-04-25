@@ -24,13 +24,12 @@ app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, R
 		$scope.bigImgSrc = img;
 	};
 
-
-	$scope.addToCart = function(product) {
-		alert('MAKE THIS FUNCTIONAL !');
-		// OrderFactory.addToCart(product._id)
-		// .then(function(cart) {
-		// 	console.log('cart from Ctrl:', cart);
-		// });
+	$scope.addToCart = function(productID, quantity) {
+		var quantity = quantity || 1;
+		OrderFactory.addToCartFromProduct(productID, quantity)
+		.then(function(cart) {
+			console.log('cart from Ctrl:', cart);
+		});
 	};
 
 
@@ -60,6 +59,8 @@ app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, R
 	};
 
     $scope.runMap = initialize_gmaps;
+
+    $scope.numbers = [1,2,3,4,5,6,7,8,9,10];
 
 
 });
