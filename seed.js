@@ -51,22 +51,22 @@ var userSeed = [
 
 var orderSeed = [
     {
-        sessionId: '123',
-        status: 'cart',
-        products: []
-    },
-    {
         sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
         status: 'cart',
         products: []
     },
     {
-        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
+        sessionId: 'DBHDEZMz3d3eXQA7q9G1g9Nln9KoeSXN',
+        status: 'cart',
+        products: []
+    },
+    {
+        sessionId: 'DBHDEZMz3d3eXQA7q9G1g9Nln9KoeSXN',
         status: 'complete',
         products: []
     },
     {
-        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
+        sessionId: 'wSKeHI5b4qOMG3mAQW1k7b0mbuYZ0PiC-',
         status: 'complete',
         products: []
     },
@@ -173,9 +173,11 @@ var seedDB = function() {
             var price;
             if(order.status !== 'cart') {
                 price = productToAddToOrder.price;
+                order.date = Date();
             }
             order.products.push({product: productToAddToOrder, quantity: 1, finalPrice: price});
-            // order.user = randomizeSelector(users);
+            order.user = randomizeSelector(users);
+
             return Order.create(order);
         });
     })

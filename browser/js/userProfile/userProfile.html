@@ -14,7 +14,7 @@
                     <md-divider ></md-divider>
                     <div ng-repeat="order in orders" layout="row">
                         <div flex="20">
-                            <h4>Order date: [PLACEHOLDER]</h4>
+                            <h4>Order date: {{order.date | date}}</h4>
                             <h4>Total price: {{order.totalPrice | currency}}</h4>
                             <h4>Status: {{order.status}}</h4>
                             <i class="material-icons md-48 green" ng-show="order.status==='complete'">check_circle</i>
