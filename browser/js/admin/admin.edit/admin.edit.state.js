@@ -6,6 +6,12 @@ app.config(function ($stateProvider) {
         resolve: {
             productToEdit: function($stateParams, ProductFactory){
                 return ProductFactory.getOneProduct($stateParams.id)
+            },
+            isAdminUser: function(AuthService, $state){
+                AuthService.getLoggedInUser()
+                .then(function(user){
+                    if(!user.isAdmin) $state.go('home');
+                });
             }
         }
     });

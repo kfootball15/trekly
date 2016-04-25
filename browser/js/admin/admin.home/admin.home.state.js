@@ -4,7 +4,13 @@ app.config(function ($stateProvider) {
         controller: 'AdminCtrl',
         resolve: {
             getAllProducts: function(ProductFactory){
-                return ProductFactory.getAllProducts()
+                return ProductFactory.getAllProducts();
+            },
+            isAdminUser: function(AuthService, $state){
+                AuthService.getLoggedInUser()
+                .then(function(user){
+                    if(!user.isAdmin) $state.go('home');
+                });
             }
         },
         templateUrl: '/js/admin/admin.home/admin.home.template.html'

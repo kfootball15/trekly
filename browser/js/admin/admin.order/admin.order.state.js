@@ -6,6 +6,12 @@ app.config(function ($stateProvider) {
         resolve: {
             allOrders: function(AdminOrderFactory){
                 return AdminOrderFactory.getAllOrders();
+            },
+            isAdminUser: function(AuthService, $state){
+                AuthService.getLoggedInUser()
+                .then(function(user){
+                    if(!user.isAdmin) $state.go('home');
+                });
             }
         }
     });

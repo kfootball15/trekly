@@ -13,7 +13,7 @@
         <button ng-show="!user" ui-sref="signup" class="btn login-button" style="margin:10px">Sign Up</button>
 
         <!-- THE REAL ADMIN BUTTON = UNHIDE THIS ONE -->
-        <button ng-if="user.isAdmin" ui-sref="admin" class="btn">ADMIN</button>
+        <button ui-sref="adminOrder" class="btn">ADMIN</button>
 
         <div ng-show="user" class="welcome">
             <span ng-if="user.username">Welcome, {{ user.username }}!</span>
