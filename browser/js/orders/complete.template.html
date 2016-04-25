@@ -2,6 +2,7 @@
 
 CONFIRMATION PAGE
 
+
 <div class='md-padding' layout="row" layout-wrap>
 	<br>
 	<table>
@@ -13,11 +14,11 @@ CONFIRMATION PAGE
 				<th>Status</th>
 		</tr>
 		</thead>
-		<tr ng-repeat="product in consolidateOrder">
+		<tr ng-repeat="product in cart.products">
 			<!-- <td>
 				<img ng-src="{{imagePath}}" style="width: 10%">
 			</td> -->
-			<td>{{product.title}}</td>
+			<td>{{product.product.title}}</td>
 			<td>{{product.quantity}}</td>
 			<td>{{product.finalPrice | currency}}</td>
 			<td>Confirmed</td>

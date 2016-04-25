@@ -1,7 +1,24 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var Promise = require('bluebird');
+
 // var _ = require('lodash');
+
+var productChildSchema = new mongoose.Schema({
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    },
+    quantity: {
+        type: Number,
+        min: 0
+    },
+    finalPrice: {
+        type: Number
+    }
+});
 
 var schema = new mongoose.Schema({
     user: {
@@ -11,18 +28,16 @@ var schema = new mongoose.Schema({
     sessionId: {
         type: String
     },
-    products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-    }],
-    finalPrice: [{
-        type: Number,
-    }], //array of product prices 
+    products: [productChildSchema],
+    // finalPrice: [{
+    //     type: Number,
+    // }], //array of product prices
     status: {
         type: String,
         enum:   ['cart',
                 // 'confirmed',
                 // 'processing',
+                'paid',
                 'cancelled',
                 'complete'
                 ],
@@ -31,67 +46,73 @@ var schema = new mongoose.Schema({
 });
 
 //get total price ARRAY of all products AT CURRENT PRICE IN DATABASE
-schema.methods.getPriceArray = function(){
-    console.log('in get price array function');
-    return mongoose.model('Order').findById(this._id).populate('products')
-    .then(function(populatedOrder) {
-        return populatedOrder.products.map(function(product) {
-            return product.price;
+schema.methods.getLiveProductPrices = function(){
+    console.log('in get live product prices')
+    return mongoose.model('Order').findById(this._id)
+    .then(function(order) {
+        console.log('order',order);
+        if (!order.products) return;
+        var promises = order.products.map(function(product) {
+            console.log('product', product.product)
+            return mongoose.model('Product').findById(product.product);
         });
+        return Promise.all(promises);
     })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+    .then(function(arrayOfProducts) {
+        console.log('arrayOfProducts', arrayOfProducts);
+        return arrayOfProducts.map(product => product.price);
+    });
+};
 
-//get total price of all products
-schema.methods.getTotalPrice = function(){
-    return this.getPriceArray()
-    .then(function(priceArray){
-        return priceArray.reduce(function(prev, curr){return prev+curr});
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+//get total final price of all products
+schema.methods.getTotalFinalPrice = function(){
+    return this.products
+    .map(productChild => productChild.finalPrice)
+    .reduce((a, b) => a + b);
+};
 
 //route to change status to 'complete' calls this method
 schema.methods.cartToComplete = function(){
-    console.log('in cart to complete method')
-    var self = this;
-    return this.getPriceArray()
-    .then(function(priceArray){
-        self.finalPrice = priceArray;
-        self.status = 'complete';
-        return self.save()
+    var thisOrder;
+    return this.getLiveProductPrices()
+    .then((liveProductPrices) => {
+        console.log('liveProductPrices', liveProductPrices);
+        liveProductPrices.forEach((price, index) => {
+            this.products[index].finalPrice = price;
+        });
+        this.status = 'complete';
+        return this.save();
     })
     .then(function(updatedOrder){
-        return mongoose.model('Product').decreaseInventory(updatedOrder.products);
+        thisOrder = updatedOrder;
+        return mongoose.model('Product')
+        .changeInventory(
+            updatedOrder.products.map(productChild => productChild.product),
+            updatedOrder.products.map(productChild => -1 * productChild.quantity)
+        );
     })
-    .then(function(updatedProducts){
-        return self;
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+    .then(function(){
+        return thisOrder;
+    });
+};
 
 
 //route to change status to 'cancelled' calls this method
 schema.methods.cancel = function(){
-    var self = this;
-    self.status = 'cancelled';
-    return self.save()
+    var thisOrder = this;
+    thisOrder.status = 'cancelled';
+    return thisOrder.save()
     .then(function(updatedOrder){
-        return mongoose.model('Product').increaseInventory(updatedOrder.products);
+        thisOrder = updatedOrder;
+        return mongoose.model('Product').changeInventory(
+            updatedOrder.products.map(productChild => productChild.product),
+            updatedOrder.products.map(productChild => productChild.quantity)
+        );
     })
     .then(function(updatedProducts){
-        return self;
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+        return thisOrder;
+    });
+};
 
 
 
@@ -106,24 +127,34 @@ schema.statics.findOrCreate = function(sessionId, userId){
             var newOrder = new self();
             newOrder.sessionId = sessionId;
             if (userId) newOrder.userId = userId;
-            return newOrder.save()
-            .then(function(newOrder){
-                return newOrder;
-            })
+            return newOrder.save();
         }
         else return order;
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-}
+    });
+};
 
 // method to add to order
 schema.methods.addProduct = function (productId, quantity) {
     if (this.status !== 'cart') return;
     var number = quantity || 1;
-    for (var i = 0; i < number; i++) {
-        this.products.push(productId);
+
+    // if this.products has an element with a product matching productId, then increment the quantity on that element
+
+    console.log('productIdArray', this.products.map(productChild => productChild.product));
+    console.log('productIdToFind', productId);
+
+    var index = this.products.map(productChild => productChild.product.toString()).indexOf(productId);
+    console.log(index);
+    if (index !== -1) {
+        this.products[index].quantity += +number;
+    }
+    // else push a new product child to the order's products array
+    else {
+        var newProductChildToAdd = {
+            product: productId,
+            quantity: number
+        };
+        this.products.push(newProductChildToAdd);
     }
     return this.save();
 };
@@ -132,21 +163,27 @@ schema.methods.addProduct = function (productId, quantity) {
 // method to remove product from order
 schema.methods.deleteOneProduct = function (productId) {
     if (this.status !== 'cart') return;
-    var firstIndex = this.products.indexOf(productId);
-    this.products.splice(firstIndex, 1);
+    var index = this.products.map(productChild => productChild.product.toString()).indexOf(productId);
+    console.log(this.products.map(productChild => productChild.product.toString()));
+    console.log(productId)
+    this.products[index].quantity--;
     return this.save();
 };
 
 
 schema.methods.deleteProduct = function (productId) {
     if (this.status !== 'cart') return;
-    while (this.products.indexOf(productId) > -1){
-        var firstIndex = this.products.indexOf(productId);
-        if (this.products.length > 1) this.products.splice(firstIndex, 1);
-        else this.products = [];
-    }
+    var index = this.products.map(productChild => productChild.product.toString()).indexOf(productId);
+    this.products.splice(index, 1);
+    // while (this.products.indexOf(productId) > -1){
+    //     var firstIndex = this.products.indexOf(productId);
+    //     if (this.products.length > 1) this.products.splice(firstIndex, 1);
+    //     else this.products = [];
+    // }
     return this.save();
 };
 
 
 mongoose.model('Order', schema);
+schema.plugin(deepPopulate);
+

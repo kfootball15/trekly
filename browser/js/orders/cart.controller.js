@@ -3,22 +3,24 @@ app.controller('CartCtrl', function($scope, $state, OrderFactory, $timeout, $q, 
   $scope.cart = OrderFactory.getCartCache();
   $scope.products = $scope.cart.products;
   $scope.finalPrice = $scope.cart.finalPrice;
-  $scope.consolidateCart = $scope.cart.consolidateCart;
+  // $scope.consolidateCart = $scope.cart.consolidateCart;
 
 
 
-  $scope.getTotalPrice = function(){
-    var arr = $scope.consolidateCart.map(function(item){
-      return item.finalPrice;
-    })
-    $scope.totalPrice = arr.reduce(function(prev,curr){return prev+curr; })
-  }
+  // $scope.getTotalPrice = function(){
+  //   var arr = $scope.consolidateCart.map(function(item){
+  //     return item.finalPrice;
+  //   })
+  //   $scope.totalPrice = arr.reduce(function(prev,curr){return prev+curr; })
+  // }
+
+
   //ADD TOTAL PRICE FUNCTION INTO THE ORDER FACTORY
   // $scope.totalPrice = $scope.consolidateCart.map(function(item){return item.finalPrice; }).reduce(function(prev,curr){return prev+curr; });
   // $scope.totalPrice = $scope.cart.totalPrice;
   // var getTotalPrice = function(){
   //   if ($scope.cart.finalPrice) {
-  //     price = $scope.cart.finalPrice.reduce(function(prev,curr){return prev+curr; }) 
+  //     price = $scope.cart.finalPrice.reduce(function(prev,curr){return prev+curr; })
   //     $scope.totalPrice = String(price);
   //   }
   //   else $scope.totalPrice = '0';
@@ -58,8 +60,8 @@ app.controller('CartCtrl', function($scope, $state, OrderFactory, $timeout, $q, 
   }
 
   console.log('in controller');
-  
+
 //MAKE SURE:
 //one session ID can only have one cart order at a given time
-//one session ID can have multiple orders at once 
+//one session ID can have multiple orders at once
 });

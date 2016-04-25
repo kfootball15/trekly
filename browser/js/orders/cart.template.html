@@ -1,6 +1,6 @@
 Shopping Cart
 
-
+{{cart | json}}
 
 <div class='md-padding' layout="row" layout-wrap>
 	<br>
@@ -15,23 +15,23 @@ Shopping Cart
 			</tr>
 		</thead>
 		<!-- <tr ng-repeat="item in consolidateCart"> -->
-		<tr ng-repeat="item in consolidateCart">
+		<tr ng-repeat="item in cart.products">
 			<!-- <td>
 				<img ng-src="{{imagePath}}" style="width: 10%">
 			</td> -->
-			<td>{{item.title}}</td>
-			<td>{{item.products.location}}</td>
+			<td>{{item.product.title}}</td>
+			<td>{{item.product.location}}</td>
 			<td>{{item.finalPrice | currency}}</td>
 			<td>{{item.quantity}}</td>
 			<td>
-				<md-button class="md-fab" aria-label="Eat cake" ng-click="add(item.id)"><md-icon>+</md-icon></md-button>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="add(item.product._id)"><md-icon>+</md-icon></md-button>
 			</td>
 			<td>
-				<md-button class="md-fab" aria-label="Eat cake" ng-click="subtract(item.id)">
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="subtract(item.product._id)">
 				<md-icon>-</md-icon>
 			</td>
 			<td>
-				<md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.id)"><md-icon>X</md-icon>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.product._id)"><md-icon>X</md-icon>
 			</md-button>
 		</td>
 
