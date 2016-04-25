@@ -126,7 +126,7 @@ var productSeed = [
         location: 'Hawaii',
         categories: ['waterfalls', 'ocean', 'mountains', 'nature', 'beaches', 'snorkeling', 'fish', 'hiking', 'swimming'],
         price: 5000,
-        inventory: 5,
+        inventory: 500,
         coordinates: [19.8968, 155.5828],
         images: ['http://hdwallpaperfun.com/wp-content/uploads/2014/09/Hawaii-Wallpaper-High-Res-Pics-54655.jpeg', 'http://soaquipassagensbaratas.com.br/wp-content/uploads/2014/08/eua7.jpg', 'https://i.ytimg.com/vi/EebVVEvm75Y/maxresdefault.jpg', 'http://www.aloha-hawaiian.com/images/newsite/HawaiiSunsetHoneymoon.jpg']
     },
@@ -136,7 +136,7 @@ var productSeed = [
         location: 'Arizona',
         categories: ['Grand Canyon', 'hot', 'desert', 'sun', 'hiking'],
         price: 3000,
-        inventory: 5,
+        inventory: 500,
         coordinates: [36.1128, -113.9961],
         images: ['http://www.thecanyon.com/assets/css/images/grandcanyon1.jpg', 'https://media.deseretdigital.com/file/b41fa91284?crop=top:0%7Cleft:0%7Cwidth:1260%7Cheight:670%7Cgravity:Center&resize=width:1260&order=resize,crop&c=14&a=c856f78c', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUujpnAirDSgJhNJ-AifEWa0NDXi7ODarSVVHdS1AnvroIJfdi', 'http://i.huffpost.com/gen/1585786/images/o-GRAND-CANYON-RIVER-facebook.jpg']
 
@@ -147,7 +147,7 @@ var productSeed = [
         location: 'Africa',
         categories: ['animals', 'safari', 'sahara', 'wildlife', 'nature'],
         price: 4000,
-        inventory: 5,
+        inventory: 500,
         coordinates: [17.5707, 3.9962],
         images: ['https://i.ytimg.com/vi/lugard7P0nw/maxresdefault.jpg', 'http://eskipaper.com/images/africa-landscape-wallpaper-1.jpg', 'http://cdn.playbuzz.com/cdn/a9ef0d8c-0aa0-4796-b512-8f348ea8eeb5/2faf3263-7f6d-4843-9156-bc257dbf8911.jpg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMUt6UIfVaiEqyPDFSK7v0qNGJmtwR0ThSosz1p5OdXFrcZMn']
     },
@@ -157,7 +157,7 @@ var productSeed = [
         location: 'Australia',
         categories: ['wildlife', 'desert', 'hot', 'safari', 'ocean', 'nature', 'biking', 'snorkeling'],
         price: 2000,
-        inventory: 5,
+        inventory: 500,
         coordinates: [-25.2744, 133.7751],
         images: ['https://images.unsplash.com/photo-1456023054428-0f2118ef3180?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1300', 'https://images.unsplash.com/photo-1447953696461-df240a5320a3?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1300', 'https://images.unsplash.com/photo-1421992110690-5b12e022c666?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1300', 'https://images.unsplash.com/photo-1445986478946-8504638d4eab?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=e25648c37ff5bef668a03376e7df17bd']
     },
@@ -167,7 +167,7 @@ var productSeed = [
         location: 'Egypt',
         categories: ['pyramids', 'Nile River', 'desert', 'sphynx'],
         price: 10000,
-        inventory: 5,
+        inventory: 500,
         coordinates: [29.9792, 31.1342],
         images: ['http://www.freedomofresearch.org/sites/default/files/ancient-egypt-pyramids-wallpaper.jpg', 'https://www.teachaway.com/sites/default/files/headers/egypt-header-01.jpg', 'http://www.utsegypt.com/wp-content/uploads/2015/08/Egypt-1.jpg', 'https://upload.wikimedia.org/wikipedia/commons/f/f6/Great_Sphinx_of_Giza_-_20080716a.jpg']
     },
@@ -177,7 +177,7 @@ var productSeed = [
         location: 'China',
         categories: ['Great Wall of China', 'Genearl Tsos Chicken', 'mountains', 'nature', 'hiking', 'biking', 'food'],
         price: 7000,
-        inventory: 5,
+        inventory: 500,
         coordinates: [35.8617, 104.1954],
         images: ['http://i.imgur.com/RWcZ0.jpg', 'http://wallpapercave.com/wp/VRvyWZC.jpg', 'http://64.78.58.53/wp-content/uploads/2015/04/wall-clouds.jpg', 'http://wallpaperbeta.com/wallpaper_3840x2160/snowy_mountains_china_pagoda_landscapes_ultra_3840x2160_hd-wallpaper-35203.jpg']
     }

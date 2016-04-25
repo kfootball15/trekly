@@ -4,7 +4,9 @@ app.factory('OrderFactory', function($http){
 
     var cachedCart = {};
 
+
     OrderFactory.getCartCache = function(){
+        console.log(cachedCart);
         return cachedCart;
     }
 
@@ -27,6 +29,8 @@ app.factory('OrderFactory', function($http){
     };
 
     OrderFactory.getRecentComplete = function(orderId){
+        cachedCart = {};
+        console.log('after cache cleared', cachedCart)
         return $http.get('/api/orders/getRecentComplete/' + orderId)
         .then(function(recentComplete){
             var order = recentComplete.data;

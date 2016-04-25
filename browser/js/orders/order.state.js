@@ -41,18 +41,3 @@ app.config(function ($stateProvider) {
     });
 });
 
-// app.config(function ($stateProvider) {
-//     $stateProvider.state('userAccount', {
-//         url: '/userAccount',
-//         templateUrl: 'js/orders/userAccount.template.html',
-//         resolve: {
-//             pastOrders: function(OrderFactory){
-//                 return OrderFactory.getPastOrders();
-//             },
-//             loggedInUser: function(AuthService){
-//                 return AuthService.getLoggedInUser();
-//             }
-//         },
-//         controller: 'UserAccountCtrl'
-//     });
-// });
