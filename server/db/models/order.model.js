@@ -42,33 +42,25 @@ var schema = new mongoose.Schema({
                 'complete'
                 ],
         default: 'cart'
+    },
+    date: {
+        type: Date
     }
 });
 
 //get total price ARRAY of all products AT CURRENT PRICE IN DATABASE
 schema.methods.getLiveProductPrices = function(){
-    console.log('in get live product prices')
     return mongoose.model('Order').findById(this._id)
     .then(function(order) {
-        console.log('order',order);
         if (!order.products) return;
         var promises = order.products.map(function(product) {
-            console.log('product', product.product)
             return mongoose.model('Product').findById(product.product);
         });
         return Promise.all(promises);
     })
     .then(function(arrayOfProducts) {
-        console.log('arrayOfProducts', arrayOfProducts);
         return arrayOfProducts.map(product => product.price);
     });
-};
-
-//get total final price of all products
-schema.methods.getTotalFinalPrice = function(){
-    return this.products
-    .map(productChild => productChild.finalPrice)
-    .reduce((a, b) => a + b);
 };
 
 //route to change status to 'complete' calls this method
@@ -76,11 +68,11 @@ schema.methods.cartToComplete = function(){
     var thisOrder;
     return this.getLiveProductPrices()
     .then((liveProductPrices) => {
-        console.log('liveProductPrices', liveProductPrices);
         liveProductPrices.forEach((price, index) => {
             this.products[index].finalPrice = price;
         });
         this.status = 'complete';
+        this.date = Date();
         return this.save();
     })
     .then(function(updatedOrder){
@@ -114,9 +106,6 @@ schema.methods.cancel = function(){
     });
 };
 
-
-
-
 //find cart by sessionID or create a new card, specifying product ID, session ID, and user ID if exists
 schema.statics.findOrCreate = function(sessionId, userId){
     var self = this;
@@ -137,14 +126,8 @@ schema.statics.findOrCreate = function(sessionId, userId){
 schema.methods.addProduct = function (productId, quantity) {
     if (this.status !== 'cart') return;
     var number = quantity || 1;
-
     // if this.products has an element with a product matching productId, then increment the quantity on that element
-
-    console.log('productIdArray', this.products.map(productChild => productChild.product));
-    console.log('productIdToFind', productId);
-
     var index = this.products.map(productChild => productChild.product.toString()).indexOf(productId);
-    console.log(index);
     if (index !== -1) {
         this.products[index].quantity += +number;
     }
@@ -164,8 +147,6 @@ schema.methods.addProduct = function (productId, quantity) {
 schema.methods.deleteOneProduct = function (productId) {
     if (this.status !== 'cart') return;
     var index = this.products.map(productChild => productChild.product.toString()).indexOf(productId);
-    console.log(this.products.map(productChild => productChild.product.toString()));
-    console.log(productId)
     this.products[index].quantity--;
     return this.save();
 };
@@ -175,11 +156,6 @@ schema.methods.deleteProduct = function (productId) {
     if (this.status !== 'cart') return;
     var index = this.products.map(productChild => productChild.product.toString()).indexOf(productId);
     this.products.splice(index, 1);
-    // while (this.products.indexOf(productId) > -1){
-    //     var firstIndex = this.products.indexOf(productId);
-    //     if (this.products.length > 1) this.products.splice(firstIndex, 1);
-    //     else this.products = [];
-    // }
     return this.save();
 };
 

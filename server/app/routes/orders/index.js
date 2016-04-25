@@ -51,18 +51,10 @@ router.get('/getCart', function(req, res, next) {
     .catch(next);
 });
 
-// router.get('/getProcessing', function(req, res, next) {
-//     Order.findOne({sessionId: req.session.id, status: 'processing'})
-//     .populate('products')
-//     .then(function(order) {
-//         res.status(200).send(order);
-//     })
-//     .catch(next);
-// });
 
 router.get('/getRecentComplete/:orderId', function(req, res, next){
     Order.findOne({sessionId: req.session.id, _id: req.params.orderId, status: 'complete'})
-    .populate('products')
+    .populate('products.product')
     .then(function(order) {
         res.status(200).send(order);
     })
@@ -80,7 +72,6 @@ router.get('/getAllComplete', function(req, res, next){
 
 
 router.put('/addToCart/:productId', function(req,res,next){
-    console.log('in add to cart route, request params, productId: ', req.params.productId)
     Order.findOrCreate(req.session.id)
     .then(function(order){
         return order.addProduct(req.params.productId, req.body.quantity);
@@ -103,13 +94,11 @@ router.put('/removeOneFromCart/:productId', function(req,res,next){
 });
 
 router.put('/removeFromCart/:productId', function(req,res,next){
-    console.log('in route to remove product from cart');
     Order.findOne({sessionId: req.session.id})
     .then(function(order){
         return order.deleteProduct(req.params.productId);
     })
     .then(function(updatedCart){
-        console.log('removed product from cart in route', updatedCart);
         res.send(updatedCart);
     })
     .catch(next);
@@ -124,32 +113,22 @@ router.get('/findOneOrderById/:orderId', function(req, res, next) {
 });
 
 router.put('/changeStatus/:newStatus', function(req, res, next){
-    console.log('in route new status')
     var newStatus = req.params.newStatus;
     return Order.findOne({sessionId: req.session.id}).exec()
     .then(function(order){
-        console.log('order in new status route', order);
         var currentStatus = order.status;
         if (currentStatus === 'cart' && newStatus === 'complete') {
-            console.log('going from cart -> complete');
             return order.cartToComplete();
         }
         if (currentStatus === 'complete' && newStatus === 'cancelled') {
             return order.cancel();
         }
         else {
-            console.log('was not able to change status')
             return order
         }
     })
     .then(function(updatedOrder){
-        console.log('updated order in route', updatedOrder);
         res.json(updatedOrder);
-        console.log('\n\n\n hi')
     })
     .catch(next);
 })
-
-// router.get('/checkout')
-// //get checkout info
-
