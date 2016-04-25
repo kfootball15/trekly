@@ -173,9 +173,11 @@ var seedDB = function() {
             var price;
             if(order.status !== 'cart') {
                 price = productToAddToOrder.price;
+                order.date = Date();
             }
             order.products.push({product: productToAddToOrder, quantity: 1, finalPrice: price});
-            // order.user = randomizeSelector(users);
+            order.user = randomizeSelector(users);
+
             return Order.create(order);
         });
     })

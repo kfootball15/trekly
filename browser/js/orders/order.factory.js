@@ -84,10 +84,10 @@ app.factory('OrderFactory', function($http){
     }
 
     //WILL ADD TO CART OR CREATE CART IF DOESN'T ALREADY EXIST
-    OrderFactory.addToCart = function(productId){
-        return $http.put('/api/orders/addToCart/' + productId)
+    OrderFactory.addToCart = function(productId, quantity){
+        return $http.put('/api/orders/addToCart/' + productId, {quantity: quantity})
         .then(function(cart){
-            updateCache(productId, 1);
+            updateCache(productId, quantity);
             return cachedCart;
         });
     };
