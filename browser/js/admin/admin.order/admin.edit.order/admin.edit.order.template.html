@@ -1,0 +1,50 @@
+<admin-toolbar></admin-toolbar>
+
+<div layout="row">
+
+  <admin-nav layout="column"></admin-nav>
+
+  <div ng-cloak>
+    <md-content md-theme="docs-dark"layout-padding>
+      <div layout="row">
+          <h3> {{orderToEdit.user}} </h3>
+      </div>
+
+      <div layout="row" ng-cloak>
+
+        <md-card col-md-4>
+            <div>
+              <h1 class="md-title" style="width:100px">Change Status</h1>
+              <div layout="row" style="text-align: center">
+                <md-input-container>
+                  <md-select ng-init="update.status = orderToEdit.status" ng-model="update.status">
+                    <md-option value="{{status}}" ng-repeat="status in statuses">
+                      {{status}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+                <md-button style="width: 100px" ng-click="updateOrder(orderToEdit, update)" > Update </md-button>
+              </div>
+            </div>
+          </md-card>
+        <md-card col-md-4>
+          <h1 class="md-title">Products:</h1>
+          <md-list-item class="md-2-line" ng-repeat="product in orderToEdit.products" ng-init="update.products = orderToEdit.products">
+              <md-button class="btn1" ng-click="editProductForm(product)" > Edit Product </md-button>
+              <img ng-src="{{product.images[0]}}" class="md-avatar"/>
+
+              <div class="md-list-item-text">
+                <h3>{{product.title}}</h3>
+                <p> {{product.description}}</p>
+                <p>${{product.price}}</p>
+              </div>
+
+              <md-button class="btn1" ng-click="removeProduct(product, orderToEdit, {products: orderToEdit.products})" > Delete </md-button>
+          </md-list-item>
+          <h1 class="md-title" ng-hide="orderToEdit.products.length">There are no more Products</h1>
+        </md-card>
+
+      </div>
+    </md-content>
+  </div>
+</div>

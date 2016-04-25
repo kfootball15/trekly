@@ -1,0 +1,48 @@
+
+<div layout="row">
+<admin-nav></admin-nav>
+
+
+<div layout="column" ng-cloak class="md-inline-form">
+  <md-content layout-gt-sm="row" layout-padding>
+    <div >
+    <h2>{{productToEdit.title}}</h2>
+      <md-input-container>
+        <label>Title</label>
+        <input ng-init="update.title = productToEdit.title" ng-model="update.title" placeholder="{{productToEdit.title}}">
+      </md-input-container>
+       <md-input-container>
+        <label>Location</label>
+        <input ng-init="update.location = productToEdit.location" ng-model="update.location" placeholder="{{productToEdit.location}}">
+      </md-input-container>
+      <md-input-container>
+        <label>Price</label>
+        <input ng-init="update.price = productToEdit.price" ng-model="update.price" type="number" placeholder="{{productToEdit.price}}">
+      </md-input-container>
+      <md-input-container>
+        <label>Inventory</label>
+        <input ng-init="update.inventory = productToEdit.inventory" ng-model="update.inventory" type="number" placeholder="{{productToEdit.inventory}}">
+      </md-input-container>
+      <div layout-gt-xs="row">
+        <md-datepicker ng-model="update.date" md-placeholder="date">
+        </md-datepicker>
+      </div>
+    </div>
+  </md-content>
+  <md-content layout-padding>
+    <div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Activities</label>
+            <md-chips ng-init="update.categories = productToEdit.categories" ng-model="update.categories" readonly="false" md-enable-chip-edit="true" secondary-placeholder="+Tag"></md-chips>
+          <br/>
+        </div>
+        <md-input-container class="md-block">
+          <label>Description</label>
+          <textarea ng-init="update.description = productToEdit.description" ng-model="update.description" md-maxlength="150" rows="5" md-select-on-focus placeholder="{{productToEdit.description}}"></textarea>
+        </md-input-container>
+      <md-button class="md-accent md-raised md-hue-3 md-button md-ink-ripple" ng-click="updateProduct(productToEdit._id, update)">Submit</md-button>
+    </div>
+  </md-content>
+</div>
+</div>

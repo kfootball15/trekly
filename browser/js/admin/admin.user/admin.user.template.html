@@ -1,0 +1,29 @@
+
+  <div layout="row">
+    <admin-nav></admin-nav>
+    <md-list>
+      <md-list-item class="md-2-line" ng-repeat="user in users">
+        <md-checkbox ng-model="item.done"></md-checkbox>
+        <div class="md-list-item-text">
+            <img ng-src="{{user.images[0]}}" class="md-avatar"/>
+        </div>
+        <div class="md-list-item-text">
+            <h3>{{user.email}}</h3>
+            <p>{{user.role}}</p>
+        </div>
+        <div class="md-list-item-text">
+            <p></p>
+        </div>
+         <div class="md-list-item-text">
+            <p></p>
+        </div>
+        <div class="md-list-item-text">
+            <p></p>
+        </div>
+        <md-button class="btn1" ng-click="passwordReset(user);"> Reset PW </md-button>
+        <md-button class="btn1" ng-click="deleteUser(user);"> Delete </md-button>
+        <md-button class="btn1" ng-click="editUser(user);"> Edit </md-button>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+</div>
