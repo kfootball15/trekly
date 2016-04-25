@@ -29,4 +29,10 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state, UserFactory)
 
     };
 
+    $scope.style = function() {
+        if ($scope.signupForm.email.$invlaid) {
+            return {"color": "red"};
+        }
+    }
+
 });

@@ -24,13 +24,13 @@
                         </button>
                 </div>
                     <h1>{{ product.title }}</h1>
-                    <h4>Experience...</h4>
-                    <h5>{{product.categories.join(', ')}}</h5>
+                    <h4><strong>Location: </strong>{{product.location}}</h4>
+                    <h4><strong>Attractions: </strong>{{product.categories.join(', ')}}</h4>
                     <!-- <p>{{ product.description | cut:true:100:'...'}}</p> -->
                 </div>
                 <div class="ratings">
                     <p class="pull-right">{{ reviews.length }} {{ numReviews }}</p>
-                    <p>
+                    <p ng-show="totalReviewRating">
                         <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 1, 'glyphicon-star-empty': totalReviewRating < 1}"></span>
                         <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 2, 'glyphicon-star-empty': totalReviewRating < 2}"></span>
                         <span class="glyphicon" ng-class="{'glyphicon-star': totalReviewRating >= 3, 'glyphicon-star-empty': totalReviewRating < 3}"></span>
@@ -53,19 +53,19 @@
                               </md-tab>
                               <md-tab label="REVIEWS">
                                 <md-content class="md-padding">
-                                  <h1 class="md-display-2">Reviews</h1>
+                                  <h1 class="md-display-2" ng-show="reviewsPresent">Reviews</h1>
+                                  <h5 ng-show="!reviewsPresent">There are currently no reviews for this package.</h5>
                                     <review review="review" ng-repeat="review in reviews"></review>
                                 </md-content>
                               </md-tab>
                               <md-tab label="MAP" ng-click="runMap()">
                                 <md-content class="md-padding">
-                                  <h1 class="md-display-2">Map</h1>
+                                  <!-- <h1 class="md-display-2">Map</h1> -->
 
                                     <div class="map-container">
                                       <div id="map-canvas" style="height:500px;"></div>
                                     </div>
 
-                                  <p>- - map here - - </p>
                                 </md-content>
                               </md-tab>
                             </md-tabs>

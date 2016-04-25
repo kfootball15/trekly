@@ -10,7 +10,8 @@ var schema = new mongoose.Schema({
         max: 5
     },
     comment: {
-        type: String
+        type: String,
+        minlength: 50
     },
     user: {
       type: Schema.Types.ObjectId, 
