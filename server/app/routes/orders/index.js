@@ -83,7 +83,7 @@ router.put('/addToCart/:productId', function(req,res,next){
 });
 
 router.put('/removeOneFromCart/:productId', function(req,res,next){
-    Order.findOne({sessionId: req.session.id})
+    Order.findOne({sessionId: req.session.id, status: 'cart'})
     .then(function(order){
         return order.deleteOneProduct(req.params.productId);
     })
@@ -103,11 +103,12 @@ router.get('/findOneOrder', function(req, res, next) {
 });
 
 router.put('/removeFromCart/:productId', function(req,res,next){
-    Order.findOne({sessionId: req.session.id})
+    Order.findOne({sessionId: req.session.id, status:'cart'})
     .then(function(order){
         return order.deleteProduct(req.params.productId);
     })
     .then(function(updatedCart){
+        console.log('NOT HAPPENING updatedCart in remove from cart', updatedCart);
         res.send(updatedCart);
     })
     .catch(next);
@@ -121,9 +122,9 @@ router.get('/findOneOrderById/:orderId', function(req, res, next) {
     .catch(next);
 });
 
-router.put('/changeStatus/:newStatus', function(req, res, next){
+router.put('/changeStatus/:orderId/:newStatus', function(req, res, next){
     var newStatus = req.params.newStatus;
-    return Order.findOne({sessionId: req.session.id}).exec()
+    return Order.findOne({sessionId: req.session.id, _id: req.params.orderId}).exec()
     .then(function(order){
         var currentStatus = order.status;
         if (currentStatus === 'cart' && newStatus === 'complete') {
@@ -137,6 +138,7 @@ router.put('/changeStatus/:newStatus', function(req, res, next){
         }
     })
     .then(function(updatedOrder){
+        console.log('updated order after confirmatin', updatedOrder)
         res.json(updatedOrder);
     })
     .catch(next);

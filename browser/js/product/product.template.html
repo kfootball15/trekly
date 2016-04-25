@@ -11,7 +11,7 @@
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
       <md-button ui-sref="productDetail({productId: product._id})">Details</md-button>
-      <md-button ng-click="addToCart(product)">Add to Cart</md-button>
+      <md-button ng-click="addToCart(product._id); showAlert($event, product)">Add to Cart</md-button>
     </div>
   </md-card>
 

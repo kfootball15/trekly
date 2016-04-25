@@ -11,7 +11,6 @@ app.factory('OrderFactory', function($http){
     OrderFactory.getCart = function(){
         return $http.get('/api/orders/getCart')
         .then(function(cart){
-// <<<<<<< HEAD
             var cart = cart.data;
             if ((!cart.products) || (cart && cart.products.length < 1)) {
                 cachedCart.cartTotal = 0;
@@ -24,12 +23,6 @@ app.factory('OrderFactory', function($http){
                 angular.copy(cart, cachedCart);
                 return cachedCart;
             }
-// =======
-            // console.log('this is the cart', cart)
-            // if (!cart) throw new Error();
-            // angular.copy(cart.data, cachedCart);
-            // return cachedCart;
-// >>>>>>> master
         });
     };
 
@@ -75,6 +68,7 @@ app.factory('OrderFactory', function($http){
     }
 
     function updateCache(productId, number){
+        console.log('in update cache')
         var arr = cachedCart.products.map(productChild => productChild.product._id);
         var index = arr.indexOf(productId);
         cachedCart.products[index].quantity+=number;
@@ -92,8 +86,16 @@ app.factory('OrderFactory', function($http){
         });
     };
 
+    OrderFactory.addToCartFromProduct = function(productId, quantity){
+        return $http.put('/api/orders/addToCart/' + productId, {quantity: quantity})
+        .then(function(cart){
+            return cart.data;
+        });
+    };
+
 
     OrderFactory.removeOneFromCart = function(productId){
+        console.log('product id in remove one from car', productId)
         return $http.put('/api/orders/removeOneFromCart/' + productId)
         .then(function(cart){
             updateCache(productId, -1);
@@ -102,20 +104,24 @@ app.factory('OrderFactory', function($http){
     }
 
     OrderFactory.removeFromCart = function(productId){
+        console.log('cachedCart in removefrom cart factory', cachedCart);
         return $http.put('/api/orders/removeFromCart/' + productId)
         .then(function(cart){
             var index;
             for (var i=0; i< cachedCart.products.length; i++){
-                if (cachedCart.products[i].id === productId) index = i;
+                console.log(cachedCart.products[i].product._id)
+                if (cachedCart.products[i].product._id === productId) index = i;
             }
+            console.log('index', index)
             cachedCart.cartTotal -= cachedCart.products[index].productTotal;
             cachedCart.products.splice(index,1);
             return cachedCart;
         })
     }
 
-    OrderFactory.changeStatus = function(newStatus){
-        return $http.put('/api/orders/changeStatus/' + newStatus)
+    OrderFactory.changeStatus = function(newStatus, orderId){
+        cachedCart = {};
+        return $http.put('/api/orders/changeStatus/' + orderId + '/' + newStatus)
         .then(function(updatedOrder){
             return updatedOrder.data;
         })

@@ -19,7 +19,11 @@
               <div class="caption-full">
                 <div layout="column" class="pull-right">
                     <h4>{{ product.price | myCurrency }}</h4>
-                        <button type="button" class="btn btn-default btn-sm" ng-click="addToCart(product)">
+                    <select ng-model="quantity" default="1">
+                      <option ng-repeat="num in numbers" value="{{num}}">{{num}}
+                      </option>
+                   </select>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="addToCart(product._id, quantity)">
                           <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
                         </button>
                 </div>
