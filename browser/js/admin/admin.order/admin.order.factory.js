@@ -30,7 +30,7 @@ app.factory('AdminOrderFactory', function($http){
 
             return $http.delete('api/orders/' + orderId)
             .then(function(order){
-                return order.data;
+                return order;
             });
 
         }

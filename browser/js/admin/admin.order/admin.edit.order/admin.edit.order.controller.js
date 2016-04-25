@@ -38,7 +38,25 @@ app.controller('AdminEditOrderCtrl', function($scope, $state, AdminOrderFactory,
 
     AdminOrderFactory.updateOneOrder(order._id, update)
     .then(function(){
-    })
+    });
+
+    //This is closer but the $scope.update.products does not match the updatedOrder.data._id
+    //Also, you must chang the factory funciton to return 'response' instead of 'response.data'
+    // AdminOrderFactory.updateOneOrder(order._id, update)
+    // .then(function(updatedOrder){
+    //   console.log(updatedOrder)
+    //   if(updatedOrder.status===200){
+    //     for (var i = 0; i < $scope.update.products.length; i++) {
+    //       if($scope.update.products[i]._id === updatedOrder.data._id){
+    //         $scope.update.products.splice(i, 1);
+    //         break;
+    //       }
+    //     }
+    //   }
+    // })
+    // .catch(function(err){
+    //   console.error(err);
+    // });
 
   };
 

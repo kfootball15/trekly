@@ -12,9 +12,10 @@ app.controller('AdminOrderCtrl', function($scope, $state, AdminOrderFactory, all
   $scope.deleteOrder = function(orderId){
     AdminOrderFactory.deleteOneOrder(orderId)
     .then(function(order){
-      //CHECK FOR STATUS LIKE LAURA DID
-      for (var i = 0; i < $scope.update.allOrders.length; i++) {
-        if ($scope.update.allOrders[i]._id === order._id) $scope.update.allOrders.splice(i, 1);
+      if(order.status===200){
+        for (var i = 0; i < $scope.update.allOrders.length; i++) {
+          if ($scope.update.allOrders[i]._id === order.data._id) $scope.update.allOrders.splice(i, 1);
+        }
       }
     })
     .then(null, function(err){
