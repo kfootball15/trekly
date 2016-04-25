@@ -4,6 +4,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var updateCartWhenLoggingIn = require('./updateCartWhenLoggingIn.js');
+var garbageCollectStrayCarts = require('./garbageCollectStrayCarts.js');
 
 module.exports = function (app) {
 
@@ -43,6 +44,13 @@ module.exports = function (app) {
                 if (loginErr) return next(loginErr);
 
                 updateCartWhenLoggingIn(user, req.session)
+                .then(function() {
+                    if(user.isAdmin === true) {
+                        return garbageCollectStrayCarts();
+                    } else {
+                        return;
+                    }
+                })
                 .then(function() {
                     // We respond with a response object that has user with _id and email.
                     res.status(200).send({

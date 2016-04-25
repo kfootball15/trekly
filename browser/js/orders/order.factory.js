@@ -50,6 +50,7 @@ app.factory('OrderFactory', function($http){
     OrderFactory.getCart = function(){
         return $http.get('/api/orders/getCart')
         .then(function(cart){
+            console.log(cart)
             if (!cart) throw new Error();
             // var products = cart.products;
             // cart.consolidateCart = consolidateCart(products);
@@ -193,11 +194,12 @@ app.factory('OrderFactory', function($http){
     	console.log('in remove all product from cart factory')
     	return $http.put('/api/orders/removeFromCart/' + productId)
     	.then(function(cart){
-    		cachedCart.consolidateCart = removeAllFromCache(cachedCart.consolidateCart, productId);
+            var index = cachedCart.products.map(productChild => productChild.product._id).indexOf(productId);
+            cachedCart.products.splice(index, 1);
             console.log('cart after remove in order factory', cachedCart)
     		return cachedCart;
-    	})
-    }
+    	});
+    };
 
     function removeAllFromCache(consolidatedArray, productId){
         console.log('consolidatedArray', consolidatedArray);

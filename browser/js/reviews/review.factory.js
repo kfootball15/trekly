@@ -11,6 +11,12 @@ app.factory('ReviewFactory', function($http) {
             .then(function(reviews) {
                 return reviews.data;
             });
+        },
+        createReview: function(newReview) {
+            return $http.post('/api/reviews/', newReview)
+            .then(function(review) {
+                return review.data;
+            });
         }
     };
 });

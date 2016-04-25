@@ -51,7 +51,7 @@ var userSeed = [
 
 var orderSeed = [
     {
-        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
+        sessionId: '123',
         status: 'cart',
         products: []
     },
@@ -66,12 +66,12 @@ var orderSeed = [
         products: []
     },
     {
-        sessionId: 'HgnK0TBC9xYNyC_cwXlb2cTImnZraUE-',
+        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
         status: 'complete',
         products: []
     },
     {
-        sessionId: 'HgnK0TBC9xYNyC_cwXlb2cTImnZraUE-',
+        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
         status: 'complete',
         products: []
     }
@@ -175,7 +175,7 @@ var seedDB = function() {
                 price = productToAddToOrder.price;
             }
             order.products.push({product: productToAddToOrder, quantity: 1, finalPrice: price});
-            order.user = randomizeSelector(users);
+            // order.user = randomizeSelector(users);
             return Order.create(order);
         });
     })
