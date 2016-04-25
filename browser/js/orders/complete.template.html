@@ -1,0 +1,32 @@
+CONFIRMATION PAGE
+
+<div class='md-padding' layout="row" layout-wrap>
+	<br>
+	<table>
+		<thead>
+		<tr>
+			<th>Package</th>
+			<th>Location</th>
+			<th>Quantity</th>
+			<th>Price</th>
+			<th>Status</th>
+		</tr>
+		</thead>
+		<tr ng-repeat="product in order.products">
+			<td>{{product.product.title}}</td>
+			<td>{{product.product.location}}</td>
+			<td>{{product.quantity}}</td>
+			<td>{{product.productTotal | currency}}</td>
+			<td>Confirmed</td>
+		</tr>
+		<tr>
+			<th></th>
+			<th>Total</th>
+			<th>{{order.orderTotal | currency}}</th>
+		</tr>
+	</table>
+	<button ng-click="goToAccount()">Go to Account
+	</button>
+	<button ng-click="continueShopping()">Continue Shopping
+	</button>
+</div>
