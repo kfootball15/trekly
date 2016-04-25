@@ -32,6 +32,9 @@ app.config(function ($stateProvider) {
         resolve: {
             recentOrder: function(OrderFactory, $stateParams, $state){
                 return OrderFactory.getRecentComplete($stateParams.id);
+            },
+            loggedInUser: function(AuthService){
+                return AuthService.getLoggedInUser();
             }
         },
         controller: 'CompleteCtrl'

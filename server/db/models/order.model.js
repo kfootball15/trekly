@@ -65,6 +65,7 @@ schema.methods.getLiveProductPrices = function(){
 
 //route to change status to 'complete' calls this method
 schema.methods.cartToComplete = function(){
+    console.log('THIS', this)
     var thisOrder;
     return this.getLiveProductPrices()
     .then((liveProductPrices) => {
@@ -76,6 +77,7 @@ schema.methods.cartToComplete = function(){
         return this.save();
     })
     .then(function(updatedOrder){
+        console.log('updated order in cart to complete', updatedOrder)
         thisOrder = updatedOrder;
         return mongoose.model('Product')
         .changeInventory(
@@ -153,8 +155,11 @@ schema.methods.deleteOneProduct = function (productId) {
 
 
 schema.methods.deleteProduct = function (productId) {
+    console.log('THIS', this);
     if (this.status !== 'cart') return;
+    console.log('this.products', this.products);
     var index = this.products.map(productChild => productChild.product.toString()).indexOf(productId);
+    console.log('index', index);
     this.products.splice(index, 1);
     return this.save();
 };
@@ -162,4 +167,9 @@ schema.methods.deleteProduct = function (productId) {
 
 mongoose.model('Order', schema);
 schema.plugin(deepPopulate);
+
+
+
+
+
 

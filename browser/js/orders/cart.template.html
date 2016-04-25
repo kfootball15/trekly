@@ -2,7 +2,7 @@ SHOPPING CART
 
 <div ng-show='checkCartEmpty()'>
 	Cart is empty. 
-	<button>Time to Shop!</button>
+	<a ui-sref="home">Time to Shop!</a>
 </div>
 
 <div class='md-padding' layout="row" ng-show="!checkCartEmpty()">
@@ -32,7 +32,7 @@ SHOPPING CART
 				</md-button>
 			</td>
 			<td>
-				<md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.id)"><md-icon>X</md-icon>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.product._id)"><md-icon>X</md-icon>
 				</md-button>
 			</td>
 		</tr>
