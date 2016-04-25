@@ -12,7 +12,7 @@ require('./configure')(app);
 // /api so they are isolated from our GET /* wildcard.
 app.use('/api', require('./routes'));
 app.use('/admin', require('./routes/admin'));
-app.use('/cart', require('./routes/charge'))
+app.use('/checkout', require('./routes/charge'))
 
 
 /*

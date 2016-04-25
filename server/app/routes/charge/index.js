@@ -9,7 +9,8 @@ router.post('/', function(req, res,next) {
  console.log('in post to cart', req.body)
   var stripeToken = req.body.stripeToken;
 //CHANGE THIS TO ACTUAL CHARGE AMOUNT
-  var amount = 999
+  var amount = req.body.amount
+  console.log("in charge route", req.body)
 
   // ensure amount === actual product amount to avoid fraud
 
@@ -23,7 +24,7 @@ router.post('/', function(req, res,next) {
       console.log(err);
       res.send('error');
     } else {
-      res.send('success');
+      res.redirect('/complete')
     }
   });
 });
