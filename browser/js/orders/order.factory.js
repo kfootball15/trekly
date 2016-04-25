@@ -11,18 +11,25 @@ app.factory('OrderFactory', function($http){
     OrderFactory.getCart = function(){
         return $http.get('/api/orders/getCart')
         .then(function(cart){
+// <<<<<<< HEAD
             var cart = cart.data;
-            if ((!cart.products) || (cart && cart.products.length < 1)) {
-                cachedCart.cartTotal = 0;
-                return cachedCart;
-            }
-            else {
-                var priceArr = cart.products.map((product)=>{return product.quantity * product.product.price});
-                priceArr.forEach((price, index)=>{cart.products[index]['productTotal'] = price});
-                cart.cartTotal = priceArr.reduce((p,c)=>{return p+c; });
-                angular.copy(cart, cachedCart);
-                return cachedCart;
-            }
+            // if ((!cart.products) || (cart && cart.products.length < 1)) {
+            //     cachedCart.cartTotal = 0;
+            //     return cachedCart;
+            // }
+            // else {
+                // var priceArr = cart.products.map((product)=>{return product.quantity * product.product.price});
+                // priceArr.forEach((price, index)=>{cart.products[index]['productTotal'] = price});
+                // cart.cartTotal = priceArr.reduce((p,c)=>{return p+c; });
+                // angular.copy(cart, cachedCart);
+                // return cachedCart;
+            // }
+// =======
+            console.log(cart)
+            if (!cart) throw new Error();
+            angular.copy(cart.data, cachedCart);
+            return cachedCart;
+// >>>>>>> master
         });
     };
 

@@ -63,7 +63,7 @@ router.get('/getRecentComplete/:orderId', function(req, res, next){
 
 router.get('/getAllComplete', function(req, res, next){
     Order.find({sessionId: req.session.id, status: 'complete'})
-    .populate('products')
+    .populate('products.product')
     .then(function(orders) {
         res.status(200).send(orders);
     })

@@ -13,24 +13,33 @@
                   <md-list flex>
                     <md-divider ></md-divider>
                     <div ng-repeat="order in orders" layout="row">
-                        <div flex="30">
-                            <h4>ORDER DATE PLACEHOLDER</h4>
+                        <div flex="20">
+                            <h4>Order date: [PLACEHOLDER]</h4>
+                            <h4>Total price: {{order.totalPrice | currency}}</h4>
                             <h4>Status: {{order.status}}</h4>
-                            <i class="material-icons md-48 green">check_circle</i>
+                            <i class="material-icons md-48 green" ng-show="order.status==='complete'">check_circle</i>
+                            <i class="material-icons md-48 blue" ng-if="order.status==='paid'">payment</i>
                         </div>
-                        <div flex="70">
-                            <md-list-item class="md-3-line" ng-repeat="product in order.products" ng-click="productDetail({productId: review.product._id})">
-                              <div flex="20">
-                                <img class="listImg md-avatar" ng-src="{{product.images[0]}}"/>
+                        <div flex="80">
+                            <div ng-repeat="product in order.products" layout="row">
+                              <md-list-item class="md-3-line"  ui-sref="productDetail({productId: product.product._id})" flex=80>
+                                <div flex="20">
+                                  <img class="listImg" ng-src="{{product.product.images[0]}}"/>
+                                </div>
+                                <div class="md-list-item-text" layout="column" flex="30">
+                                  <h4>{{ product.product.title }}</h4>
+                                </div>
+                                <div class="md-list-item-text" layout="column" flex="10">
+                                  <h4>x{{ product.quantity }}</h4>
+                                </div>
+                                <div class="md-list-item-text" layout="column" flex="10">
+                                  <h4>{{ product.finalPrice * product.quantity | currency}}</h4>
+                                </div>
+                              </md-list-item>
+                              <div class="md-list-item-text" layout="column" flex="20">
+                                <md-button class="md-raised md-primary" ui-sref="newReview({productId: product.product._id})" ng-show="order.status==='complete'">Write a review</md-button>
                               </div>
-                              <div class="md-list-item-text" layout="column" flex="60">
-                                <h4>{{ product.title }}</h4>
-                              </div>
-                              <div class="md-list-item-text" layout="column" flex="60">
-                                <h4>{{ product.finalPrice | currency}}</h4>
-                              </div>
-
-                            </md-list-item>
+                            </div>
                         </div>
                         <md-divider ></md-divider>
                     </div>
@@ -45,7 +54,7 @@
                 <md-content>
                   <md-list flex>
                     <md-divider ></md-divider>
-                    <md-list-item class="md-3-line" ng-repeat="review in reviews" ng-click="productDetail({productId: review.product._id})">
+                    <md-list-item class="md-3-line" ng-repeat="review in reviews" ui-sref="productDetail({productId: review.product._id})">
                       <div flex="30">
                         <img class="listImg" ng-src="{{review.product.images[0]}}"/>
                       </div>
