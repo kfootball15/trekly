@@ -26,6 +26,7 @@ CHECKOUT PAGE
     <form action="" method="POST">
         <h1>Stripe Checkout</h1>
         <input name="amount" value="{{cart.cartTotal * 100}}" input type="hidden">
+        <input name="orderId" value="{{cart._id}}" input type="hidden">
           <script
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="pk_test_baVyKj915LMNByhXkC1fJBqS"
@@ -36,5 +37,4 @@ CHECKOUT PAGE
           </script>
     </form>
     <button ng-click="editOrder()">EditOrder</button>
-    <button ng-click="confirm()">Confirm Order</button>
 </div>

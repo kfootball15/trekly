@@ -65,7 +65,6 @@ schema.methods.getLiveProductPrices = function(){
 
 //route to change status to 'complete' calls this method
 schema.methods.cartToComplete = function(){
-    console.log('THIS', this)
     var thisOrder;
     return this.getLiveProductPrices()
     .then((liveProductPrices) => {
@@ -77,7 +76,6 @@ schema.methods.cartToComplete = function(){
         return this.save();
     })
     .then(function(updatedOrder){
-        console.log('updated order in cart to complete', updatedOrder)
         thisOrder = updatedOrder;
         return mongoose.model('Product')
         .changeInventory(
