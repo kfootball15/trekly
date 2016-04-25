@@ -51,7 +51,7 @@ var userSeed = [
 
 var orderSeed = [
     {
-        sessionId: 'wSKeHI5b4qOMG3mAQW1k7b0mbuYZ0PiC',
+        sessionId: 'OblUqs2K95KldfV3oV1EEZnMUZjUJeY8',
         status: 'cart',
         products: []
     },
