@@ -38,6 +38,7 @@ app.factory('UserFactory', function($http) {
     };
 
     UserFactory.updateUser = function(userId, update){
+        console.log('in user factory update user function. userId: ', userId, ' update: ', update)
         return $http({
             method: 'PUT',
             url: '/api/members/' + userId,

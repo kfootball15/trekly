@@ -1,0 +1,32 @@
+<div layout="row" ng-style="newColor">
+    <seller-nav></seller-nav>
+
+<!--     <h1>'getStoreName()'</h1> -->
+
+<h1>Store Name: {{ storeName }}</h1>
+<br>
+<div class="col-md-12">
+    <form>
+            <input type='text' ng-model='name'>
+            <button ng-click='setStoreName()' type='button'>Submit Store Name</button>
+    </form>
+</div>
+
+    <br>
+
+
+<div class="col-md-12">
+    <form>
+            <select ng-model="color" default="white">
+                <option value="white">white</option>
+                <option value="blue">blue</option>
+                <option value="green">green</option>
+                <option value="yellow">yellow</option>
+                <option value="red">red</option>
+            </select>
+
+            <button ng-click="setBackgroundColor()">Submit Color</button>
+    </form>
+</div>
+
+</div>

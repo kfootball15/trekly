@@ -1,0 +1,24 @@
+<seller-toolbar></seller-toolbar>
+
+
+<div layout="row">
+
+  <seller-nav></seller-nav>
+
+  <md-list>
+
+    <!-- TABLE HEADER DIRECTIVE-->
+      <seller-order-header></seller-order-header>
+
+    <!-- ALL ORDERS FILTERED BY update.status -->
+      <seller-order-list ng-repeat="order in update.allOrders | filter: update.status" ng-show="update.status!=='all'"></seller-order-list>
+
+    <!-- ALL ORDERS FILTERED BY update.status==='all' -->
+      <seller-order-list ng-repeat="order in update.allOrders" ng-show="update.status==='all'"></seller-order-list>
+
+    <!-- NO ORDERS - this div shows -->
+    <h3 ng-hide="update.allOrders.length" style="text-align: center"> ***There are no Orders*** </h3>
+
+  </md-list>
+
+</div>

@@ -1,4 +1,4 @@
-app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, ReviewFactory, UserFactory, singleProduct, OrderFactory) {
+app.controller('ProductDetail', function($state, $scope, ProductFactory, $stateParams, ReviewFactory, UserFactory, singleProduct, OrderFactory, $mdDialog) {
 	console.log('singleProduct',singleProduct)
 	$scope.product = singleProduct;
 
@@ -61,6 +61,25 @@ app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, R
     $scope.runMap = initialize_gmaps;
 
     $scope.numbers = [1,2,3,4,5,6,7,8,9,10];
+
+
+    $scope.showConfirm = function(ev, product) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('You just added ' + product.title + ' to your cart!')
+          .textContent('You are on your way to ' + product.location + '!')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Keep Shopping')
+          .cancel('Go to Cart');
+
+	    $mdDialog.show(confirm).then(function() {
+	  		$state.go('productDetail', {productId: product._id, sellerId: product.seller});
+	    }, function() {
+	      $state.go('cart');
+	    });
+  };
+
 
 
 });
