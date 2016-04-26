@@ -45,6 +45,10 @@ var schema = new mongoose.Schema({
     },
     date: {
         type: Date
+    },
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User' 
     }
 });
 

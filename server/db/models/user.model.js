@@ -19,6 +19,10 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isSeller: {
+        type: Boolean,
+        default: false
+    },
     role: {
         type: String,
         enum: ['Admin', 'Customer', 'Seller']
@@ -57,6 +61,10 @@ var schema = new mongoose.Schema({
         username: String,
         email: String,
         token: String
+    },
+    storeName: {
+        type: String,
+        default: null
     }
 });
 

@@ -33,6 +33,11 @@ var schema = new mongoose.Schema({
     coordinates: {
         type: [Number]
     },
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null
+    }
 });
 
 schema.statics.changeInventory = function(productIdArray, quantityChangeArray){
