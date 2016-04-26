@@ -152,7 +152,7 @@ var productSeed = [
         images: ['https://i.ytimg.com/vi/lugard7P0nw/maxresdefault.jpg', 'http://eskipaper.com/images/africa-landscape-wallpaper-1.jpg', 'http://cdn.playbuzz.com/cdn/a9ef0d8c-0aa0-4796-b512-8f348ea8eeb5/2faf3263-7f6d-4843-9156-bc257dbf8911.jpg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMUt6UIfVaiEqyPDFSK7v0qNGJmtwR0ThSosz1p5OdXFrcZMn']
     },
     {
-        title: 'Austrailian Undertaking',
+        title: 'Australian Undertaking',
         description: 'Australia is a stable, democratic and culturally diverse nation with a highly skilled workforce and one of the strongest performing economies in the world.With spectacular landscapes and a rich ancient culture, Australia is a land like no other. It is the earths sixth-largest country in land area and is the only nation to govern an entire continent.Australia in Brief provides an authoritative overview of Australias history, the land, its people and their way of life. It also looks at Australias economic, scientific and cultural achievements and its foreign, trade and defence policies.  This is the 50th edition of Australia in Brief, revised and updated in October 2014. The Department of Foreign Affairs and Trade is grateful for assistance from other Government departments and agencies, and various private organisations who have licensed the use of photos and graphics. Money values are given in Australian dollars unless otherwise indicated. Weights and measures are metric and imperial.',
         location: 'Australia',
         categories: ['wildlife', 'desert', 'hot', 'safari', 'ocean', 'nature', 'biking', 'snorkeling'],

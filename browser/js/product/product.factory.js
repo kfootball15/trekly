@@ -1,4 +1,4 @@
-app.factory('ProductFactory', function($http){
+core.factory('ProductFactory', function($http){
     return {
         getAllProducts: function(sellerId){
             console.log('sellerID: ', sellerId)
@@ -49,7 +49,7 @@ app.factory('ProductFactory', function($http){
                 return response;
             })
         },
-        // redunndant paths
+        // redundant paths
         getById: function(id) {
             console.log('id in getById',id);
         	return $http.get('api/product/' + id)

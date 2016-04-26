@@ -77,6 +77,9 @@ router.put('/addToCart/:productId', function(req,res,next){
         return order.addProduct(req.params.productId, req.body.quantity);
     })
     .then(function(updatedCart){
+        return Order.findOne({_id: updatedCart._id}).populate('products.product');
+    })
+    .then(function(updatedCart) {
         res.send(updatedCart);
     })
     .catch(next);
@@ -88,6 +91,9 @@ router.put('/removeOneFromCart/:productId', function(req,res,next){
         return order.deleteOneProduct(req.params.productId);
     })
     .then(function(updatedCart){
+        return Order.findOne({_id: updatedCart._id}).populate('products.product');
+    })
+    .then(function(updatedCart) {
         res.send(updatedCart);
     })
     .catch(next);
