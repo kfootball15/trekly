@@ -1,4 +1,4 @@
-app.factory('OrderFactory', function($http){
+core.factory('OrderFactory', function($http){
 
     var OrderFactory = {};
 
@@ -72,11 +72,20 @@ app.factory('OrderFactory', function($http){
     }
 
     function updateCache(productId, number){
-        console.log('in update cache')
-        var arr = cachedCart.products.map(productChild => productChild.product._id);
-        var index = arr.indexOf(productId);
-        cachedCart.products[index].quantity+=number;
-        cachedCart.products[index].productTotal = cachedCart.products[index].quantity * cachedCart.products[index].product.price;
+        cachedCart.products.forEach((elem, index)=>{
+          cachedCart.products[index].productTotal = elem.quantity * elem.product.price
+        })
+        // console.log('in update cache')
+        // var arr = cachedCart.products.map(productChild => productChild.product._id);
+        // var index = arr.indexOf(productId);
+        // console.log("in cached cart.products", cachedCart.products, index, productId )
+        // if (index === -1){
+        //   angular.copy(cart.data, cachedCart)
+        // }
+        // else {
+        // cachedCart.products[index].quantity+=number;
+        // }
+        // cachedCart.products[index].productTotal = cachedCart.products[index].quantity * cachedCart.products[index].product.price;
         var arr = cachedCart.products.map(function(product){return product.quantity * product.product.price});
         cachedCart.cartTotal = arr.reduce(function(p,c){return p+c});
     }
@@ -85,8 +94,17 @@ app.factory('OrderFactory', function($http){
     OrderFactory.addToCart = function(productId, quantity){
         return $http.put('/api/orders/addToCart/' + productId, {quantity: quantity})
         .then(function(cart){
-            updateCache(productId, quantity);
-            return cachedCart;
+            // console.log("cached cart", cachedCart)
+            // if(!cachedCart.products){
+            //  angular.copy(cart.data, cachedCart)
+            //  console.log("in angular copy", cachedCart)
+            //  return cachedCart
+            // }
+            // else {
+              angular.copy(cart.data, cachedCart)
+              updateCache(productId, quantity);
+              return cachedCart;
+
         });
     };
 
@@ -102,6 +120,7 @@ app.factory('OrderFactory', function($http){
         console.log('product id in remove one from car', productId)
         return $http.put('/api/orders/removeOneFromCart/' + productId)
         .then(function(cart){
+              angular.copy(cart.data, cachedCart)
             updateCache(productId, -1);
             return cachedCart;
         })

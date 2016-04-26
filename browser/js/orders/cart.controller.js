@@ -20,6 +20,8 @@ $scope.checkCartEmpty = function(){
   }
 
   $scope.subtract = function(productId){
+    console.log('productId', productId);
+    console.log('cart.products[0].product._id', $scope.cart.products[0]);
     OrderFactory.removeOneFromCart(productId)
     .then(function(updatedCart){
     })
