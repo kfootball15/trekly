@@ -1,15 +1,24 @@
 core.factory('ProductFactory', function($http){
     return {
-        getAllProducts: function(){
-            return $http.get('/api/product')
+        getAllProducts: function(sellerId){
+            console.log('sellerID: ', sellerId)
+            return $http.get('/api/product/')
             .then(function(products){
-                return products.data;
+                if (!sellerId) return products.data;
+                var products = products.data;
+                console.log('products before filter: ', products);
+                products = products.filter(function(product) {
+                    return (product.seller === sellerId);
+                });
+                console.log(products);
+                return products;
             })
         },
         getOneProduct: function(productId){
             return $http.get('/api/product/' + productId)
             .then(function(product){
                 return product.data
+
             })
         },
         updateProduct: function(productId, update){
@@ -40,8 +49,10 @@ core.factory('ProductFactory', function($http){
         },
         // redundant paths
         getById: function(id) {
+            console.log('id in getById',id);
         	return $http.get('api/product/' + id)
         	.then(function(product) {
+                console.log('product in getById', product)
         		return product.data;
         	});
 

@@ -305,6 +305,10 @@ var seedDB = function() {
     })
     .then(function(users){
         usersList = users;
+        // productsList.forEach(function(product) {
+        //     product.seller = randomizeSelector(users);
+        // });
+            // console.log(productsList)
         return Promise.map(orderSeed, function(order) {
             var productToAddToOrder = randomizeSelector(productsList);
             var price;
