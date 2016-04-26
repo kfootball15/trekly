@@ -13,7 +13,7 @@ describe('The Product Factory', function(){
     // });
 
     it('gets all products', function() {
-      $httpBackend.whenGET('/api/product') // when GET
+      $httpBackend.whenGET('/api/product/') // when GET
         .respond(200, [{title: 'Product1', price: 100}, {title: 'Product2', price: 500}]); // give a canned response
       var product;
       ProductFactory.getAllProducts().then(function(gotProduct){
