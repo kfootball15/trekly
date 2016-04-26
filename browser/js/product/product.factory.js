@@ -31,11 +31,13 @@ app.factory('ProductFactory', function($http){
             })
         },
         createProduct: function(create){
+            console.log('in product factory. create: ', create)
             return $http({
                 method: 'POST',
                 url: '/api/product',
                 data: create
             }).then(function(response){
+                console.log('in product factory, created product: ', response.data)
                 return response.data;
             })
         },

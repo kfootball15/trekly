@@ -1,4 +1,4 @@
-app.controller('ProductCtrl', function($scope, OrderFactory, $mdDialog) {
+app.controller('ProductCtrl', function($scope, OrderFactory, $mdDialog, $state) {
 
 	$scope.addToCart = function(productId) {
 		OrderFactory.addToCartFromProduct(productId)
@@ -7,21 +7,28 @@ app.controller('ProductCtrl', function($scope, OrderFactory, $mdDialog) {
 		});
 	};
 
-  $scope.showAlert = function(ev, product) {
+
+    $scope.showConfirm = function(ev, product) {
     // Appending dialog to document.body to cover sidenav in docs app
-    // Modal dialogs should fully cover application
-    // to prevent interaction outside of dialog
-    $mdDialog.show(
-      $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Package Added To Cart')
-        .textContent(product.title + ' added to cart.')
-        .ariaLabel('Alert Dialog Demo')
-        .ok('Keep Shopping!')
-        .targetEvent(ev)
-    );
+    var confirm = $mdDialog.confirm()
+          .title('You just added ' + product.title + ' to your cart!')
+          .textContent('You are on your way to ' + product.location + '!')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Keep Shopping')
+          .cancel('Go to Cart');
+
+    $mdDialog.show(confirm).then(function() {
+        if (product.seller === null) var newState = 'home';
+        else newState = 'seller'
+      $state.go(newState, {sellerId: product.seller});
+    }, function() {
+      $state.go('cart');
+    });
   };
+
+
+
 
 })
 

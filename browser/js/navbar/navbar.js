@@ -6,6 +6,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
         templateUrl: 'js/navbar/navbar.html',
         link: function (scope) {
 
+
             scope.items = [
                 { label: 'Home', state: 'home' },
                 { label: 'About', state: 'about' },
@@ -32,15 +33,21 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
 
             var setUser = function () {
                 AuthService.getLoggedInUser().then(function (user) {
+                    console.log('user in navbar.js', user)
                     scope.user = user;
                 });
             };
+
 
             var removeUser = function () {
                 scope.user = null;
             };
 
             setUser();
+
+            scope.goToStore = function() {
+              $state.go('sellerHome', {sellerId: scope.user._id});
+            };
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);

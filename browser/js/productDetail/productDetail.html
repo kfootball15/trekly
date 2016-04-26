@@ -23,7 +23,7 @@
                       <option ng-repeat="num in numbers" value="{{num}}">{{num}}
                       </option>
                    </select>
-                        <button type="button" class="btn btn-default btn-sm" ng-click="addToCart(product._id, quantity)">
+                        <button type="button" class="btn btn-default btn-sm" ng-click="addToCart(product._id, quantity); showConfirm($event, product)">
                           <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
                         </button>
                 </div>

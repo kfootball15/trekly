@@ -17,11 +17,11 @@ navbar a {
 
 <md-toolbar md-whiteframe="1" class="site-content-toolbar">
       <div class="md-toolbar-tools">
-      <fullstack-logo></fullstack-logo>
+      <fullstack-logo ui-sref="home"></fullstack-logo>
       <md-content>
         <md-list>
           <md-list-item>
-            <h1 class="md-title" ui-sref="home">Trekly</h1>
+            <md-button class="md-title" ui-sref="home">Trekly</md-button>
           </md-list-item>
         </md-list>
       </md-content>
@@ -55,7 +55,7 @@ navbar a {
         </md-menu>
 
 
-        <md-button ng-show="true" ui-sref="SOMETHING IN THE FUTURE" class="md-accent md-raised md-hue-3 md-button md-ink-ripple">My Store</md-button>
+        <md-button ng-show="user.isSeller" ng-click="goToStore()" class="md-accent md-raised md-hue-3 md-button md-ink-ripple">My Store</md-button>
 
         <md-button ng-show="true" ui-sref="allStores" class="md-accent md-raised md-hue-3 md-button md-ink-ripple">Stores</md-button>
 

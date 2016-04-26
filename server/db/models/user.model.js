@@ -65,6 +65,10 @@ var schema = new mongoose.Schema({
     storeName: {
         type: String,
         default: null
+    },
+    backgroundColor: {
+        type: String,
+        default: 'white'
     }
 });
 

@@ -1,0 +1,49 @@
+
+<div layout="row">
+
+<seller-nav></seller-nav>
+
+<div layout="column" ng-cloak class="md-inline-form">
+  <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
+    <div >
+    <h2>Create a new product</h2>
+      <md-input-container>
+        <label>Title</label>
+        <input ng-model="create.title">
+      </md-input-container>
+       <md-input-container>
+        <label>Location</label>
+        <input ng-model="create.location">
+      </md-input-container>
+      <md-input-container>
+        <label>Price</label>
+        <input ng-model="create.price" type="number">
+      </md-input-container>
+      <md-input-container>
+        <label>Inventory</label>
+        <input ng-model="create.inventory" type="number">
+      </md-input-container>
+      <div layout-gt-xs="row">
+        <md-datepicker ng-model="create.date" md-placeholder="date">
+        </md-datepicker>
+      </div>
+    </div>
+  </md-content>
+  <md-content layout-padding>
+    <div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Activities</label>
+<md-chips ng-init="create.categories = []" ng-model="create.categories" readonly="false" md-enable-chip-edit="true" secondary-placeholder="+Tag"></md-chips>
+            </md-input-container>
+          <br/>
+        </div>
+        <md-input-container class="md-block">
+          <label>Description</label>
+          <textarea ng-model="create.description" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+      <md-button class="md-accent md-raised md-hue-3 md-button md-ink-ripple" ng-click="createProduct(create)">Submit</md-button>
+    </div>
+  </md-content>
+</div>
+</div>

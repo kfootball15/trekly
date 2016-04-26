@@ -1,48 +1,86 @@
-SHOPPING CART
-
 <div ng-show='checkCartEmpty()'>
-    Cart is empty.
-    <a ui-sref="home">Time to Shop!</a>
+	Cart is empty.
+	<a ui-sref="home">Time to Shop!</a>
 </div>
 
 
-<div class='md-padding' layout="row" ng-show="!checkCartEmpty()">
-	<br>
-	<table>
-		<thead>
-		<tr>
-			<th>Package</th>
-			<th>Location</th>
-			<th>Price</th>
-			<th>Quantity</th>
-			<th>Actions</th>
-		</tr>
-		</thead>
-		<tr ng-repeat="item in cart.products">
-			<td>{{item.product.title}}</td>
-			<td>{{item.product.location}}</td>
-			<td>{{item.productTotal | currency}}</td>
-			<td>{{item.quantity}}</td>
-			<td>
-				<md-button class="md-fab" aria-label="Eat cake" ng-click="add(item.product._id)"><md-icon>+</md-icon>
-				</md-button>
-			</td>
-			<td>
-				<md-button class="md-fab" aria-label="Eat cake" ng-click="subtract(item.product._id)">
-				<md-icon>-</md-icon>
-				</md-button>
-			</td>
-			<td>
-				<md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.product._id)"><md-icon>X</md-icon>
-				</md-button>
-			</td>
-		</tr>
-		<tr>
-			<th></th>
-			<th>Total</th>
-			<th>{{cart.cartTotal | currency}}</th>
-		</tr>
-	</table>
-	<button ng-click="checkout()">Proceed to check-Out
-	</button>
+
+<div ng-show="!checkCartEmpty()">
+<md-content class="md-padding">
+<h1 class="md-display-2">SHOPPING CART</h1>
+<md-content>
+<md-list flex>
+<md-divider ></md-divider>
+<div layout="row">
+	<div flex="80">
+
+		<div ng-repeat="item in cart.products" layout="row">
+			<md-list-item class="md-3-line" flex=80>
+			<div flex="20">
+				<img class="listImg" ng-src="{{item.product.images[0]}}"/>
+			</div>
+			<div class="md-list-item-text" layout="column" flex="20">
+				<h3>{{item.product.title}}</h3>
+				<p>{{item.product.location}}</p>
+			</div>
+			<!-- <div class="md-list-item-text" layout="column" flex="30">
+				<h4>{{ item.product.location }}</h4>
+			</div> -->
+			<div class="md-list-item-text" layout="column" flex="10">
+				<h4>x{{ item.quantity }}</h4>
+			</div>
+			<div class="md-list-item-text" layout="column" flex="10">
+				<h4>{{ item.productTotal | currency}}</h4>
+			</div>
+			<div>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="add(item.product._id)"><md-icon>+</md-icon></md-button>
+			</div>
+			<div>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="subtract(item.product._id)"><md-icon>-</md-icon></md-button>
+			</div>
+			<div>
+				<md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.product._id)"><md-icon>X</md-icon></md-button>
+			</div>
+		</md-list-item>
+		<div class="md-list-item-text" layout="column" flex="20">
+		</div>
+	</div>
 </div>
+	<md-divider >
+	<h3>Total</h3>
+	<p>{{cart.cartTotal | currency}}</p>
+		<md-button class="md-raised md-primary" ng-click="checkout()">Proceed to check-Out</md-button>
+	</md-divider>
+</div>
+</md-list>
+</md-content>
+</md-content>
+</div>
+
+
+
+
+<!-- <div class='md-padding' layout="row" ng-show="!checkCartEmpty()">
+  <div layout="row">
+    <md-list>
+      <md-list-item class="md-2-line" ng-repeat="item in cart.products">
+        <div class="md-list-item-text">
+            <img ng-src="{{item.product.images[0]}}" class="md-avatar"/>
+        </div>
+        <div class="md-list-item-text">
+            <h3>{{item.product.title}}</h3>
+            <p>{{item.product.location}}</p>
+        </div>
+        <div class="md-list-item-text">
+            <h4>{{item.quantity | currency}}</h4>
+        </div>
+
+        <md-button class="md-fab" aria-label="Eat cake" ng-click="add(item.product._id)"><md-icon>+</md-icon></md-button>
+        <md-button class="md-fab" aria-label="Eat cake" ng-click="subtract(item.product._id)"><md-icon>-</md-icon></md-button>
+        <md-button class="md-fab" aria-label="Eat cake" ng-click="remove(item.product._id)"><md-icon>X</md-icon></md-button>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+</div>
+</div> -->
+
