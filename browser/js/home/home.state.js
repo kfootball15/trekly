@@ -5,9 +5,14 @@ app.config(function ($stateProvider) {
         controller: 'HomeCtrl',
         resolve: {
         	allProducts: function(ProductFactory) {
-				return ProductFactory.getAllProducts();
+				return ProductFactory.getAllProducts()
+                .then(function(products){
+                    products = products.filter(function(product){
+                        return (product.seller === null)
+                    })
+                    return products;
+                })
         	}
         }
     });
 });
-

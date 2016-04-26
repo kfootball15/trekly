@@ -1,5 +1,5 @@
 app.controller('ProductDetail', function($scope, ProductFactory, $stateParams, ReviewFactory, UserFactory, singleProduct, OrderFactory) {
-
+	console.log('singleProduct',singleProduct)
 	$scope.product = singleProduct;
 
 	ReviewFactory.getProductReviews($stateParams.productId)
