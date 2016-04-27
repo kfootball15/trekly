@@ -14,16 +14,16 @@
 
 	<md-list-item class="md-2-line" >
         <div class="md-list-item-text">
-            <img ng-src="{{user.images[0]}}" class="md-avatar"/>
+            <!-- <img ng-src="{{user.images[0]}}" class="md-avatar"/> -->
+            <fullstack-logo ui-sref="home"></fullstack-logo class='md-avatar'>
         </div>
         <div class="md-list-item-text">
             <a ui-sref='home'>TREKLY</a>
         </div>
     </md-list-item>
-
       <md-list-item class="md-2-line" ng-repeat="user in users">
         <div class="md-list-item-text">
-            <img ng-src="{{user.images[0]}}" class="md-avatar"/>
+            <img ng-src="{{user.avatar}}" class="md-avatar"/>
         </div>
         <div class="md-list-item-text">
             <a ui-sref='seller({sellerId: user._id})'>{{user.storeName}}</a>

@@ -1,40 +1,59 @@
-CHECKOUT PAGE
+<div>
+<md-content class="md-padding">
+<h1 class="md-display-2">CHECKOUT PAGE</h1>
+<md-content>
+<md-list flex>
+<md-divider ></md-divider>
+<div layout="row">
+    <div flex="80">
 
-<div class='md-padding' layout="row" layout-wrap>
-    <br>
-    <table>
-        <thead>
-        <tr>
-            <th>Package</th>
-            <th>Location</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
-        </thead>
-        <tr ng-repeat="item in cart.products">
-            <td>{{item.product.title}}</td>
-            <td>{{item.product.location}}</td>
-            <td>{{item.productTotal | currency}}</td>
-            <td>{{item.quantity}}</td>
-        </tr>
-        <tr>
-            <th></th>
-            <th>Total</th>
-            <th>{{cart.cartTotal | currency}}</th>
-        </tr>
-    </table>
-    <form action="" method="POST">
-        <h1>Stripe Checkout</h1>
-        <input name="amount" value="{{cart.cartTotal * 100}}" input type="hidden">
-        <input name="orderId" value="{{cart._id}}" input type="hidden">
-          <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="pk_test_baVyKj915LMNByhXkC1fJBqS"
-            data-amount="{{cart.cartTotal * 100}}"
-            data-name="Stripe.com"
-            data-description="Widget"
-            data-locale="auto">
-          </script>
-    </form>
-    <button ng-click="editOrder()">EditOrder</button>
+        <div ng-repeat="item in cart.products" layout="row">
+            <md-list-item class="md-3-line" flex=100>
+                <div flex="20">
+                    <img class="listImg" ng-src="{{item.product.images[0]}}"/>
+                </div>
+                <div class="md-list-item-text" layout="column" flex="25">
+                    <h4>{{item.product.title}}</h4>
+                    <p>{{item.product.location}}</p>
+                </div>
+                <div class="md-list-item-text" layout="column" flex="5">
+                    <h4>x{{ item.quantity }}</h4>
+                </div>
+                <div class="md-list-item-text" layout="column" flex="15">
+                    <h4>{{ item.productTotal | currency}}</h4>
+                </div>
+                <div class="md-list-item-text" layout="column" flex="15">
+                </div>
+            </md-list-item>
+        <div class="md-list-item-text" layout="column" flex="15">
+        </div>
+    </div>
+</div>
+    <md-divider >
+        <h3>Total</h3>
+        <p>{{cart.cartTotal | currency}}</p> 
+        <div>
+            <md-button class="md-raised md-primary" ng-click="editOrder()">EDIT ORDER</md-button>
+        </div>
+        <div>
+            <form action="" method="POST">
+            <!-- <h1>Stripe Checkout</h1> -->
+            <input name="amount" value="{{cart.cartTotal * 100}}" input type="hidden">
+            <input name="orderId" value="{{cart._id}}" input type="hidden">
+              <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_test_baVyKj915LMNByhXkC1fJBqS"
+                data-amount="{{cart.cartTotal * 100}}"
+                data-name="Stripe.com"
+                data-description="Widget"
+                data-locale="auto">
+              </script>
+            </form>
+        </div>
+
+    </md-divider>
+</div>
+</md-list>
+</md-content>
+</md-content>
 </div>

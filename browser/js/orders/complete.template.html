@@ -1,38 +1,45 @@
-<!-- complete.template.html -->
-
-CONFIRMATION PAGE
-
-<div class='md-padding' layout="row" layout-wrap>
-	<br>
-	<table>
-		<thead>
-		<tr>
-				<th>Package</th>
-				<th>Quantity</th>
-				<th>Price</th>
-				<th>Status</th>
-		</tr>
-		</thead>
-		<tr ng-repeat="product in complete.products">
-			<!-- <td>
-				<img ng-src="{{imagePath}}" style="width: 10%">
-			</td> -->
-			<td>{{product.product.title}}</td>
-			<td>{{product.quantity}}</td>
-			<td>{{product.productTotal | currency}}</td>
-			<td>Confirmed</td>
-
-		</tr>
-		<tr>
-				<th></th>
-				<th>Total</th>
-				<th>{{complete.orderTotal | currency}}</th>
-		</tr>
-
-	</table>
-	<button ui-sref="userProfile" ng-if="loggedInUser">Go to Account
-	</button>
-	<button ui-sref="home">Continue Shopping
-	</button>
-
+</div>
+<div>
+<md-content class="md-padding">
+<h1 class="md-display-2">CONFIRMATION PAGE</h1>
+<md-content>
+<md-list flex>
+<md-divider ></md-divider>
+<div layout="row">
+	<div flex="100">
+		<div ng-repeat="item in complete.products" layout="row">
+			<md-list-item class="md-3-line" flex=100>
+				<div flex="20">
+					<img class="listImg" ng-src="{{item.product.images[0]}}"/>
+				</div>
+				<div class="md-list-item-text" layout="column" flex="20">
+					<h4>{{item.product.title}}</h4>
+					<p>{{item.product.location}}</p>
+				</div>
+				<div class="md-list-item-text" layout="column" flex="5">
+					<h4>x{{ item.quantity }}</h4>
+				</div>
+				<div class="md-list-item-text" layout="column" flex="15">
+					<h4>{{ item.productTotal | currency}}</h4>
+				</div>
+				<div class="md-list-item-text" layout="column" flex="10">
+					<h4>Confirmed</h4>
+				</div>
+				<div class="md-list-item-text" layout="column" flex="15">
+				</div>
+			</md-list-item>
+			<div class="md-list-item-text" layout="column" flex="15">
+			</div>
+		</div>
+	<md-divider >
+		<h3>Total</h3>
+		<p>{{complete.orderTotal | currency}}</p>
+		<md-button class="md-raised md-primary" ui-sref="userProfile" ng-if="loggedInUser">Go to Account</md-button>
+		<md-button class="md-raised md-primary" ui-sref="home">Continue Shopping</md-button>
+	</md-divider>
+	</div>
+</div>
+</md-list>
+</md-content>
+</md-content>
 </div>
