@@ -10,6 +10,10 @@ describe('cut filter', function() {
 }); });
 
 
+
+
+
+
 // describe('The Product Factory', function(){
 //     beforeEach(module('core'));
 //     var ProductFactory;

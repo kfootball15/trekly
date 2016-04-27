@@ -119,7 +119,7 @@ schema.statics.findOrCreate = function(sessionId, userId){
         if (!order){
             var newOrder = new self();
             newOrder.sessionId = sessionId;
-            if (userId) newOrder.userId = userId;
+            if (userId) newOrder.user = userId;
             return newOrder.save();
         }
         else return order;

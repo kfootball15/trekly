@@ -55,6 +55,8 @@ navbar a {
         </md-menu>
 
 
+        <md-button ng-show="!user.isSeller" class="md-accent md-raised md-hue-3 md-button md-ink-ripple" ui-sref="createStore">Become A Seller!</md-button>
+
         <md-button ng-show="user.isSeller" ng-click="goToStore()" class="md-accent md-raised md-hue-3 md-button md-ink-ripple">My Store</md-button>
 
         <md-button ng-show="true" ui-sref="allStores" class="md-accent md-raised md-hue-3 md-button md-ink-ripple">Stores</md-button>

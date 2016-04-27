@@ -23,10 +23,18 @@
         <label>Inventory</label>
         <input ng-model="create.inventory" type="number">
       </md-input-container>
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="create.date" md-placeholder="date">
-        </md-datepicker>
-      </div>
+
+<br>
+      <md-input-container>
+        <label>Latitude Coordinate (south is negative)</label>
+        <input ng-model="create.coordinates[0]" type="number">
+      </md-input-container>
+      <md-input-container>
+        <label>Longitude Coordinate (east is negative)</label>
+        <input ng-model="create.coordinates[1]" type="number">
+      </md-input-container>
+
+
     </div>
   </md-content>
   <md-content layout-padding>
@@ -42,6 +50,25 @@
           <label>Description</label>
           <textarea ng-model="create.description" md-maxlength="150" rows="5" md-select-on-focus></textarea>
         </md-input-container>
+
+<md-input-container class="md-block">
+          <label>Image 1 (paste image url)</label>
+          <textarea ng-model="create.images[0]" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Image 2 (paste image url)</label>
+          <textarea ng-model="create.images[1]" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Image 3 (paste image url)</label>
+          <textarea ng-model="create.images[2]" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Image 4 (paste image url)</label>
+          <textarea ng-model="create.images[3]" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+
+        
       <md-button class="md-accent md-raised md-hue-3 md-button md-ink-ripple" ng-click="createProduct(create)">Submit</md-button>
     </div>
   </md-content>

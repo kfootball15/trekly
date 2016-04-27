@@ -2,7 +2,7 @@ app.controller('SellerCreateCtrl', function(currentUser, $scope, $state, Product
 	console.log('in seller create controller');
 	$scope.user = currentUser;
 
-  	$scope.create = {};
+  	$scope.create = {images: [], coordinates: []};
 
   $scope.createProduct = function(create){
   	create.seller = $scope.user._id;

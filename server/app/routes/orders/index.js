@@ -72,7 +72,7 @@ router.get('/getAllComplete', function(req, res, next){
 
 
 router.put('/addToCart/:productId', function(req,res,next){
-    Order.findOrCreate(req.session.id)
+    Order.findOrCreate(req.session.id, req.user._id)
     .then(function(order){
         return order.addProduct(req.params.productId, req.body.quantity);
     })

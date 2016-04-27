@@ -19,6 +19,11 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
                 { label: 'Admin :: Add Product', state: 'adminCreateProduct', auth: true },
             ];
 
+            // scope.goToCreateStore = function() {
+            //   console.log('FUNCTION RAN')
+            //   $state.go('home');
+            // };
+
             scope.user = null;
 
             scope.isLoggedIn = function () {
